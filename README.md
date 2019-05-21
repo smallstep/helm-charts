@@ -2,7 +2,7 @@
 Helm packages for Kubernetes.
 
 ```text
-⚠️ This repository a work in progress packages
+⚠️ This repository contains work in progress packages
 ```
 
 ## Packages
