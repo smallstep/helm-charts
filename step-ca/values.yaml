@@ -1,0 +1,66 @@
+# Default values for step-ca.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+replicaCount: 1
+nameOverride: ""
+fullnameOverride: ""
+
+image:
+  repository: smallstep/step-ca
+  tag: latest
+  pullPolicy: IfNotPresent
+
+bootstrapImage:
+  repository: smallstep/step-ca-bootstrap
+  tag: latest
+  pullPolicy: IfNotPresent
+
+service:
+  type: ClusterIP
+  port: 443
+  targetPort: 9000
+
+# Certificate authority configuration.
+# Used by the init image to create the PKI and configuration files.
+ca:
+  # The name of the new PKI.
+  name: Step Certificates
+  # The address where the ca will listen at.
+  address: :9000
+  # The dns name to use. 
+  # Leave it empty to use the format https://{{ include "step-ca.fullname" . }}.{{ .Release.Namespace }}.svc.cluster.local
+  url:
+  # The password used to encrypt the keys.
+  # Leave it empty to generate one.
+  password: 
+  # The provisioner configuration.
+  provisioner:
+    # The provisioner name.
+    name: admin
+    # The provisioner password.
+    password:
+
+ingress:
+  enabled: false
+  annotations: {}
+  hosts: []
+  tls: []
+
+resources: {}
+  # We usually recommend not to specify default resources and to leave this as a conscious
+  # choice for the user. This also increases chances charts run on environments with little
+  # resources, such as Minikube. If you do want to specify resources, uncomment the following
+  # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
+  # limits:
+  #   cpu: 100m
+  #   memory: 128Mi
+  # requests:
+  #   cpu: 100m
+  #   memory: 128Mi
+
+nodeSelector: {}
+
+tolerations: []
+
+affinity: {}

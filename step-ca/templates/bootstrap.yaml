@@ -1,0 +1,60 @@
+{{- if .Release.IsInstall -}}
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: {{ include "step-ca.fullname" . }}-config
+  namespace: {{.Release.Namespace}}
+  labels:
+    helm.sh/chart: {{ include "step-ca.chart" . }}
+    app.kubernetes.io/instance: {{ .Release.Name }}
+    app.kubernetes.io/managed-by: {{ .Release.Service }}
+    app.kubernetes.io/version: {{ .Chart.AppVersion }}
+
+---
+
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: "{{.Release.Name}}"
+  labels:
+    helm.sh/chart: {{ include "step-ca.chart" . }}
+    app.kubernetes.io/instance: {{ .Release.Name }}
+    app.kubernetes.io/managed-by: {{ .Release.Service }}
+    app.kubernetes.io/version: {{ .Chart.AppVersion }}
+spec:
+  template:
+    metadata:
+      name: "{{.Release.Name}}"
+      labels:
+        helm.sh/chart: {{ include "step-ca.chart" . }}
+        app.kubernetes.io/managed-by: {{ .Release.Service }}
+        app.kubernetes.io/instance: {{.Release.Name | quote }}
+        app.kubernetes.io/version: {{ .Chart.AppVersion }}
+    spec:
+      serviceAccountName: {{ include "step-ca.fullname" . }}-config
+      restartPolicy: Never
+      containers:
+      - name: config
+        image: "{{ .Values.bootstrapImage.repository }}:{{ .Values.bootstrapImage.tag }}"
+        imagePullPolicy: {{ .Values.bootstrapImage.pullPolicy }}
+        command: ["/home/step/entrypoint.sh"]
+        env:
+        - name: NAMESPACE
+          value: "{{ .Release.Namespace }}"
+        - name: PREFIX
+          value: "{{ include "step-ca.fullname" . }}"
+        - name: CA_NAME
+          value: "{{ .Values.ca.name }}"
+        - name: CA_URL
+          value: "{{ include "step-ca.url" . }}"
+        - name: CA_DNS
+          value: "{{ include "step-ca.dns" . }}"
+        - name: CA_ADDRESS
+          value: "{{ .Values.ca.address }}"
+        - name: CA_PROVISIONER
+          value: "{{ .Values.ca.provisioner.name }}"
+        - name: CA_PASSWORD # optional
+          value: "{{ .Values.ca.password }}" 
+        - name: CA_PROVISIONER_PASSWORD # optional
+          value: "{{ .Values.ca.provisioner.password }}" 
+{{- end -}}

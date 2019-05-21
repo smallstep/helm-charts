@@ -1,0 +1,8 @@
+Step CA is up and running.
+
+1. Get the PKI and Provisioner secrets running these commands:
+   kubectl get -n {{ .Release.Namespace }} -o jsonpath='{.data.password}' secret/{{ include "step-ca.fullname" . }}-ca-password | base64 --decode
+   kubectl get -n {{ .Release.Namespace }} -o jsonpath='{.data.password}' secret/{{ include "step-ca.fullname" . }}-provisioner-password | base64 --decode
+
+2. Delete the configuration job running this command:
+   kubectl -n {{ .Release.Namespace }} delete job.batch/{{ .Release.Name }}

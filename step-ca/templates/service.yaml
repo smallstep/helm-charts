@@ -1,0 +1,19 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "step-ca.fullname" . }}
+  labels:
+    helm.sh/chart: {{ include "step-ca.chart" . }}
+    app.kubernetes.io/name: {{ include "step-ca.name" . }}
+    app.kubernetes.io/instance: {{ .Release.Name }}
+    app.kubernetes.io/managed-by: {{ .Release.Service }}
+spec:
+  type: {{ .Values.service.type }}
+  ports:
+    - port: {{ .Values.service.port }}
+      targetPort: {{ .Values.service.targetPort }}
+      protocol: TCP
+      name: https
+  selector:
+    app.kubernetes.io/name: {{ include "step-ca.name" . }}
+    app.kubernetes.io/instance: {{ .Release.Name }}

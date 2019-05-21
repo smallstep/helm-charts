@@ -1,0 +1,39 @@
+{{- if .Release.IsInstall -}}
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: {{ include "step-ca.fullname" . }}-config
+  namespace: {{.Release.Namespace}}
+  labels:
+    helm.sh/chart: {{ include "step-ca.chart" . }}
+    app.kubernetes.io/name: {{ include "step-ca.name" . }}
+    app.kubernetes.io/instance: {{ .Release.Name }}
+    app.kubernetes.io/managed-by: {{ .Release.Service }}
+    app.kubernetes.io/version: {{ .Chart.AppVersion }}
+rules:
+- apiGroups: [""]
+  resources: ["secrets", "configmaps"]
+  verbs: ["create", "update"]
+
+---
+
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: {{ include "step-ca.fullname" . }}-config
+  namespace: {{.Release.Namespace}}
+  labels:
+    helm.sh/chart: {{ include "step-ca.chart" . }}
+    app.kubernetes.io/name: {{ include "step-ca.name" . }}
+    app.kubernetes.io/instance: {{ .Release.Name }}
+    app.kubernetes.io/managed-by: {{ .Release.Service }}
+    app.kubernetes.io/version: {{ .Chart.AppVersion }}
+subjects:
+- kind: ServiceAccount
+  name: {{ include "step-ca.fullname" . }}-config
+  namespace: {{.Release.Namespace}}
+roleRef:
+  kind: Role
+  name: {{ include "step-ca.fullname" . }}-config
+  apiGroup: rbac.authorization.k8s.io
+{{- end -}}

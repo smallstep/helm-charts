@@ -1,0 +1,24 @@
+# ConfigMaps that will be updated by the configuration job: 
+# 1. Step CA config directory.
+# 2. Step CA certs direcotry.
+# 3. Step CA secrets directory.
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ include "step-ca.fullname" . }}-config
+  namespace: {{.Release.Namespace}}
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ include "step-ca.fullname" . }}-certs
+  namespace: {{.Release.Namespace}}
+---
+apiVersion: v1
+data:
+  intermediate_ca_key: ""
+  root_ca_key: ""
+kind: ConfigMap
+metadata:
+  name: {{ include "step-ca.fullname" . }}-secrets
+  namespace: {{.Release.Namespace}}
