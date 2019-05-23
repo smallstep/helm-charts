@@ -1,12 +1,15 @@
 
 Thanks for installing Autocert.
 
-1. Get the PKI and Provisioner secrets running these commands:
+1. Enable Autocert in your namespaces:
+   kubectl label namespace {{ .Release.Namespace }} {{ index .Values "step-ca" "autocert" "label" }}=enabled
+
+2. Get the PKI and Provisioner secrets running these commands:
    kubectl get -n {{ .Release.Namespace }} -o jsonpath='{.data.password}' secret/{{ .Release.Name }}-step-ca-ca-password | base64 --decode
    kubectl get -n {{ .Release.Namespace }} -o jsonpath='{.data.password}' secret/{{ .Release.Name }}-step-ca-provisioner-password | base64 --decode
 
-2. Get the CA URL and the root certificate fingerprint running this command:
+3. Get the CA URL and the root certificate fingerprint running this command:
    kubectl -n {{ .Release.Namespace }} logs job.batch/{{ .Release.Name }}
 
-3. Delete the configuration job running this command:
+4. Delete the configuration job running this command:
    kubectl -n {{ .Release.Namespace }} delete job.batch/{{ .Release.Name }}

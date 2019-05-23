@@ -9,6 +9,7 @@ To learn more, visit https://github.com/smallstep/certificates/tree/master/autoc
 
 ```console
 helm install autocert
+kubectl label namespace default autocert.step.sm=enabled
 ```
 
 ## Prerequisites
@@ -39,6 +40,26 @@ helm delete my-release
 
 The command removes all the Kubernetes components associated with the chart and
 deletes the release.
+
+## Enable Autocert (per namespace)
+
+To enable Autocert for a namespace it must be labelled
+`autocert.step.sm=enabled`.
+
+To label the default namespace run:
+
+```console
+kubectl label namespace default autocert.step.sm=enabled
+```
+
+To check which namespaces have Autocert enabled run:
+
+```console
+$ kubectl get namespace -L autocert.step.sm
+NAME          STATUS   AGE   AUTOCERT.STEP.SM
+default       Active   59m   enabled
+...
+```
 
 ## Configuration
 
