@@ -1,0 +1,6 @@
+dependencies:
+- name: step-ca
+  repository: file://../step-ca
+  version: 0.1.0
+digest: sha256:3f4db049ac18c004bf6a3eb700ebdba1740418fa181cb25f3ee497a2cea297d9
+generated: "2019-05-23T15:17:08.561126-07:00"

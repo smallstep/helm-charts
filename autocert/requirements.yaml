@@ -1,0 +1,5 @@
+dependencies:
+  - name: step-ca
+    version: 0.1.0
+    repository: file://../step-ca
+

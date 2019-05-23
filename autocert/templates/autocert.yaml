@@ -1,0 +1,87 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "autocert.fullname" . }}
+  labels: 
+{{ include "autocert.labels" . | indent 4 }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: {{ include "autocert.name" . }}
+      app.kubernetes.io/instance: {{ .Release.Name }}
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: {{ include "autocert.name" . }}
+        app.kubernetes.io/instance: {{ .Release.Name }}
+    spec:
+{{- if .Release.IsInstall }}
+      initContainers:
+        - name: {{ .Chart.Name }}-init
+          image: busybox:latest
+          imagePullPolicy: {{ .Values.autocert.image.pullPolicy }}
+          command: ["sleep", "5"]
+{{- end }}
+      containers:
+      - name: {{ .Chart.Name }}
+        image: {{ .Values.autocert.image.repository }}:{{ .Values.autocert.image.tag }}
+        imagePullPolicy: {{ .Values.autocert.image.pullPolicy }}
+        resources: 
+          {{- toYaml .Values.autocert.resources | nindent 10 }}
+        env:
+        - name: PROVISIONER_NAME
+          value: admin
+        - name: NAMESPACE
+          value: {{.Release.Namespace}}
+        volumeMounts:
+        - name: config
+          mountPath: /home/step/.step/config
+          readOnly: true
+        - name: certs
+          mountPath: /home/step/.step/certs
+          readOnly: true
+        - name: autocert-password
+          mountPath: /home/step/password
+          readOnly: true
+        - name: autocert-config
+          mountPath: /home/step/autocert
+          readOnly: true
+        securityContext:
+          runAsUser: 1000
+          allowPrivilegeEscalation: false
+        livenessProbe:
+          httpGet:
+            path: /healthz
+            port: {{ .Values.service.targetPort }}
+            scheme: HTTPS
+        readinessProbe:
+          httpGet:
+            path: /healthz
+            port: {{ .Values.service.targetPort }}
+            scheme: HTTPS
+      volumes:
+      - name: config
+        configMap:
+          name: {{ .Release.Name }}-step-ca-config
+      - name: certs
+        configMap:
+          name: {{ .Release.Name }}-step-ca-certs
+      - name: autocert-password
+        secret:
+          secretName: {{ .Release.Name }}-step-ca-provisioner-password
+      - name: autocert-config
+        configMap:
+          name: {{ .Release.Name }}-autocert-config
+      {{- with .Values.nodeSelector }}
+      nodeSelector:
+      {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.affinity }}
+      affinity:
+      {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.tolerations }}
+      tolerations:
+      {{- toYaml . | nindent 8 }}
+      {{- end }}

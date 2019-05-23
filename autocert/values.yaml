@@ -1,0 +1,46 @@
+# Default values for autocert.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+replicaCount: 1
+nameOverride: ""
+fullnameOverride: ""
+
+service:
+  type: ClusterIP
+  port: 443
+  targetPort: 4443
+ 
+autocert:
+  image:
+    repository: smallstep/autocert-controller
+    tag: 0.8.3
+    pullPolicy: IfNotPresent
+  logFormat: json # or text
+  restrictCertificatesToNamespace: false
+  closterDomain: cluster.local
+  certLifetime: 24h
+  resources: {requests: {cpu: 100m, memory: 20Mi}}
+  nodeSelector: {}
+  tolerations: []
+  affinity: {}
+
+bootstrapper:
+  image:
+    repository: smallstep/autocert-bootstrapper
+    tag: 0.8.3
+    pullPolicy: IfNotPresent
+  resources: {requests: {cpu: 10m, memory: 20Mi}}
+
+renewer:
+  image:
+    repository: smallstep/autocert-renewer
+    tag: 0.8.3
+    pullPolicy: IfNotPresent
+  resources: {requests: {cpu: 10m, memory: 20Mi}}
+
+step-ca:
+  autocert:
+    enabled: true
+    label: autocert.step.sm
+    service: '{{ include "autocert.fullname" . | trimSuffix "-step-ca" }}'
