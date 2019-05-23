@@ -1,4 +1,5 @@
-Step CA is up and running.
+
+Thanks for installing Step CA.
 
 1. Get the PKI and Provisioner secrets running these commands:
    kubectl get -n {{ .Release.Namespace }} -o jsonpath='{.data.password}' secret/{{ include "step-ca.fullname" . }}-ca-password | base64 --decode

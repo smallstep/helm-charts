@@ -18,7 +18,7 @@ spec:
     spec:
 {{- if .Release.IsInstall }}
       initContainers:
-        - name: init-myservice
+        - name: {{ .Chart.Name }}-init
           image: busybox:latest
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           command: ["sleep", "5"]
@@ -80,13 +80,13 @@ spec:
           secretName: {{ include "step-ca.fullname" . }}-ca-password
       {{- with .Values.nodeSelector }}
       nodeSelector:
-        {{- toYaml . | nindent 8 }}
+      {{- toYaml . | nindent 8 }}
       {{- end }}
-    {{- with .Values.affinity }}
+      {{- with .Values.affinity }}
       affinity:
-        {{- toYaml . | nindent 8 }}
-    {{- end }}
-    {{- with .Values.tolerations }}
+      {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.tolerations }}
       tolerations:
-        {{- toYaml . | nindent 8 }}
-    {{- end }}
+      {{- toYaml . | nindent 8 }}
+      {{- end }}
