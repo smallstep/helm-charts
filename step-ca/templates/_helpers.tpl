@@ -32,6 +32,19 @@ Create chart name and version as used by the chart label.
 {{- end -}}
 
 {{/*
+Common labels
+*/}}
+{{- define "step-ca.labels" -}}
+helm.sh/chart: {{ include "step-ca.chart" . }}
+app.kubernetes.io/name: {{ include "step-ca.name" . }}
+app.kubernetes.io/instance: {{ .Release.Name }}
+{{- if .Chart.AppVersion }}
+app.kubernetes.io/version: {{ .Chart.AppVersion | quote }}
+{{- end }}
+app.kubernetes.io/managed-by: {{ .Release.Service }}
+{{- end -}}
+
+{{/*
 Create CA URL
 */}}
 {{- define "step-ca.url" -}}

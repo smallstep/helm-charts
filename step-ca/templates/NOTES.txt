@@ -4,5 +4,8 @@ Step CA is up and running.
    kubectl get -n {{ .Release.Namespace }} -o jsonpath='{.data.password}' secret/{{ include "step-ca.fullname" . }}-ca-password | base64 --decode
    kubectl get -n {{ .Release.Namespace }} -o jsonpath='{.data.password}' secret/{{ include "step-ca.fullname" . }}-provisioner-password | base64 --decode
 
-2. Delete the configuration job running this command:
+2. Get the CA URL and the root certificate fingerprint running this command:
+   kubectl -n {{ .Release.Namespace }} logs job.batch/{{ .Release.Name }}
+
+3. Delete the configuration job running this command:
    kubectl -n {{ .Release.Namespace }} delete job.batch/{{ .Release.Name }}

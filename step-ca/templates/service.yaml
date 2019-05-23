@@ -3,10 +3,7 @@ kind: Service
 metadata:
   name: {{ include "step-ca.fullname" . }}
   labels:
-    helm.sh/chart: {{ include "step-ca.chart" . }}
-    app.kubernetes.io/name: {{ include "step-ca.name" . }}
-    app.kubernetes.io/instance: {{ .Release.Name }}
-    app.kubernetes.io/managed-by: {{ .Release.Service }}
+{{ include "step-ca.labels" . | indent 4 }}
 spec:
   type: {{ .Values.service.type }}
   ports:

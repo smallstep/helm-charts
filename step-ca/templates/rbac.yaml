@@ -13,10 +13,8 @@ metadata:
 rules:
 - apiGroups: [""]
   resources: ["secrets", "configmaps"]
-  verbs: ["create", "update"]
-
+  verbs: ["get", "create", "update", "patch"]
 ---
-
 apiVersion: rbac.authorization.k8s.io/v1
 kind: RoleBinding
 metadata:
@@ -34,6 +32,41 @@ subjects:
   namespace: {{.Release.Namespace}}
 roleRef:
   kind: Role
+  name: {{ include "step-ca.fullname" . }}-config
+  apiGroup: rbac.authorization.k8s.io
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: {{ include "step-ca.fullname" . }}-config
+  labels:
+    helm.sh/chart: {{ include "step-ca.chart" . }}
+    app.kubernetes.io/name: {{ include "step-ca.name" . }}
+    app.kubernetes.io/instance: {{ .Release.Name }}
+    app.kubernetes.io/managed-by: {{ .Release.Service }}
+    app.kubernetes.io/version: {{ .Chart.AppVersion }}
+rules:
+- apiGroups: ["admissionregistration.k8s.io"]
+  resources: ["mutatingwebhookconfigurations"]
+  verbs: ["get", "create", "update", "patch"]
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: {{ include "step-ca.fullname" . }}-config
+  namespace: {{.Release.Namespace}}
+  labels:
+    helm.sh/chart: {{ include "step-ca.chart" . }}
+    app.kubernetes.io/name: {{ include "step-ca.name" . }}
+    app.kubernetes.io/instance: {{ .Release.Name }}
+    app.kubernetes.io/managed-by: {{ .Release.Service }}
+    app.kubernetes.io/version: {{ .Chart.AppVersion }}
+subjects:
+- kind: ServiceAccount
+  name: {{ include "step-ca.fullname" . }}-config
+  namespace: {{.Release.Namespace}}
+roleRef:
+  kind: ClusterRole
   name: {{ include "step-ca.fullname" . }}-config
   apiGroup: rbac.authorization.k8s.io
 {{- end -}}

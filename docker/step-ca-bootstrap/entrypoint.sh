@@ -16,11 +16,18 @@ function assert_variable () {
 # check required variables
 assert_variable "$NAMESPACE"
 assert_variable "$PREFIX"
+assert_variable "$LABELS"
 assert_variable "$CA_URL"
 assert_variable "$CA_NAME"
 assert_variable "$CA_DNS"
 assert_variable "$CA_ADDRESS"
 assert_variable "$CA_PROVISIONER"
+
+# check autocert required variables
+if [ "$AUTOCERT" == "true" ]; then
+  assert_variable "$AUTOCERT_SERVICE"
+  assert_variable "$AUTOCERT_LABEL"
+fi
 
 # generate password if necessary
 CA_PASSWORD=${CA_PASSWORD:-$(head /dev/urandom | tr -dc A-Za-z0-9 | head -c 32 ; echo '')}
@@ -53,17 +60,24 @@ kubectl config set-credentials user --token=$(cat /var/run/secrets/kubernetes.io
 kubectl config set-context cfc --user=user
 kubectl config use-context cfc
 
-
 echo -n "Checking for permission to create configmaps in $NAMESPACE namespace: "
 kubectl auth can-i create configmaps --namespace $NAMESPACE
 if [ $? -ne 0 ]; then
-    permission_error "create configmaps"
+  permission_error "create configmaps"
 fi
 
 echo -n "Checking for permission to create secrets in $NAMESPACE namespace: "
 kubectl auth can-i create secrets --namespace $NAMESPACE
 if [ $? -ne 0 ]; then
-    permission_error "create secrets"
+  permission_error "create secrets"
+fi
+
+if [ "$AUTOCERT" == "true" ]; then
+  echo -n "Checking for permission to create mutatingwebhookconfiguration in $NAMESPACE namespace: "
+  kubectl auth can-i create mutatingwebhookconfiguration --namespace $NAMESPACE
+  if [ $? -ne 0 ]; then
+    permission_error "create mutatingwebhookconfiguration"
+  fi
 fi
 
 # Setting this here on purpose, after the above section which explicitly checks
@@ -103,6 +117,42 @@ kbreplace -n $NAMESPACE create configmap $PREFIX-secrets --from-file $(step path
 kbreplace -n $NAMESPACE create secret generic $PREFIX-ca-password --from-literal "password=${CA_PASSWORD}"
 kbreplace -n $NAMESPACE create secret generic $PREFIX-provisioner-password --from-literal "password=${CA_PROVISIONER_PASSWORD}"
 
+# Label all configmaps and secrets
+kubectl -n $NAMESPACE label configmap $PREFIX-config $LABELS
+kubectl -n $NAMESPACE label configmap $PREFIX-certs $LABELS
+kubectl -n $NAMESPACE label configmap $PREFIX-secrets $LABELS
+kubectl -n $NAMESPACE label secret $PREFIX-ca-password $LABELS
+kubectl -n $NAMESPACE label secret $PREFIX-provisioner-password $LABELS
+
+# Replace webhook if necessary
+if [ "$AUTOCERT" == "true" ]; then
+  CA_BUNDLE=$(cat $(step path)/certs/root_ca.crt | base64 | tr -d '\n')
+  cat <<EOF | kubectl replace -f -
+apiVersion: admissionregistration.k8s.io/v1beta1
+kind: MutatingWebhookConfiguration
+metadata:
+  name: $PREFIX-webhook-config
+webhooks:
+  - name: $AUTOCERT_LABEL
+    clientConfig:
+      service:
+        name: $AUTOCERT_SERVICE
+        namespace: $NAMESPACE
+        path: "/mutate"
+      caBundle: $CA_BUNDLE
+    rules:
+      - operations: ["CREATE"]
+        apiGroups: [""]
+        apiVersions: ["v1"]
+        resources: ["pods"]
+    failurePolicy: Ignore
+    namespaceSelector:
+      matchLabels:
+        $AUTOCERT_LABEL: enabled
+EOF
+  kubectl -n $NAMESPACE label mutatingwebhookconfiguration $PREFIX-webhook-config $LABELS
+fi
+
 FINGERPRINT=$(step certificate fingerprint $(step path)/certs/root_ca.crt)
 
 echo
@@ -110,3 +160,4 @@ echo -e "\e[1mStep Certificates installed!\e[0m"
 echo
 echo "CA URL: ${CA_URL}"
 echo "CA Fingerprint: ${FINGERPRINT}"
+echo

@@ -5,31 +5,21 @@ metadata:
   name: {{ include "step-ca.fullname" . }}-config
   namespace: {{.Release.Namespace}}
   labels:
-    helm.sh/chart: {{ include "step-ca.chart" . }}
-    app.kubernetes.io/instance: {{ .Release.Name }}
-    app.kubernetes.io/managed-by: {{ .Release.Service }}
-    app.kubernetes.io/version: {{ .Chart.AppVersion }}
-
+{{ include "step-ca.labels" . | indent 4 }}   
 ---
-
 apiVersion: batch/v1
 kind: Job
 metadata:
   name: "{{.Release.Name}}"
   labels:
-    helm.sh/chart: {{ include "step-ca.chart" . }}
-    app.kubernetes.io/instance: {{ .Release.Name }}
-    app.kubernetes.io/managed-by: {{ .Release.Service }}
-    app.kubernetes.io/version: {{ .Chart.AppVersion }}
+{{ include "step-ca.labels" . | indent 4 }}   
 spec:
   template:
     metadata:
       name: "{{.Release.Name}}"
       labels:
-        helm.sh/chart: {{ include "step-ca.chart" . }}
-        app.kubernetes.io/managed-by: {{ .Release.Service }}
-        app.kubernetes.io/instance: {{.Release.Name | quote }}
-        app.kubernetes.io/version: {{ .Chart.AppVersion }}
+        app.kubernetes.io/name: {{ include "step-ca.name" . }}
+        app.kubernetes.io/instance: {{ .Release.Name }}
     spec:
       serviceAccountName: {{ include "step-ca.fullname" . }}-config
       restartPolicy: Never
@@ -43,6 +33,8 @@ spec:
           value: "{{ .Release.Namespace }}"
         - name: PREFIX
           value: "{{ include "step-ca.fullname" . }}"
+        - name: LABELS
+          value: "helm.sh/chart={{ include "step-ca.chart" . }} app.kubernetes.io/instance={{ .Release.Name }} app.kubernetes.io/managed-by={{ .Release.Service }} app.kubernetes.io/version={{ .Chart.AppVersion }}"
         - name: CA_NAME
           value: "{{ .Values.ca.name }}"
         - name: CA_URL
@@ -56,5 +48,11 @@ spec:
         - name: CA_PASSWORD # optional
           value: "{{ .Values.ca.password }}" 
         - name: CA_PROVISIONER_PASSWORD # optional
-          value: "{{ .Values.ca.provisioner.password }}" 
+          value: "{{ .Values.ca.provisioner.password }}"
+        - name: AUTOCERT
+          value: "{{ .Values.autocert.enabled }}"
+        - name: AUTOCERT_SERVICE
+          value: "{{ tpl .Values.autocert.service . }}"
+        - name: AUTOCERT_LABEL
+          value: "{{ .Values.autocert.label }}"
 {{- end -}}

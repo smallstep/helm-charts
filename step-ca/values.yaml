@@ -41,6 +41,11 @@ ca:
     # The provisioner password.
     password:
 
+autocert:
+  enabled: false
+  label: autocert.step.sm
+  service: ''
+
 ingress:
   enabled: false
   annotations: {}
