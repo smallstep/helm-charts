@@ -21,7 +21,7 @@ spec:
         - name: {{ .Chart.Name }}-init
           image: busybox:latest
           imagePullPolicy: {{ .Values.autocert.image.pullPolicy }}
-          command: ["sleep", "5"]
+          command: ["sleep", "10"]
 {{- end }}
       containers:
       - name: {{ .Chart.Name }}
@@ -51,11 +51,13 @@ spec:
           runAsUser: 1000
           allowPrivilegeEscalation: false
         livenessProbe:
+          initialDelaySeconds: 5
           httpGet:
             path: /healthz
             port: {{ .Values.service.targetPort }}
             scheme: HTTPS
         readinessProbe:
+          initialDelaySeconds: 5
           httpGet:
             path: /healthz
             port: {{ .Values.service.targetPort }}

@@ -38,11 +38,13 @@ spec:
               containerPort: {{ .Values.service.targetPort }}
               protocol: TCP
           livenessProbe:
+            initialDelaySeconds: 5
             httpGet:
               path: /health
               port: {{ .Values.service.targetPort }}
               scheme: HTTPS
           readinessProbe:
+            initialDelaySeconds: 5
             httpGet:
               path: /health
               port: {{ .Values.service.targetPort }}
