@@ -8,7 +8,7 @@ fullnameOverride: ""
 
 image:
   repository: smallstep/step-ca
-  tag: latest
+  tag: 0.10.0
   pullPolicy: IfNotPresent
 
 bootstrapImage:
