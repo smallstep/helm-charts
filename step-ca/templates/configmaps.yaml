@@ -133,7 +133,7 @@ data:
     kubectl -n {{.Release.Namespace}} label secret {{ include "step-ca.fullname" . }}-provisioner-password {{ include "step-ca.labels" . | replace ": " "=" | replace "\n" " " }}
 
     # Replace webhook if necessary
-{{- if .Values.autocert.enabled -}}
+{{ if .Values.autocert.enabled }}
     CA_BUNDLE=$(cat $(step path)/certs/root_ca.crt | base64 | tr -d '\n')
     cat <<EOF | kubectl replace -f -
     apiVersion: admissionregistration.k8s.io/v1beta1
@@ -159,7 +159,7 @@ data:
             {{.Values.autocert.label}}: enabled
     EOF
     kubectl -n {{.Release.Namespace}} label mutatingwebhookconfiguration {{ include "step-ca.fullname" . }}-webhook-config {{ include "step-ca.labels" . | replace ": " "=" | replace "\n" " " }}
-{{- end -}}
+{{- end }}
 
     echo -e "\n\e[1mStep Certificates installed!\e[0m"
     echo
