@@ -5,14 +5,14 @@ metadata:
   name: {{ include "step-ca.fullname" . }}-config
   namespace: {{.Release.Namespace}}
   labels:
-{{ include "step-ca.labels" . | indent 4 }}   
+{{ include "step-ca.labels" . | indent 4 }}
 ---
 apiVersion: batch/v1
 kind: Job
 metadata:
   name: "{{.Release.Name}}"
   labels:
-{{ include "step-ca.labels" . | indent 4 }}   
+{{ include "step-ca.labels" . | indent 4 }}
 spec:
   template:
     metadata:

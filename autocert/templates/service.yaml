@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: {{ include "autocert.fullname" . }}
+  name: autocert # Fixme: autocert has the DNS hardcoded to autocert.<namespace>.svc
   labels:
 {{ include "autocert.labels" . | indent 4 }}
 spec:

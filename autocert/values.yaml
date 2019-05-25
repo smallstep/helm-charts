@@ -39,8 +39,10 @@ renewer:
     pullPolicy: IfNotPresent
   resources: {requests: {cpu: 10m, memory: 20Mi}}
 
+
 step-ca:
   autocert:
     enabled: true
     label: autocert.step.sm
-    service: '{{ include "autocert.fullname" . | trimSuffix "-step-ca" }}'
+    # Fixme: autocert has the DNS hardcoded to autocert.<namespace>.svc
+    service: autocert
