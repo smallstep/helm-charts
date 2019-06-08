@@ -21,7 +21,7 @@ spec:
         - name: {{ .Chart.Name }}-init
           image: busybox:latest
           imagePullPolicy: {{ .Values.image.pullPolicy }}
-          command: ["sleep", "5"]
+          command: ["sleep", "20"]
 {{- end }}
       containers:
         - name: {{ .Chart.Name }}

@@ -16,6 +16,7 @@ autocert:
     repository: smallstep/autocert-controller
     tag: 0.8.3
     pullPolicy: IfNotPresent
+  label: autocert.step.sm
   logFormat: json # or text
   restrictCertificatesToNamespace: false
   closterDomain: cluster.local
@@ -39,10 +40,7 @@ renewer:
     pullPolicy: IfNotPresent
   resources: {requests: {cpu: 10m, memory: 20Mi}}
 
-
+# Enables autocert in the step-ca subchart
 step-ca:
   autocert:
     enabled: true
-    label: autocert.step.sm
-    # Fixme: autocert has the DNS hardcoded to autocert.<namespace>.svc
-    service: autocert

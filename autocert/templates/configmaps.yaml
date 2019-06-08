@@ -7,11 +7,15 @@ metadata:
 {{ include "autocert.labels" . | indent 4 }}
 data:
   config.yaml: |
+    address: :{{.Values.service.targetPort}}
+    service: {{ include "autocert.fullname" . }}
     logFormat: {{.Values.autocert.logFormat}}
-    restrictCertificatesToNamespace: {{.Values.autocert.restrictCertificatesToNamespace}}
-    clusterDomain: {{.Values.autocert.clusterDomain}}
     caUrl: {{ include "autocert.ca.url" . }}
     certLifetime: {{.Values.autocert.certLifetime}}
+    clusterDomain: {{.Values.autocert.clusterDomain}}
+    restrictCertificatesToNamespace: {{.Values.autocert.restrictCertificatesToNamespace}}
+    rootCAPath: /home/step/certs/root_ca.crt
+    provisionerPasswordPath: /home/step/password/password
     renewer:
       name: autocert-renewer
       image: {{.Values.renewer.image.repository}}:{{.Values.renewer.image.tag}}

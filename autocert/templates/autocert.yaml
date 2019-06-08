@@ -21,7 +21,7 @@ spec:
         - name: {{ .Chart.Name }}-init
           image: busybox:latest
           imagePullPolicy: {{ .Values.autocert.image.pullPolicy }}
-          command: ["sleep", "10"]
+          command: ["sleep", "30"]
 {{- end }}
       containers:
       - name: {{ .Chart.Name }}
@@ -36,10 +36,10 @@ spec:
           value: {{.Release.Namespace}}
         volumeMounts:
         - name: config
-          mountPath: /home/step/.step/config
+          mountPath: /home/step/config
           readOnly: true
         - name: certs
-          mountPath: /home/step/.step/certs
+          mountPath: /home/step/certs
           readOnly: true
         - name: autocert-password
           mountPath: /home/step/password
