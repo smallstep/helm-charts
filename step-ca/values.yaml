@@ -41,10 +41,9 @@ ca:
     # The provisioner password.
     password:
 
+# This should be disabled unless this is used as a sub-chart of autocert
 autocert:
   enabled: false
-  label: autocert.step.sm
-  service: ''
 
 ingress:
   enabled: false

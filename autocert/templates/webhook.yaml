@@ -1,15 +1,14 @@
-{{- if .Values.autocert.enabled -}}
 apiVersion: admissionregistration.k8s.io/v1beta1
 kind: MutatingWebhookConfiguration
 metadata:
-  name: {{ include "step-ca.fullname" . }}-webhook-config
+  name: {{ .Release.Name }}-autocert-webhook-config
   labels:
 {{ include "step-ca.labels" . | indent 4 }}
 webhooks:
   - name: {{ .Values.autocert.label }}
     clientConfig:
       service:
-        name: {{ tpl .Values.autocert.service . }}
+        name: {{ include "autocert.fullname" .}}
         namespace: {{ .Release.Namespace }}
         path: "/mutate"
       caBundle: ""
@@ -22,4 +21,3 @@ webhooks:
     namespaceSelector:
       matchLabels:
         {{ .Values.autocert.label }}: enabled
-{{- end -}}

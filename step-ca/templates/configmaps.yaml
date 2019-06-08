@@ -132,33 +132,11 @@ data:
     kubectl -n {{.Release.Namespace}} label secret {{ include "step-ca.fullname" . }}-ca-password {{ include "step-ca.labels" . | replace ": " "=" | replace "\n" " " }}
     kubectl -n {{.Release.Namespace}} label secret {{ include "step-ca.fullname" . }}-provisioner-password {{ include "step-ca.labels" . | replace ": " "=" | replace "\n" " " }}
 
-    # Replace webhook if necessary
+    # Patch webhook if autocert is enabled
 {{ if .Values.autocert.enabled }}
     CA_BUNDLE=$(cat $(step path)/certs/root_ca.crt | base64 | tr -d '\n')
-    cat <<EOF | kubectl replace -f -
-    apiVersion: admissionregistration.k8s.io/v1beta1
-    kind: MutatingWebhookConfiguration
-    metadata:
-      name: {{include "step-ca.fullname" .}}-webhook-config
-    webhooks:
-      - name: {{.Values.autocert.label}}
-        clientConfig:
-          service:
-            name: {{ tpl .Values.autocert.service . }}
-            namespace: {{.Release.Namespace}}
-            path: "/mutate"
-          caBundle: $CA_BUNDLE
-        rules:
-          - operations: ["CREATE"]
-            apiGroups: [""]
-            apiVersions: ["v1"]
-            resources: ["pods"]
-        failurePolicy: Ignore
-        namespaceSelector:
-          matchLabels:
-            {{.Values.autocert.label}}: enabled
-    EOF
-    kubectl -n {{.Release.Namespace}} label mutatingwebhookconfiguration {{ include "step-ca.fullname" . }}-webhook-config {{ include "step-ca.labels" . | replace ": " "=" | replace "\n" " " }}
+    kubectl patch mutatingwebhookconfigurations {{ .Release.Name }}-autocert-webhook-config \
+      --type json -p="[{\"op\":\"replace\",\"path\":\"/webhooks/0/clientConfig/caBundle\",\"value\":\"$CA_BUNDLE\"}]"
 {{- end }}
 
     echo -e "\n\e[1mStep Certificates installed!\e[0m"
