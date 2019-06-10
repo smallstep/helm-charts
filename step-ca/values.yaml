@@ -33,13 +33,17 @@ ca:
   url:
   # The password used to encrypt the keys.
   # Leave it empty to generate one.
-  password: 
+  password:
+  # Enable or disable step-ca database.
+  db:
+    enabled: true
   # The provisioner configuration.
   provisioner:
     # The provisioner name.
     name: admin
     # The provisioner password.
     password:
+
 
 # This should be disabled unless this is used as a sub-chart of autocert
 autocert:

@@ -50,6 +50,7 @@ chart and their default values.
 | `ca.name`                   | Name for you CA                                                                   | `Step Certificates`           |
 | `ca.address`                | TCP address where Step CA runs                                                    | `:9000`                       |
 | `ca.url`                    | URL of Step CA, if empty it will be inferred                                      | `""`                          |
+| `ca.db.enabled`             | Enabled or disable the use of a database                                          | `true`                        |
 | `ca.password`               | Password for the CA keys, if empty it will be automatically generated             | `""`                          |
 | `ca.provisioner.name`       | Name for the default provisioner                                                  | `admin`                       |
 | `ca.provisioner.password`   | Password for the default provisioner, if empty it will be automatically generated | `""`                          |

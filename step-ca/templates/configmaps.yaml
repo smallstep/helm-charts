@@ -110,7 +110,7 @@ data:
       --provisioner "{{.Values.ca.provisioner.name}}" \
       --with-ca-url "{{include "step-ca.url" .}}" \
       --password-file "$TMP_CA_PASSWORD" \
-      --provisioner-password-file "$TMP_CA_PROVISIONER_PASSWORD"
+      --provisioner-password-file "$TMP_CA_PROVISIONER_PASSWORD" {{ if not .Values.ca.db.enabled }}--no-db{{ end }}
 
     rm -f $TMP_CA_PASSWORD $TMP_CA_PROVISIONER_PASSWORD
 
