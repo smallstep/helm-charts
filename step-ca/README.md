@@ -60,7 +60,7 @@ chart and their default values.
 | `service.type`              | Service type                                                                      | `ClusterIP`                   |
 | `service.port`              | Incoming port to access Step CA                                                   | `443`                         |
 | `service.targetPort`        | Internal port where Step CA runs                                                  | `9000`                        |
-| `replicaCount`              | Number of Step CA replicas                                                        | `1`                           |
+| `replicaCount`              | Number of Step CA replicas. Only one replica is currently supported.              | `1`                           |
 | `image.repository`          | Repository of the Step CA image                                                   | `smallstep/step-ca`           |
 | `image.tag`                 | Tag of the Step CA image                                                          | `latest`                      |
 | `image.pullPolicy`          | Step CA image pull policy                                                         | `IfNotPresent`                |
@@ -98,3 +98,8 @@ helm install --name my-release -f values.yaml step-ca
 ```
 
 > **Tip**: You can use the default [values.yaml](values.yaml)
+
+## Notes
+
+At this moment only one replica is supported, step certificates supports
+multiple ones using MariaDB or MySQL.

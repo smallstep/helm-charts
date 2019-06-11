@@ -5,7 +5,9 @@ metadata:
   labels:
 {{ include "step-ca.labels" . | indent 4 }}
 spec:
-  replicas: {{ .Values.replicaCount }}
+  # Only one replica is supported at this moment
+  # Requested {{ .Values.replicaCount }}
+  replicas: 1
   selector:
     matchLabels:
       app.kubernetes.io/name: {{ include "step-ca.name" . }}
