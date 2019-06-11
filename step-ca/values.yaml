@@ -1,76 +1,81 @@
-# Default values for step-ca.
-# This is a YAML-formatted file.
-# Declare variables to be passed into your templates.
+# Default values for step-certificates.
 
-# Only one replica is currently supported
+# replicaCount is the number of replicas of step-certificates.
+# Only one replica is supported at this time.
 replicaCount: 1
+
+# nameOverride overrides the name of the chart.
 nameOverride: ""
+# fullnameOverride overrides the full name of the chart.
 fullnameOverride: ""
 
+# image contains the docker image for step-certificates.
 image:
   repository: smallstep/step-ca
   tag: 0.10.0
   pullPolicy: IfNotPresent
 
+# bootstrapImage contains the docker image for the bootstrap of the configuration.
 bootstrapImage:
   repository: smallstep/step-ca-bootstrap
   tag: latest
   pullPolicy: IfNotPresent
 
+# service contains configuration for the kubernetes service.
 service:
   type: ClusterIP
   port: 443
   targetPort: 9000
 
-# Certificate authority configuration.
-# Used by the init image to create the PKI and configuration files.
+# ca contains the certificate authority configuration.
 ca:
-  # The name of the new PKI.
+  # name is new public key infrastructure (PKI) names.
   name: Step Certificates
-  # The address where the ca will listen at.
+  # address is the HTTP listener address of step-certificates.
   address: :9000
-  # The dns name to use. 
-  # Leave it empty to use the format https://{{ include "step-ca.fullname" . }}.{{ .Release.Namespace }}.svc.cluster.local
+  # url is the DNS name to use.  Leave it empty to use the format
+  # https://{{ include "step-ca.fullname" . }}.{{ .Release.Namespace }}.svc.cluster.local
   url:
-  # The password used to encrypt the keys.
-  # Leave it empty to generate one.
+  # password is the password used to encrypt the keys. Leave it empty to generate a random one.
   password:
-  # The provisioner configuration.
+  # provisioner contains the step-certificates provisioner configuration.
   provisioner:
-    # The provisioner name.
+    # name is the new provisioner name.
     name: admin
-    # The provisioner password.
+    # password is the password used to encrypt the provisioner private key.
     password:
-  # step-ca database configurations.
+  # db contains the step-certificate dataabase configuration.
   db:
-    ## If true, the database will be enabled.
+    # enabled defines if the database is enabled.
     enabled: true
-    ## If true, use a Persistent Volume Claim, If false, use emptyDir
+    # persistent defines if a Persistent Volume Claim is used, if false and emptyDir will be used.
     persistent: true
-    ## Persistent Volume Storage Class
-    ## If defined, storageClassName: <storageClass>
-    ## If set to "-", storageClassName: "", which disables dynamic provisioning
-    ## If undefined (the default) or set to null, no storageClassName spec is
-    ##   set, choosing the default provisioner.  (gp2 on AWS, standard on
-    ##   GKE, AWS & OpenStack)
-    ##
+    # storeageClass is Persistent Volume Storage Class
+    # If defined, storageClassName: <storageClass>
+    # If set to "-", storageClassName: "", which disables dynamic provisioning
+    # If undefined (the default) or set to null, no storageClassName spec is
+    #   set, choosing the default provisioner.  (gp2 on AWS, standard on
+    #   GKE, AWS & OpenStack)
+    #
     # storageClass: "-"
-    ## Persistent Volume Access Mode
+    # accessModes defines the Persistent Volume Access Mode.
     accessModes:
     - ReadWriteOnce
-    ## Persistent Volume size
+    # size is the Persistent Volume size.
     size: 10Gi
 
-# This should be disabled unless this is used as a sub-chart of autocert
+# autocert is used to configure the autocert chart that depends on step-certificates.
 autocert:
   enabled: false
 
+# ingress contains the configuration for an ingress controller.
 ingress:
   enabled: false
   annotations: {}
   hosts: []
   tls: []
 
+# resources contains the CPU/memory resource requests/limits.
 resources: {}
   # We usually recommend not to specify default resources and to leave this as a conscious
   # choice for the user. This also increases chances charts run on environments with little
@@ -83,8 +88,11 @@ resources: {}
   #   cpu: 100m
   #   memory: 128Mi
 
+# nodeSelector contains the node labels for pod assignment.
 nodeSelector: {}
 
+# tolerations contains the toleration labels for pod assignment.
 tolerations: []
 
+# affinity contains the affinity settings for pod assignment.
 affinity: {}
