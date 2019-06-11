@@ -14,7 +14,7 @@ service:
 autocert:
   image:
     repository: smallstep/autocert-controller
-    tag: 0.8.3
+    tag: 0.11.0-rc.2
     pullPolicy: IfNotPresent
   label: autocert.step.sm
   logFormat: json # or text

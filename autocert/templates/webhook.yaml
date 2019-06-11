@@ -11,7 +11,6 @@ webhooks:
         name: {{ include "autocert.fullname" .}}
         namespace: {{ .Release.Namespace }}
         path: "/mutate"
-      caBundle: ""
     rules:
       - operations: ["CREATE"]
         apiGroups: [""]
