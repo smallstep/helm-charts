@@ -33,8 +33,11 @@ ca:
   name: Step Certificates
   # address is the HTTP listener address of step-certificates.
   address: :9000
-  # url is the DNS name to use.  Leave it empty to use the format
-  # https://{{ include "step-ca.fullname" . }}.{{ .Release.Namespace }}.svc.cluster.local
+  # dns is the comma separated dns names to use. Leave it empty to use the format:
+  # {include "step-certificates.fullname" .}.{ .Release.Namespace}.svc.cluster.local,127.0.0.1
+  dns: 
+  # url is the http url where step-certificates will listen at. Leave it empty to use the format
+  # https://{{ include "step-certificates.fullname" . }}.{{ .Release.Namespace }}.svc.cluster.local
   url:
   # password is the password used to encrypt the keys. Leave it empty to generate a random one.
   password:
@@ -51,13 +54,11 @@ ca:
     # persistent defines if a Persistent Volume Claim is used, if false and emptyDir will be used.
     persistent: true
     # storeageClass is Persistent Volume Storage Class
-    # If defined, storageClassName: <storageClass>
-    # If set to "-", storageClassName: "", which disables dynamic provisioning
-    # If undefined (the default) or set to null, no storageClassName spec is
-    #   set, choosing the default provisioner.  (gp2 on AWS, standard on
-    #   GKE, AWS & OpenStack)
-    #
-    # storageClass: "-"
+    # If defined, storageClassName: <storageClass>.
+    # If set to "-", storageClassName: "", which disables dynamic provisioning.
+    # If undefined or set to null, no storageClassName spec is set, choosing the
+    # default provisioner (gp2 on AWS, standard on GKE, AWS & OpenStack).
+    storageClass:
     # accessModes defines the Persistent Volume Access Mode.
     accessModes:
     - ReadWriteOnce

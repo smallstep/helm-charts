@@ -10,8 +10,8 @@ If you're using a cluster with RBAC enabled please be sure to follow helm's [set
 
 ## Packages
 
-* [Step CA](./step-ca/README.md): An online certificate authority and related
-  tools for secure automated certificate management, so you can use TLS
+* [Step CA](./step-certificates/README.md): An online certificate authority and
+  related tools for secure automated certificate management, so you can use TLS
   everywhere.
 
 * [Autocert](./autocert/REAMDE.md): A kubernetes add-on that automatically

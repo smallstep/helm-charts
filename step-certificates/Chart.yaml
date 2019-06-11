@@ -1,7 +1,7 @@
 apiVersion: v1
-name: step-ca
+name: step-certificates
 version: 0.1.0     # chart version
-appVersion: 0.10.0 # step-ca version
+appVersion: 0.10.0 # step-certificates version
 description: An online certificate authority and related tools for secure automated certificate management, so you can use TLS everywhere.
 keywords:
  - ca

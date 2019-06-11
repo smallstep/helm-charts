@@ -5,18 +5,18 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: {{ include "step-ca.fullname" . }}-config
+  name: {{ include "step-certificates.fullname" . }}-config
   namespace: {{.Release.Namespace}}
   labels:
-{{ include "step-ca.labels" . | indent 4 }}
+{{ include "step-certificates.labels" . | indent 4 }}
 ---
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: {{ include "step-ca.fullname" . }}-certs
+  name: {{ include "step-certificates.fullname" . }}-certs
   namespace: {{.Release.Namespace}}
   labels:
-{{ include "step-ca.labels" . | indent 4 }}
+{{ include "step-certificates.labels" . | indent 4 }}
 ---
 apiVersion: v1
 data:
@@ -24,18 +24,18 @@ data:
   root_ca_key: ""
 kind: ConfigMap
 metadata:
-  name: {{ include "step-ca.fullname" . }}-secrets
+  name: {{ include "step-certificates.fullname" . }}-secrets
   namespace: {{.Release.Namespace}}
   labels:
-{{ include "step-ca.labels" . | indent 4 }}
+{{ include "step-certificates.labels" . | indent 4 }}
 ---
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: {{ include "step-ca.fullname" . }}-bootstrap
+  name: {{ include "step-certificates.fullname" . }}-bootstrap
   namespace: {{.Release.Namespace}}
   labels:
-{{ include "step-ca.labels" . | indent 4 }}
+{{ include "step-certificates.labels" . | indent 4 }}
 data:
   bootstrap.sh: |-
     #!/bin/sh
@@ -105,10 +105,10 @@ data:
 
     step ca init \
       --name "{{.Values.ca.name}}" \
-      --dns "{{include "step-ca.dns" .}}" \
+      --dns "{{include "step-certificates.dns" .}}" \
       --address "{{.Values.ca.address}}" \
       --provisioner "{{.Values.ca.provisioner.name}}" \
-      --with-ca-url "{{include "step-ca.url" .}}" \
+      --with-ca-url "{{include "step-certificates.url" .}}" \
       --password-file "$TMP_CA_PASSWORD" \
       --provisioner-password-file "$TMP_CA_PROVISIONER_PASSWORD" {{ if not .Values.ca.db.enabled }}--no-db{{ end }}
 
@@ -118,19 +118,19 @@ data:
 
     # Replace secrets created on helm install
     # It allows to properly remove them on helm delete
-    kbreplace -n {{.Release.Namespace}} create configmap {{ include "step-ca.fullname" . }}-config --from-file $(step path)/config
-    kbreplace -n {{.Release.Namespace}} create configmap {{ include "step-ca.fullname" . }}-certs --from-file $(step path)/certs
-    kbreplace -n {{.Release.Namespace}} create configmap {{ include "step-ca.fullname" . }}-secrets --from-file $(step path)/secrets
+    kbreplace -n {{.Release.Namespace}} create configmap {{ include "step-certificates.fullname" . }}-config --from-file $(step path)/config
+    kbreplace -n {{.Release.Namespace}} create configmap {{ include "step-certificates.fullname" . }}-certs --from-file $(step path)/certs
+    kbreplace -n {{.Release.Namespace}} create configmap {{ include "step-certificates.fullname" . }}-secrets --from-file $(step path)/secrets
 
-    kbreplace -n {{.Release.Namespace}} create secret generic {{ include "step-ca.fullname" . }}-ca-password --from-literal "password=${CA_PASSWORD}"
-    kbreplace -n {{.Release.Namespace}} create secret generic {{ include "step-ca.fullname" . }}-provisioner-password --from-literal "password=${CA_PROVISIONER_PASSWORD}"
+    kbreplace -n {{.Release.Namespace}} create secret generic {{ include "step-certificates.fullname" . }}-ca-password --from-literal "password=${CA_PASSWORD}"
+    kbreplace -n {{.Release.Namespace}} create secret generic {{ include "step-certificates.fullname" . }}-provisioner-password --from-literal "password=${CA_PROVISIONER_PASSWORD}"
 
     # Label all configmaps and secrets
-    kubectl -n {{.Release.Namespace}} label configmap {{ include "step-ca.fullname" . }}-config {{ include "step-ca.labels" . | replace ": " "=" | replace "\n" " " }}
-    kubectl -n {{.Release.Namespace}} label configmap {{ include "step-ca.fullname" . }}-certs {{ include "step-ca.labels" . | replace ": " "=" | replace "\n" " " }}
-    kubectl -n {{.Release.Namespace}} label configmap {{ include "step-ca.fullname" . }}-secrets {{ include "step-ca.labels" . | replace ": " "=" | replace "\n" " " }}
-    kubectl -n {{.Release.Namespace}} label secret {{ include "step-ca.fullname" . }}-ca-password {{ include "step-ca.labels" . | replace ": " "=" | replace "\n" " " }}
-    kubectl -n {{.Release.Namespace}} label secret {{ include "step-ca.fullname" . }}-provisioner-password {{ include "step-ca.labels" . | replace ": " "=" | replace "\n" " " }}
+    kubectl -n {{.Release.Namespace}} label configmap {{ include "step-certificates.fullname" . }}-config {{ include "step-certificates.labels" . | replace ": " "=" | replace "\n" " " }}
+    kubectl -n {{.Release.Namespace}} label configmap {{ include "step-certificates.fullname" . }}-certs {{ include "step-certificates.labels" . | replace ": " "=" | replace "\n" " " }}
+    kubectl -n {{.Release.Namespace}} label configmap {{ include "step-certificates.fullname" . }}-secrets {{ include "step-certificates.labels" . | replace ": " "=" | replace "\n" " " }}
+    kubectl -n {{.Release.Namespace}} label secret {{ include "step-certificates.fullname" . }}-ca-password {{ include "step-certificates.labels" . | replace ": " "=" | replace "\n" " " }}
+    kubectl -n {{.Release.Namespace}} label secret {{ include "step-certificates.fullname" . }}-provisioner-password {{ include "step-certificates.labels" . | replace ": " "=" | replace "\n" " " }}
 
     # Patch webhook if autocert is enabled
 {{ if .Values.autocert.enabled }}
@@ -141,6 +141,6 @@ data:
 
     echo -e "\n\e[1mStep Certificates installed!\e[0m"
     echo
-    echo "CA URL: {{include "step-ca.url" .}}"
+    echo "CA URL: {{include "step-certificates.url" .}}"
     echo "CA Fingerprint: $(step certificate fingerprint $(step path)/certs/root_ca.crt)"
     echo

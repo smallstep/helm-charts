@@ -8,7 +8,7 @@ To learn more, visit https://github.com/smallstep/certificates.
 ## TL;DR
 
 ```console
-helm install step-ca
+helm install step-certificates
 ```
 
 ## Prerequisites
@@ -20,7 +20,7 @@ helm install step-ca
 To install the chart with the release name `my-release`:
 
 ```console
-helm install --name my-release step-ca
+helm install --name my-release step-certificates
 ```
 
 The command deploys Step certificates on the Kubernetes cluster in the default
@@ -49,11 +49,12 @@ chart and their default values.
 |-----------------------------|-----------------------------------------------------------------------------------|-------------------------------|
 | `ca.name`                   | Name for you CA                                                                   | `Step Certificates`           |
 | `ca.address`                | TCP address where Step CA runs                                                    | `:9000`                       |
+| `ca.dns`                    | DNS of Step CA, if empty it will be inferred                                      | `""`                          |
 | `ca.url`                    | URL of Step CA, if empty it will be inferred                                      | `""`                          |
 | `ca.password`               | Password for the CA keys, if empty it will be automatically generated             | `""`                          |
 | `ca.provisioner.name`       | Name for the default provisioner                                                  | `admin`                       |
 | `ca.provisioner.password`   | Password for the default provisioner, if empty it will be automatically generated | `""`                          |
-| `ca.db.enabled`             | If true, step-ca will be configured with a database                               | `true`                        |
+| `ca.db.enabled`             | If true, step certificates will be configured with a database                     | `true`                        |
 | `ca.db.persistent`          | If true a persistent volume will be used to store the db                          | `true`                        |
 | `ca.db.accessModes`         | Persistent volume access mode                                                     | `["ReadWriteOnce"]`           |
 | `ca.db.size`                | Persistent volume size                                                            | `10Gi`                        |
@@ -84,7 +85,7 @@ install`. For example,
 ```console
 helm install --name my-release \
   --set provisioner.password=secretpassword,provisioner.name=Foo \
-  step-ca
+  step-certificates
 ```
 
 The above command sets the Step Certificates main provisioner `Foo` with the key
@@ -94,7 +95,7 @@ Alternatively, a YAML file that specifies the values for the parameters can be
 provided while installing the chart. For example,
 
 ```console
-helm install --name my-release -f values.yaml step-ca
+helm install --name my-release -f values.yaml step-certificates
 ```
 
 > **Tip**: You can use the default [values.yaml](values.yaml)
