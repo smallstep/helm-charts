@@ -50,10 +50,13 @@ chart and their default values.
 | `ca.name`                   | Name for you CA                                                                   | `Step Certificates`           |
 | `ca.address`                | TCP address where Step CA runs                                                    | `:9000`                       |
 | `ca.url`                    | URL of Step CA, if empty it will be inferred                                      | `""`                          |
-| `ca.db.enabled`             | Enabled or disable the use of a database                                          | `true`                        |
 | `ca.password`               | Password for the CA keys, if empty it will be automatically generated             | `""`                          |
 | `ca.provisioner.name`       | Name for the default provisioner                                                  | `admin`                       |
 | `ca.provisioner.password`   | Password for the default provisioner, if empty it will be automatically generated | `""`                          |
+| `ca.db.enabled`             | If true, step-ca will be configured with a database                               | `true`                        |
+| `ca.db.persistent`          | If true a persistent volume will be used to store the db                          | `true`                        |
+| `ca.db.accessModes`         | Persistent volume access mode                                                     | `["ReadWriteOnce"]`           |
+| `ca.db.size`                | Persistent volume size                                                            | `10Gi`                        |
 | `service.type`              | Service type                                                                      | `ClusterIP`                   |
 | `service.port`              | Incoming port to access Step CA                                                   | `443`                         |
 | `service.targetPort`        | Internal port where Step CA runs                                                  | `9000`                        |

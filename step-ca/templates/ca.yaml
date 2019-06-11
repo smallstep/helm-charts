@@ -1,5 +1,5 @@
 apiVersion: apps/v1
-kind: Deployment
+kind: StatefulSet
 metadata:
   name: {{ include "step-ca.fullname" . }}
   labels:
@@ -10,6 +10,7 @@ spec:
     matchLabels:
       app.kubernetes.io/name: {{ include "step-ca.name" . }}
       app.kubernetes.io/instance: {{ .Release.Name }}
+  serviceName: {{ include "step-ca.fullname" . }}
   template:
     metadata:
       labels:
@@ -64,6 +65,11 @@ spec:
           - name: ca-password
             mountPath: /home/step/secrets/passwords
             readOnly: true
+          {{- if .Values.ca.db.enabled }}
+          - name: database
+            mountPath: /home/step/db
+            readOnly: false
+          {{- end }}
           securityContext:
             runAsUser: 1000
             allowPrivilegeEscalation: false
@@ -80,6 +86,10 @@ spec:
       - name: ca-password
         secret:
           secretName: {{ include "step-ca.fullname" . }}-ca-password
+      {{- if and .Values.ca.db.enabled (not .Values.ca.db.persistent) }}
+      - name: database
+        emptyDir: {}
+      {{- end }}
       {{- with .Values.nodeSelector }}
       nodeSelector:
       {{- toYaml . | nindent 8 }}
@@ -92,3 +102,27 @@ spec:
       tolerations:
       {{- toYaml . | nindent 8 }}
       {{- end }}
+{{- if and .Values.ca.db.enabled .Values.ca.db.persistent }}
+  volumeClaimTemplates:
+  - metadata:
+      name: database
+      labels:
+        app.kubernetes.io/name: {{ include "step-ca.name" . }}
+        app.kubernetes.io/instance: {{ .Release.Name }}
+        app.kubernetes.io/managed-by: {{ .Release.Service }}
+    spec:
+      accessModes:
+      {{- range .Values.ca.db.accessModes }}
+        - {{ . | quote }}
+      {{- end }}
+      resources:
+        requests:
+          storage: {{ .Values.ca.db.size | quote }}
+    {{- if .Values.ca.db.storageClass }}
+    {{- if (eq "-" .Values.ca.db.storageClass) }}
+      storageClassName: ""
+    {{- else }}
+      storageClassName: {{ .Values.ca.db.storageClass | quote }}
+    {{- end }}
+    {{- end }}
+{{- end }}

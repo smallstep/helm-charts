@@ -34,16 +34,31 @@ ca:
   # The password used to encrypt the keys.
   # Leave it empty to generate one.
   password:
-  # Enable or disable step-ca database.
-  db:
-    enabled: true
   # The provisioner configuration.
   provisioner:
     # The provisioner name.
     name: admin
     # The provisioner password.
     password:
-
+  # step-ca database configurations.
+  db:
+    ## If true, the database will be enabled.
+    enabled: true
+    ## If true, use a Persistent Volume Claim, If false, use emptyDir
+    persistent: true
+    ## Persistent Volume Storage Class
+    ## If defined, storageClassName: <storageClass>
+    ## If set to "-", storageClassName: "", which disables dynamic provisioning
+    ## If undefined (the default) or set to null, no storageClassName spec is
+    ##   set, choosing the default provisioner.  (gp2 on AWS, standard on
+    ##   GKE, AWS & OpenStack)
+    ##
+    # storageClass: "-"
+    ## Persistent Volume Access Mode
+    accessModes:
+    - ReadWriteOnce
+    ## Persistent Volume size
+    size: 10Gi
 
 # This should be disabled unless this is used as a sub-chart of autocert
 autocert:
