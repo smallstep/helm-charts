@@ -1,0 +1,13 @@
+# Chart directories
+*/charts/
+# Common backup files
+.DS_Store
+*.swp
+*.bak
+*.tmp
+*~
+# Various IDEs
+.project
+.idea/
+*.tmproj
+.vscode/
