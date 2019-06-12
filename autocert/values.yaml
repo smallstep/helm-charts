@@ -1,46 +1,65 @@
 # Default values for autocert.
 # This is a YAML-formatted file.
-# Declare variables to be passed into your templates.
 
+# replicaCount is the number of replicas of autocert.
 replicaCount: 1
+
+# nameOverride overrides the name of the chart.
 nameOverride: ""
+# fullnameOverride overrides the full name of the chart.
 fullnameOverride: ""
 
+# service contains configuration for the kubernetes service.
 service:
   type: ClusterIP
   port: 443
   targetPort: 4443
- 
+
+# autocert contains the configuration for autocert.
 autocert:
+  # image contains the docker image for step-certificates.
   image:
     repository: smallstep/autocert-controller
     tag: 0.11.0-rc.2
     pullPolicy: IfNotPresent
+  # label is the label used used to enable autocert in a namespace.
+  # This value is rightnow hardcoded in autocert and it should not be changed.
   label: autocert.step.sm
-  logFormat: json # or text
+  # logFormat is the format for autocert logs. Options are json or text.
+  logFormat: json
+  # restrictCertificatesToNamespace defines if certificate names are restricted to the namespace
   restrictCertificatesToNamespace: false
-  closterDomain: cluster.local
+  # clusterDomain is the domain name for your kubernetes cluster.
+  clusterDomain: cluster.local
+  # certLifetime is the default certificate life time.
   certLifetime: 24h
+  # resources contains the CPU/memory resource requests/limits.
   resources: {requests: {cpu: 100m, memory: 20Mi}}
+  # nodeSelector contains the node labels for pod assignment.
   nodeSelector: {}
+  # tolerations contains the toleration labels for pod assignment.
   tolerations: []
+  # affinity contains the affinity settings for pod assignment.
   affinity: {}
 
+# bootstrapper contains the autocert-bootstrapper image and configuration.
 bootstrapper:
   image:
     repository: smallstep/autocert-bootstrapper
-    tag: 0.8.3
+    tag: 0.11.0-rc.2
     pullPolicy: IfNotPresent
   resources: {requests: {cpu: 10m, memory: 20Mi}}
 
+# renewer contains the autocert-renewer image and configuration.
 renewer:
   image:
     repository: smallstep/autocert-renewer
-    tag: 0.8.3
+    tag: 0.11.0-rc.2
     pullPolicy: IfNotPresent
   resources: {requests: {cpu: 10m, memory: 20Mi}}
 
-# Enables autocert in the step-ca subchart
-step-ca:
+# Enables autocert in the step-certificates subchart.
+# This configuration value should not be changed.
+step-certificates:
   autocert:
     enabled: true

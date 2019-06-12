@@ -3,7 +3,7 @@ kind: MutatingWebhookConfiguration
 metadata:
   name: {{ .Release.Name }}-autocert-webhook-config
   labels:
-{{ include "step-ca.labels" . | indent 4 }}
+{{ include "autocert.labels" . | indent 4 }}
 webhooks:
   - name: {{ .Values.autocert.label }}
     clientConfig:

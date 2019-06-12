@@ -65,25 +65,25 @@ spec:
       volumes:
       - name: config
         configMap:
-          name: {{ .Release.Name }}-step-ca-config
+          name: {{ .Release.Name }}-step-certificates-config
       - name: certs
         configMap:
-          name: {{ .Release.Name }}-step-ca-certs
+          name: {{ .Release.Name }}-step-certificates-certs
       - name: autocert-password
         secret:
-          secretName: {{ .Release.Name }}-step-ca-provisioner-password
+          secretName: {{ .Release.Name }}-step-certificates-provisioner-password
       - name: autocert-config
         configMap:
           name: {{ .Release.Name }}-autocert-config
-      {{- with .Values.nodeSelector }}
+      {{- with .Values.autocert.nodeSelector }}
       nodeSelector:
       {{- toYaml . | nindent 8 }}
       {{- end }}
-      {{- with .Values.affinity }}
+      {{- with .Values.autocert.affinity }}
       affinity:
       {{- toYaml . | nindent 8 }}
       {{- end }}
-      {{- with .Values.tolerations }}
+      {{- with .Values.autocert.tolerations }}
       tolerations:
       {{- toYaml . | nindent 8 }}
       {{- end }}
