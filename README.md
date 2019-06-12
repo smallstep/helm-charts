@@ -1,18 +1,15 @@
-# helm-charts
-Helm packages for Kubernetes.
+# Smallstep Helm Charts
 
-```text
-⚠️ This repository contains work in progress packages
-```
+[Helm](https://helm.sh) packages for Kubernetes. The master branch of this
+repository contains work in progress packages.
 
-## Helm, Tiller, & RBAC
-If you're using a cluster with RBAC enabled please be sure to follow helm's [setup intructions available here](https://github.com/helm/helm/blob/master/docs/rbac.md).
+Visit https://smallstep.github.io/helm-charts/ for stable releases.
 
 ## Packages
 
-* [Step CA](./step-certificates/README.md): An online certificate authority and
+* [Step Certificates](./step-certificates/README.md): An online certificate authority and
   related tools for secure automated certificate management, so you can use TLS
   everywhere.
 
-* [Autocert](./autocert/REAMDE.md): A kubernetes add-on that automatically
+* [Autocert](./autocert/README.md): A kubernetes add-on that automatically
   injects TLS/HTTPS certificates into your containers.
