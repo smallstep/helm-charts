@@ -1,9 +1,39 @@
 apiVersion: v1
 entries:
+  autocert:
+  - apiVersion: v1
+    appVersion: 0.11.0-rc.2
+    created: "2019-06-12T15:06:32.743807-07:00"
+    description: A kubernetes add-on that automatically injects TLS/HTTPS certificates
+      into your containers.
+    digest: a9fc6084c92aa981b7287b275950d0588e015b66c20bab3a0006f0c4538abdab
+    engine: gotpl
+    home: https://smallstep.com
+    icon: https://raw.githubusercontent.com/smallstep/autocert/master/icon.png
+    keywords:
+    - ca
+    - tls
+    - pki
+    - step
+    - step-ca
+    - step-certificates
+    - smallstep
+    - certificate
+    - certificates
+    - authority
+    maintainers:
+    - email: mariano@smallstep.com
+      name: maraino
+    name: autocert
+    sources:
+    - https://github.com/smallstep/autocert
+    urls:
+    - autocert-0.1.0.tgz
+    version: 0.1.0
   step-certificates:
   - apiVersion: v1
     appVersion: 0.10.0
-    created: "2019-06-12T12:13:08.066905-07:00"
+    created: "2019-06-12T15:06:32.744986-07:00"
     description: An online certificate authority and related tools for secure automated
       certificate management, so you can use TLS everywhere.
     digest: 4f85f6a32370658a304e67a797c1913bafd0e2879f645d0b14dfe7d85f0d214b
@@ -27,6 +57,6 @@ entries:
     sources:
     - https://github.com/smallstep/certificates
     urls:
-    - https://smallstep.github.io/helm-charts/step-certificates-1.0.0.tgz
+    - step-certificates-1.0.0.tgz
     version: 1.0.0
-generated: "2019-06-12T12:13:08.06497-07:00"
+generated: "2019-06-12T15:06:32.740597-07:00"

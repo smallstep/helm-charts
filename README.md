@@ -11,11 +11,16 @@ helm repo update
 
 ## Packages
 
-* [Step Certificates](https://github.com/smallstep/helm-charts/blob/master/step-ca/README.md):
+* [Step Certificates](https://github.com/smallstep/helm-charts/tree/master/step-certificates):
   An online certificate authority and related tools for secure automated
-  certificate management, so you can use TLS everywhere.
-  Install step-certificates using:
-  
+  certificate management, so you can use TLS everywhere. Install step-certificates using:
+
   ```console
   helm install --name your-release smallstep/step-certificates
+  ```
+* [Autocert](https://github.com/smallstep/helm-charts/tree/master/autocert): A kubernetes add-on that automatically
+  injects TLS/HTTPS certificates into your containers. Install autocert using:
+
+  ```console
+  helm install --name your-release smallstep/autocert
   ```
