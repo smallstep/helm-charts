@@ -3,10 +3,10 @@ entries:
   step-certificates:
   - apiVersion: v1
     appVersion: 0.10.0
-    created: "2019-06-12T11:26:33.045172-07:00"
+    created: "2019-06-12T12:13:08.066905-07:00"
     description: An online certificate authority and related tools for secure automated
       certificate management, so you can use TLS everywhere.
-    digest: 16267c30864ae71aee091fd94661c143cb31ac183c4568f3f28aca5f3e6eb6d4
+    digest: 4f85f6a32370658a304e67a797c1913bafd0e2879f645d0b14dfe7d85f0d214b
     engine: gotpl
     home: https://smallstep.com
     icon: https://smallstep.com/images/logo.png
@@ -29,4 +29,4 @@ entries:
     urls:
     - https://smallstep.github.io/helm-charts/step-certificates-1.0.0.tgz
     version: 1.0.0
-generated: "2019-06-12T11:26:33.037735-07:00"
+generated: "2019-06-12T12:13:08.06497-07:00"
