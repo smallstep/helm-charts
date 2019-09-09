@@ -3,7 +3,7 @@ entries:
   autocert:
   - apiVersion: v1
     appVersion: 0.11.0
-    created: "2019-08-29T16:24:06.600369-07:00"
+    created: "2019-09-09T16:31:20.730615-07:00"
     description: A kubernetes add-on that automatically injects TLS/HTTPS certificates
       into your containers.
     digest: bc60b17a7c10767fab35bc002cf257c8b474ca87dc8d111a9faaad543fac3ef1
@@ -37,7 +37,7 @@ entries:
     version: 1.0.0
   - apiVersion: v1
     appVersion: 0.11.0-rc.2
-    created: "2019-08-29T16:24:06.599392-07:00"
+    created: "2019-09-09T16:31:20.725796-07:00"
     description: A kubernetes add-on that automatically injects TLS/HTTPS certificates
       into your containers.
     digest: a9fc6084c92aa981b7287b275950d0588e015b66c20bab3a0006f0c4538abdab
@@ -66,8 +66,42 @@ entries:
     version: 0.1.0
   step-certificates:
   - apiVersion: v1
+    appVersion: 0.12.0
+    created: "2019-09-09T16:31:20.735653-07:00"
+    description: An online certificate authority and related tools for secure automated
+      certificate management, so you can use TLS everywhere.
+    digest: a2fe4d685fd711f2d7016386e123297b0c9e866700d971ab5efde3a656254e2b
+    engine: gotpl
+    home: https://smallstep.com
+    icon: https://raw.githubusercontent.com/smallstep/certificates/master/icon.png
+    keywords:
+    - authority
+    - ca
+    - certificate
+    - certificates
+    - certificate-authority
+    - kubernetes
+    - pki
+    - security
+    - security-tools
+    - smallstep
+    - ssh
+    - step
+    - step-ca
+    - tls
+    - x509
+    maintainers:
+    - email: mariano@smallstep.com
+      name: Mariano Cano
+    name: step-certificates
+    sources:
+    - https://github.com/smallstep/certificates
+    urls:
+    - https://smallstep.github.io/helm-charts/step-certificates-1.0.4.tgz
+    version: 1.0.4
+  - apiVersion: v1
     appVersion: 0.11.0
-    created: "2019-08-29T16:24:06.603057-07:00"
+    created: "2019-09-09T16:31:20.734489-07:00"
     description: An online certificate authority and related tools for secure automated
       certificate management, so you can use TLS everywhere.
     digest: fb1b2965adae68baa3d3a0569e1e833e54544e4b936da5870f6fa1ddc0856ad8
@@ -100,7 +134,7 @@ entries:
     version: 1.0.3
   - apiVersion: v1
     appVersion: 0.10.0
-    created: "2019-08-29T16:24:06.602227-07:00"
+    created: "2019-09-09T16:31:20.733478-07:00"
     description: An online certificate authority and related tools for secure automated
       certificate management, so you can use TLS everywhere.
     digest: f2a377bb38c4a0fb81168a33a3f86f3b7cdaaab91ad4239c5227f7c7fb51aca9
@@ -133,7 +167,7 @@ entries:
     version: 1.0.2
   - apiVersion: v1
     appVersion: 0.10.0
-    created: "2019-08-29T16:24:06.601579-07:00"
+    created: "2019-09-09T16:31:20.732537-07:00"
     description: An online certificate authority and related tools for secure automated
       certificate management, so you can use TLS everywhere.
     digest: ad00f93f89b104ae6d96cdbcde3f0435e162a6d21368fc57e3e927c23f9aed28
@@ -161,7 +195,7 @@ entries:
     version: 1.0.1
   - apiVersion: v1
     appVersion: 0.10.0
-    created: "2019-08-29T16:24:06.600951-07:00"
+    created: "2019-09-09T16:31:20.731656-07:00"
     description: An online certificate authority and related tools for secure automated
       certificate management, so you can use TLS everywhere.
     digest: 4f85f6a32370658a304e67a797c1913bafd0e2879f645d0b14dfe7d85f0d214b
@@ -187,4 +221,4 @@ entries:
     urls:
     - https://smallstep.github.io/helm-charts/step-certificates-1.0.0.tgz
     version: 1.0.0
-generated: "2019-08-29T16:24:06.59809-07:00"
+generated: "2019-09-09T16:31:20.722724-07:00"
