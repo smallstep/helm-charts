@@ -73,7 +73,11 @@ spec:
             readOnly: false
           {{- end }}
           securityContext:
+            {{- if .Values.ca.runAsRoot }}
+            runAsUser: 0
+            {{- else }}
             runAsUser: 1000
+            {{- end }}
             allowPrivilegeEscalation: false
       volumes:
       - name: certs

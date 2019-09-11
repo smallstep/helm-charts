@@ -58,6 +58,7 @@ chart and their default values.
 | `ca.db.persistent`          | If true a persistent volume will be used to store the db                          | `true`                        |
 | `ca.db.accessModes`         | Persistent volume access mode                                                     | `["ReadWriteOnce"]`           |
 | `ca.db.size`                | Persistent volume size                                                            | `10Gi`                        |
+| `ca.runAsRoot`              | Run the CA as root.                                                               | `false`                       |
 | `service.type`              | Service type                                                                      | `ClusterIP`                   |
 | `service.port`              | Incoming port to access Step CA                                                   | `443`                         |
 | `service.targetPort`        | Internal port where Step CA runs                                                  | `9000`                        |

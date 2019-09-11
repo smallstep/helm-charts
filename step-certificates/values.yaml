@@ -64,6 +64,9 @@ ca:
     - ReadWriteOnce
     # size is the Persistent Volume size.
     size: 10Gi
+  # runAsRoot runs the ca as root instead of the step user. This is required in
+  # some storage provisioners.
+  runAsRoot: false
 
 # autocert is used to configure the autocert chart that depends on step-certificates.
 autocert:
