@@ -3,7 +3,41 @@ entries:
   autocert:
   - apiVersion: v1
     appVersion: 0.11.0
-    created: "2019-09-17T18:24:11.81911-07:00"
+    created: "2019-09-17T18:30:20.774842-07:00"
+    description: A kubernetes add-on that automatically injects TLS/HTTPS certificates
+      into your containers.
+    digest: 41de5c77ab18f360497db967f7ad5227ac0501f969738edd0a9f78060b0aa1ff
+    engine: gotpl
+    home: https://smallstep.com
+    icon: https://raw.githubusercontent.com/smallstep/autocert/master/icon.png
+    keywords:
+    - ca
+    - tls
+    - pki
+    - x509
+    - step
+    - step-ca
+    - step-certificates
+    - smallstep
+    - certificate
+    - certificates
+    - authority
+    - security
+    - security-tools
+    - certificate-authority
+    - kubernetes
+    maintainers:
+    - email: mariano@smallstep.com
+      name: Mariano Cano
+    name: autocert
+    sources:
+    - https://github.com/smallstep/autocert
+    urls:
+    - https://smallstep.github.io/helm-charts/autocert-1.11.0.tgz
+    version: 1.11.0
+  - apiVersion: v1
+    appVersion: 0.11.0
+    created: "2019-09-17T18:30:20.773006-07:00"
     description: A kubernetes add-on that automatically injects TLS/HTTPS certificates
       into your containers.
     digest: fe83735271bdcc1d35deef5673ab290bfba77c57df609f5e9b27b0412c2bca1a
@@ -37,7 +71,7 @@ entries:
     version: 1.0.1
   - apiVersion: v1
     appVersion: 0.11.0
-    created: "2019-09-17T18:24:11.817368-07:00"
+    created: "2019-09-17T18:30:20.769366-07:00"
     description: A kubernetes add-on that automatically injects TLS/HTTPS certificates
       into your containers.
     digest: bc60b17a7c10767fab35bc002cf257c8b474ca87dc8d111a9faaad543fac3ef1
@@ -71,7 +105,7 @@ entries:
     version: 1.0.0
   - apiVersion: v1
     appVersion: 0.11.0-rc.2
-    created: "2019-09-17T18:24:11.815595-07:00"
+    created: "2019-09-17T18:30:20.767691-07:00"
     description: A kubernetes add-on that automatically injects TLS/HTTPS certificates
       into your containers.
     digest: a9fc6084c92aa981b7287b275950d0588e015b66c20bab3a0006f0c4538abdab
@@ -101,7 +135,7 @@ entries:
   step-certificates:
   - apiVersion: v1
     appVersion: 0.13.0
-    created: "2019-09-17T18:24:11.833192-07:00"
+    created: "2019-09-17T18:30:20.784494-07:00"
     description: An online certificate authority and related tools for secure automated
       certificate management, so you can use TLS everywhere.
     digest: 08713c418a5c3a953ac46a8404e20633ce9ca487105a796158943837dc72ace8
@@ -136,7 +170,7 @@ entries:
     version: 1.13.0
   - apiVersion: v1
     appVersion: 0.13.0
-    created: "2019-09-17T18:24:11.831978-07:00"
+    created: "2019-09-17T18:30:20.78349-07:00"
     description: An online certificate authority and related tools for secure automated
       certificate management, so you can use TLS everywhere.
     digest: 4a977fd25a3e1685470f55d5e87636c9a8d81b4d9e5b140c308eaf3a795ccd60
@@ -171,7 +205,7 @@ entries:
     version: 1.0.6
   - apiVersion: v1
     appVersion: 0.12.0
-    created: "2019-09-17T18:24:11.830729-07:00"
+    created: "2019-09-17T18:30:20.782557-07:00"
     description: An online certificate authority and related tools for secure automated
       certificate management, so you can use TLS everywhere.
     digest: 59f766fad960b83ea28bef38858911a64383a42721bc13e5aa7a6630640f8f4f
@@ -205,7 +239,7 @@ entries:
     version: 1.0.5
   - apiVersion: v1
     appVersion: 0.12.0
-    created: "2019-09-17T18:24:11.829515-07:00"
+    created: "2019-09-17T18:30:20.781576-07:00"
     description: An online certificate authority and related tools for secure automated
       certificate management, so you can use TLS everywhere.
     digest: a2fe4d685fd711f2d7016386e123297b0c9e866700d971ab5efde3a656254e2b
@@ -239,7 +273,7 @@ entries:
     version: 1.0.4
   - apiVersion: v1
     appVersion: 0.11.0
-    created: "2019-09-17T18:24:11.828455-07:00"
+    created: "2019-09-17T18:30:20.780609-07:00"
     description: An online certificate authority and related tools for secure automated
       certificate management, so you can use TLS everywhere.
     digest: fb1b2965adae68baa3d3a0569e1e833e54544e4b936da5870f6fa1ddc0856ad8
@@ -272,7 +306,7 @@ entries:
     version: 1.0.3
   - apiVersion: v1
     appVersion: 0.10.0
-    created: "2019-09-17T18:24:11.82233-07:00"
+    created: "2019-09-17T18:30:20.779669-07:00"
     description: An online certificate authority and related tools for secure automated
       certificate management, so you can use TLS everywhere.
     digest: f2a377bb38c4a0fb81168a33a3f86f3b7cdaaab91ad4239c5227f7c7fb51aca9
@@ -305,7 +339,7 @@ entries:
     version: 1.0.2
   - apiVersion: v1
     appVersion: 0.10.0
-    created: "2019-09-17T18:24:11.821293-07:00"
+    created: "2019-09-17T18:30:20.778446-07:00"
     description: An online certificate authority and related tools for secure automated
       certificate management, so you can use TLS everywhere.
     digest: ad00f93f89b104ae6d96cdbcde3f0435e162a6d21368fc57e3e927c23f9aed28
@@ -333,7 +367,7 @@ entries:
     version: 1.0.1
   - apiVersion: v1
     appVersion: 0.10.0
-    created: "2019-09-17T18:24:11.82023-07:00"
+    created: "2019-09-17T18:30:20.77734-07:00"
     description: An online certificate authority and related tools for secure automated
       certificate management, so you can use TLS everywhere.
     digest: 4f85f6a32370658a304e67a797c1913bafd0e2879f645d0b14dfe7d85f0d214b
@@ -359,4 +393,4 @@ entries:
     urls:
     - https://smallstep.github.io/helm-charts/step-certificates-1.0.0.tgz
     version: 1.0.0
-generated: "2019-09-17T18:24:11.812049-07:00"
+generated: "2019-09-17T18:30:20.762206-07:00"
