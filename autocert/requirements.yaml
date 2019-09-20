@@ -1,4 +1,4 @@
 dependencies:
   - name: step-certificates
-    version: 1.13.0
+    version: 1.13.2
     repository: https://smallstep.github.io/helm-charts
