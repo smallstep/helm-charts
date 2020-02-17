@@ -34,7 +34,6 @@ spec:
         runAsNonRoot: true
         runAsGroup: 1000
         fsGroup: 1000
-        allowPrivilegeEscalation: false
         {{- end }}
       containers:
         - name: {{ .Chart.Name }}
@@ -64,6 +63,10 @@ spec:
               scheme: HTTPS
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
+          {{- if not .Values.ca.runAsRoot }}
+          securityContext:
+            allowPrivilegeEscalation: false
+          {{- end }}
           volumeMounts:
           - name: certs
             mountPath: /home/step/certs
