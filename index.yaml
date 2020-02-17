@@ -3,11 +3,14 @@ entries:
   autocert:
   - apiVersion: v1
     appVersion: 0.11.0
-    created: "2019-10-21T10:29:30.251697-07:00"
+    created: "2020-02-17T14:34:40.580697-08:00"
+    dependencies:
+    - name: step-certificates
+      repository: https://smallstep.github.io/helm-charts
+      version: 1.13.2
     description: A kubernetes add-on that automatically injects TLS/HTTPS certificates
       into your containers.
     digest: 727bab314f1c9d6227dd18637ee5a1592656a734dec9eda38c4cc48070d70c29
-    engine: gotpl
     home: https://smallstep.com
     icon: https://raw.githubusercontent.com/smallstep/autocert/master/icon.png
     keywords:
@@ -37,11 +40,14 @@ entries:
     version: 1.11.1
   - apiVersion: v1
     appVersion: 0.11.0
-    created: "2019-10-21T10:29:30.248702-07:00"
+    created: "2020-02-17T14:34:40.577154-08:00"
+    dependencies:
+    - name: step-certificates
+      repository: https://smallstep.github.io/helm-charts
+      version: 1.13.0
     description: A kubernetes add-on that automatically injects TLS/HTTPS certificates
       into your containers.
     digest: 41de5c77ab18f360497db967f7ad5227ac0501f969738edd0a9f78060b0aa1ff
-    engine: gotpl
     home: https://smallstep.com
     icon: https://raw.githubusercontent.com/smallstep/autocert/master/icon.png
     keywords:
@@ -71,11 +77,14 @@ entries:
     version: 1.11.0
   - apiVersion: v1
     appVersion: 0.11.0
-    created: "2019-10-21T10:29:30.247194-07:00"
+    created: "2020-02-17T14:34:40.575173-08:00"
+    dependencies:
+    - name: step-certificates
+      repository: https://smallstep.github.io/helm-charts
+      version: 1.0.5
     description: A kubernetes add-on that automatically injects TLS/HTTPS certificates
       into your containers.
     digest: fe83735271bdcc1d35deef5673ab290bfba77c57df609f5e9b27b0412c2bca1a
-    engine: gotpl
     home: https://smallstep.com
     icon: https://raw.githubusercontent.com/smallstep/autocert/master/icon.png
     keywords:
@@ -105,11 +114,14 @@ entries:
     version: 1.0.1
   - apiVersion: v1
     appVersion: 0.11.0
-    created: "2019-10-21T10:29:30.245595-07:00"
+    created: "2020-02-17T14:34:40.572948-08:00"
+    dependencies:
+    - name: step-certificates
+      repository: https://smallstep.github.io/helm-charts
+      version: 1.0.2
     description: A kubernetes add-on that automatically injects TLS/HTTPS certificates
       into your containers.
     digest: bc60b17a7c10767fab35bc002cf257c8b474ca87dc8d111a9faaad543fac3ef1
-    engine: gotpl
     home: https://smallstep.com
     icon: https://raw.githubusercontent.com/smallstep/autocert/master/icon.png
     keywords:
@@ -139,11 +151,14 @@ entries:
     version: 1.0.0
   - apiVersion: v1
     appVersion: 0.11.0-rc.2
-    created: "2019-10-21T10:29:30.243859-07:00"
+    created: "2020-02-17T14:34:40.564512-08:00"
+    dependencies:
+    - name: step-certificates
+      repository: https://smallstep.github.io/helm-charts
+      version: 1.0.0
     description: A kubernetes add-on that automatically injects TLS/HTTPS certificates
       into your containers.
     digest: a9fc6084c92aa981b7287b275950d0588e015b66c20bab3a0006f0c4538abdab
-    engine: gotpl
     home: https://smallstep.com
     icon: https://raw.githubusercontent.com/smallstep/autocert/master/icon.png
     keywords:
@@ -169,11 +184,44 @@ entries:
   step-certificates:
   - apiVersion: v1
     appVersion: 0.13.3
-    created: "2019-10-21T10:29:30.263632-07:00"
+    created: "2020-02-17T14:34:40.599316-08:00"
+    description: An online certificate authority and related tools for secure automated
+      certificate management, so you can use TLS everywhere.
+    digest: 4e8331f0556347e12c3dcb7df4c2fba073c8e6bcafe5d97dc58def9aa39b7ea2
+    home: https://smallstep.com
+    icon: https://raw.githubusercontent.com/smallstep/certificates/master/icon.png
+    keywords:
+    - acme
+    - authority
+    - ca
+    - certificate
+    - certificates
+    - certificate-authority
+    - kubernetes
+    - pki
+    - security
+    - security-tools
+    - smallstep
+    - ssh
+    - step
+    - step-ca
+    - tls
+    - x509
+    maintainers:
+    - email: mariano@smallstep.com
+      name: Mariano Cano
+    name: step-certificates
+    sources:
+    - https://github.com/smallstep/certificates
+    urls:
+    - https://smallstep.github.io/helm-charts/step-certificates-1.13.4.tgz
+    version: 1.13.4
+  - apiVersion: v1
+    appVersion: 0.13.3
+    created: "2020-02-17T14:34:40.597731-08:00"
     description: An online certificate authority and related tools for secure automated
       certificate management, so you can use TLS everywhere.
     digest: bbef8b4f333b51f601800704b7f167714b17d21eec430e1bc49dfe2940bd4231
-    engine: gotpl
     home: https://smallstep.com
     icon: https://raw.githubusercontent.com/smallstep/certificates/master/icon.png
     keywords:
@@ -204,11 +252,10 @@ entries:
     version: 1.13.3
   - apiVersion: v1
     appVersion: 0.13.2
-    created: "2019-10-21T10:29:30.262909-07:00"
+    created: "2020-02-17T14:34:40.596328-08:00"
     description: An online certificate authority and related tools for secure automated
       certificate management, so you can use TLS everywhere.
     digest: da3553fc80e553b69306d5cf4eecad57373893b4cc9af94f798f2a740b0ff6cc
-    engine: gotpl
     home: https://smallstep.com
     icon: https://raw.githubusercontent.com/smallstep/certificates/master/icon.png
     keywords:
@@ -239,11 +286,10 @@ entries:
     version: 1.13.2
   - apiVersion: v1
     appVersion: 0.13.0
-    created: "2019-10-21T10:29:30.261871-07:00"
+    created: "2020-02-17T14:34:40.594997-08:00"
     description: An online certificate authority and related tools for secure automated
       certificate management, so you can use TLS everywhere.
     digest: 08713c418a5c3a953ac46a8404e20633ce9ca487105a796158943837dc72ace8
-    engine: gotpl
     home: https://smallstep.com
     icon: https://raw.githubusercontent.com/smallstep/certificates/master/icon.png
     keywords:
@@ -274,11 +320,10 @@ entries:
     version: 1.13.0
   - apiVersion: v1
     appVersion: 0.13.0
-    created: "2019-10-21T10:29:30.260833-07:00"
+    created: "2020-02-17T14:34:40.59373-08:00"
     description: An online certificate authority and related tools for secure automated
       certificate management, so you can use TLS everywhere.
     digest: 4a977fd25a3e1685470f55d5e87636c9a8d81b4d9e5b140c308eaf3a795ccd60
-    engine: gotpl
     home: https://smallstep.com
     icon: https://raw.githubusercontent.com/smallstep/certificates/master/icon.png
     keywords:
@@ -309,11 +354,10 @@ entries:
     version: 1.0.6
   - apiVersion: v1
     appVersion: 0.12.0
-    created: "2019-10-21T10:29:30.259801-07:00"
+    created: "2020-02-17T14:34:40.59211-08:00"
     description: An online certificate authority and related tools for secure automated
       certificate management, so you can use TLS everywhere.
     digest: 59f766fad960b83ea28bef38858911a64383a42721bc13e5aa7a6630640f8f4f
-    engine: gotpl
     home: https://smallstep.com
     icon: https://raw.githubusercontent.com/smallstep/certificates/master/icon.png
     keywords:
@@ -343,11 +387,10 @@ entries:
     version: 1.0.5
   - apiVersion: v1
     appVersion: 0.12.0
-    created: "2019-10-21T10:29:30.258616-07:00"
+    created: "2020-02-17T14:34:40.588263-08:00"
     description: An online certificate authority and related tools for secure automated
       certificate management, so you can use TLS everywhere.
     digest: a2fe4d685fd711f2d7016386e123297b0c9e866700d971ab5efde3a656254e2b
-    engine: gotpl
     home: https://smallstep.com
     icon: https://raw.githubusercontent.com/smallstep/certificates/master/icon.png
     keywords:
@@ -377,11 +420,10 @@ entries:
     version: 1.0.4
   - apiVersion: v1
     appVersion: 0.11.0
-    created: "2019-10-21T10:29:30.257576-07:00"
+    created: "2020-02-17T14:34:40.586833-08:00"
     description: An online certificate authority and related tools for secure automated
       certificate management, so you can use TLS everywhere.
     digest: fb1b2965adae68baa3d3a0569e1e833e54544e4b936da5870f6fa1ddc0856ad8
-    engine: gotpl
     home: https://smallstep.com
     icon: https://raw.githubusercontent.com/smallstep/certificates/master/icon.png
     keywords:
@@ -410,11 +452,10 @@ entries:
     version: 1.0.3
   - apiVersion: v1
     appVersion: 0.10.0
-    created: "2019-10-21T10:29:30.254722-07:00"
+    created: "2020-02-17T14:34:40.585479-08:00"
     description: An online certificate authority and related tools for secure automated
       certificate management, so you can use TLS everywhere.
     digest: f2a377bb38c4a0fb81168a33a3f86f3b7cdaaab91ad4239c5227f7c7fb51aca9
-    engine: gotpl
     home: https://smallstep.com
     icon: https://raw.githubusercontent.com/smallstep/certificates/master/icon.png
     keywords:
@@ -443,11 +484,10 @@ entries:
     version: 1.0.2
   - apiVersion: v1
     appVersion: 0.10.0
-    created: "2019-10-21T10:29:30.25378-07:00"
+    created: "2020-02-17T14:34:40.584148-08:00"
     description: An online certificate authority and related tools for secure automated
       certificate management, so you can use TLS everywhere.
     digest: ad00f93f89b104ae6d96cdbcde3f0435e162a6d21368fc57e3e927c23f9aed28
-    engine: gotpl
     home: https://smallstep.com
     icon: https://raw.githubusercontent.com/smallstep/certificates/master/icon.png
     keywords:
@@ -471,11 +511,10 @@ entries:
     version: 1.0.1
   - apiVersion: v1
     appVersion: 0.10.0
-    created: "2019-10-21T10:29:30.252785-07:00"
+    created: "2020-02-17T14:34:40.582258-08:00"
     description: An online certificate authority and related tools for secure automated
       certificate management, so you can use TLS everywhere.
     digest: 4f85f6a32370658a304e67a797c1913bafd0e2879f645d0b14dfe7d85f0d214b
-    engine: gotpl
     home: https://smallstep.com
     icon: https://smallstep.com/images/logo.png
     keywords:
@@ -497,4 +536,4 @@ entries:
     urls:
     - https://smallstep.github.io/helm-charts/step-certificates-1.0.0.tgz
     version: 1.0.0
-generated: "2019-10-21T10:29:30.240885-07:00"
+generated: "2020-02-17T14:34:40.560348-08:00"
