@@ -1,7 +1,7 @@
 apiVersion: v1
 name: step-certificates
-version: 1.13.4
-appVersion: 0.13.3
+version: 1.14.2
+appVersion: 0.14.2
 description: An online certificate authority and related tools for secure automated certificate management, so you can use TLS everywhere.
 keywords:
  - acme
