@@ -3,7 +3,7 @@ kind: StatefulSet
 metadata:
   name: {{ include "step-certificates.fullname" . }}
   labels:
-{{ include "step-certificates.labels" . | indent 4 }}
+    {{- include "step-certificates.labels" . | nindent 4 }}
 spec:
   # Only one replica is supported at this moment
   # Requested {{ .Values.replicaCount }}
@@ -19,13 +19,13 @@ spec:
         app.kubernetes.io/name: {{ include "step-certificates.name" . }}
         app.kubernetes.io/instance: {{ .Release.Name }}
     spec:
-{{- if .Release.IsInstall }}
+      {{- if .Release.IsInstall }}
       initContainers:
         - name: {{ .Chart.Name }}-init
           image: busybox:latest
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           command: ["sleep", "20"]
-{{- end }}
+      {{- end }}
       securityContext:
         {{- if .Values.ca.runAsRoot }}
         runAsUser: 0
@@ -39,9 +39,11 @@ spec:
         - name: {{ .Chart.Name }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
-          command: ["/usr/local/bin/step-ca", 
+          command: [
+            "/usr/local/bin/step-ca", 
             "--password-file", "/home/step/secrets/passwords/password",
-            "/home/step/config/ca.json"]
+            "/home/step/config/ca.json"
+          ]
           env:
           - name: NAMESPACE
             value: "{{ .Release.Namespace }}"
@@ -104,17 +106,17 @@ spec:
       {{- end }}
       {{- with .Values.nodeSelector }}
       nodeSelector:
-      {{- toYaml . | nindent 8 }}
+        {{- toYaml . | nindent 8 }}
       {{- end }}
       {{- with .Values.affinity }}
       affinity:
-      {{- toYaml . | nindent 8 }}
+        {{- toYaml . | nindent 8 }}
       {{- end }}
       {{- with .Values.tolerations }}
       tolerations:
-      {{- toYaml . | nindent 8 }}
+        {{- toYaml . | nindent 8 }}
       {{- end }}
-{{- if and .Values.ca.db.enabled .Values.ca.db.persistent }}
+  {{- if and .Values.ca.db.enabled .Values.ca.db.persistent }}
   volumeClaimTemplates:
   - metadata:
       name: database
@@ -130,11 +132,11 @@ spec:
       resources:
         requests:
           storage: {{ .Values.ca.db.size | quote }}
-    {{- if .Values.ca.db.storageClass }}
-    {{- if (eq "-" .Values.ca.db.storageClass) }}
+      {{- if .Values.ca.db.storageClass }}
+      {{- if (eq "-" .Values.ca.db.storageClass) }}
       storageClassName: ""
-    {{- else }}
+      {{- else }}
       storageClassName: {{ .Values.ca.db.storageClass | quote }}
-    {{- end }}
-    {{- end }}
-{{- end }}
+      {{- end }}
+      {{- end }}
+  {{- end }}

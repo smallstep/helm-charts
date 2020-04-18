@@ -3,7 +3,7 @@ kind: Service
 metadata:
   name: {{ include "autocert.fullname" . }}
   labels:
-{{ include "autocert.labels" . | indent 4 }}
+    {{- include "autocert.labels" . | nindent 4 }}
 spec:
   type: {{ .Values.service.type }}
   ports:

@@ -3,7 +3,7 @@ kind: Service
 metadata:
   name: {{ include "step-certificates.fullname" . }}
   labels:
-{{ include "step-certificates.labels" . | indent 4 }}
+    {{- include "step-certificates.labels" . | nindent 4 }}
 spec:
   type: {{ .Values.service.type }}
   ports:
