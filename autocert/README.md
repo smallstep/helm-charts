@@ -75,7 +75,7 @@ their default values.
 | `service.port`                             | Incoming port to access Autocert                                                  | `443`                                   |
 | `service.targetPort`                       | Internal port where Autocert runs                                                 | `4443`                                  |
 | `autocert.image.repository`                | Repository of the Autocert image                                                  | `smallstep/autocert-controller`         |
-| `autocert.image.tag`                       | Tag of the Autocert image                                                         | `0.11.0-rc.2`                           |
+| `autocert.image.tag`                       | Tag of the Autocert image                                                         | `0.12.0`                                |
 | `autocert.image.pullPolicy`                | Autocert image pull policy                                                        | `IfNotPresent`                          |
 | `autocert.label`                           | Label uses to enable Autocert in a namespaces (should not be changed)             | `autocert.step.sm`                      |
 | `autocert.logFormat`                       | Log format, `json` or `text`                                                      | `json`                                  |
@@ -87,11 +87,11 @@ their default values.
 | `autocert.tolerations`                     | Toleration labels for pod assignment (YAML)                                       | `[]`                                    |
 | `autocert.affinity`                        | Affinity settings for pod assignment (YAML)                                       | `{}`                                    |
 | `bootstrapper.image.repository`            | Repository of the Autocert bootstrapper image                                     | `smallstep/autocert-bootstrapper`       |
-| `bootstrapper.image.tag`                   | Tag of the Autocert bootstrapper image                                            | `0.11.0-rc.2`                           |
+| `bootstrapper.image.tag`                   | Tag of the Autocert bootstrapper image                                            | `0.12.0`                                |
 | `bootstrapper.image.pullPolicy`            | Autocert bootstrapper image pull policy                                           | `IfNotPresent`                          |
 | `bootstrapper.resources`                   | CPU/memory resource requests/limits (YAML)                                        | `{}`                                    |
 | `renewer.image.repository`                 | Repository of the Autocert renewer image                                          | `smallstep/autocert-renewer`            |
-| `renewer.image.tag`                        | Tag of the Autocert renewer image                                                 | `0.11.0-rc.2`                           |
+| `renewer.image.tag`                        | Tag of the Autocert renewer image                                                 | `0.12.0`                                |
 | `renewer.image.pullPolicy`                 | Autocert renewer image pull policy                                                | `IfNotPresent`                          |
 | `renewer.resources`                        | CPU/memory resource requests/limits (YAML)                                        | `{}`                                    |
 | `ingress.enabled`                          | If true Autocert ingress will be created                                          | `false`                                 |

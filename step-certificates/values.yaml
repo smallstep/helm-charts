@@ -12,7 +12,7 @@ fullnameOverride: ""
 # image contains the docker image for step-certificates.
 image:
   repository: smallstep/step-ca
-  tag: 0.14.2
+  tag: 0.14.4
   pullPolicy: IfNotPresent
 
 # bootstrapImage contains the docker image for the bootstrap of the configuration.
@@ -67,6 +67,9 @@ ca:
   # runAsRoot runs the ca as root instead of the step user. This is required in
   # some storage provisioners.
   runAsRoot: false
+  bootstrap:
+    # Add script snippets here to be executed after the step ca init has been run
+    postInitHook: ""
 
 # autocert is used to configure the autocert chart that depends on step-certificates.
 autocert:

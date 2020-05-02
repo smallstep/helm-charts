@@ -59,6 +59,7 @@ chart and their default values.
 | `ca.db.accessModes`         | Persistent volume access mode                                                     | `["ReadWriteOnce"]`           |
 | `ca.db.size`                | Persistent volume size                                                            | `10Gi`                        |
 | `ca.runAsRoot`              | Run the CA as root.                                                               | `false`                       |
+| `ca.bootstrap.postInitHook` | Extra script snippet to run after `step ca init` has completed.                   | `""`                          |
 | `service.type`              | Service type                                                                      | `ClusterIP`                   |
 | `service.port`              | Incoming port to access Step CA                                                   | `443`                         |
 | `service.targetPort`        | Internal port where Step CA runs                                                  | `9000`                        |

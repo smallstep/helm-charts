@@ -20,7 +20,7 @@ autocert:
   # image contains the docker image for step-certificates.
   image:
     repository: smallstep/autocert-controller
-    tag: 0.11.0
+    tag: 0.12.0
     pullPolicy: IfNotPresent
   # label is the label used used to enable autocert in a namespace.
   # This value is rightnow hardcoded in autocert and it should not be changed.
@@ -46,7 +46,7 @@ autocert:
 bootstrapper:
   image:
     repository: smallstep/autocert-bootstrapper
-    tag: 0.11.0
+    tag: 0.12.0
     pullPolicy: IfNotPresent
   resources: {requests: {cpu: 10m, memory: 20Mi}}
 
@@ -54,7 +54,7 @@ bootstrapper:
 renewer:
   image:
     repository: smallstep/autocert-renewer
-    tag: 0.11.0
+    tag: 0.12.0
     pullPolicy: IfNotPresent
   resources: {requests: {cpu: 10m, memory: 20Mi}}
 
