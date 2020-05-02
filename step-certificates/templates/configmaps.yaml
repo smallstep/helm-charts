@@ -111,6 +111,10 @@ data:
 
     rm -f $TMP_CA_PASSWORD $TMP_CA_PROVISIONER_PASSWORD
 
+{{- if .Values.ca.bootstrap.postInitHook }}
+{{ .Values.ca.bootstrap.postInitHook | indent 4 }}
+{{- end }}
+
     echo -e "\n\e[1mCreating configmaps and secrets in {{.Release.Namespace}} namespace ...\e[0m"
 
     # Replace secrets created on helm install
