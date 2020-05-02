@@ -3,7 +3,7 @@ kind: Deployment
 metadata:
   name: {{ include "autocert.fullname" . }}
   labels: 
-{{ include "autocert.labels" . | indent 4 }}
+    {{- include "autocert.labels" . | nindent 4 }}
 spec:
   replicas: {{ .Values.replicaCount }}
   selector:
@@ -16,13 +16,13 @@ spec:
         app.kubernetes.io/name: {{ include "autocert.name" . }}
         app.kubernetes.io/instance: {{ .Release.Name }}
     spec:
-{{- if .Release.IsInstall }}
+      {{- if .Release.IsInstall }}
       initContainers:
         - name: {{ .Chart.Name }}-init
           image: busybox:latest
           imagePullPolicy: {{ .Values.autocert.image.pullPolicy }}
           command: ["sleep", "30"]
-{{- end }}
+      {{- end }}
       containers:
       - name: {{ .Chart.Name }}
         image: {{ .Values.autocert.image.repository }}:{{ .Values.autocert.image.tag }}
@@ -33,7 +33,7 @@ spec:
         - name: PROVISIONER_NAME
           value: admin
         - name: NAMESPACE
-          value: {{.Release.Namespace}}
+          value: {{ .Release.Namespace }}
         volumeMounts:
         - name: config
           mountPath: /home/step/config
@@ -77,13 +77,13 @@ spec:
           name: {{ .Release.Name }}-autocert-config
       {{- with .Values.autocert.nodeSelector }}
       nodeSelector:
-      {{- toYaml . | nindent 8 }}
+        {{- toYaml . | nindent 8 }}
       {{- end }}
       {{- with .Values.autocert.affinity }}
       affinity:
-      {{- toYaml . | nindent 8 }}
+        {{- toYaml . | nindent 8 }}
       {{- end }}
       {{- with .Values.autocert.tolerations }}
       tolerations:
-      {{- toYaml . | nindent 8 }}
+        {{- toYaml . | nindent 8 }}
       {{- end }}

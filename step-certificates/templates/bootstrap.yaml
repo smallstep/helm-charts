@@ -3,20 +3,20 @@ apiVersion: v1
 kind: ServiceAccount
 metadata:
   name: {{ include "step-certificates.fullname" . }}-config
-  namespace: {{.Release.Namespace}}
+  namespace: {{ .Release.Namespace }}
   labels:
-{{ include "step-certificates.labels" . | indent 4 }}
+    {{- include "step-certificates.labels" . | nindent 4 }}
 ---
 apiVersion: batch/v1
 kind: Job
 metadata:
-  name: "{{.Release.Name}}"
+  name: "{{ .Release.Name }}"
   labels:
-{{ include "step-certificates.labels" . | indent 4 }}
+    {{- include "step-certificates.labels" . | nindent 4 }}
 spec:
   template:
     metadata:
-      name: "{{.Release.Name}}"
+      name: "{{ .Release.Name }}"
       labels:
         app.kubernetes.io/name: {{ include "step-certificates.name" . }}
         app.kubernetes.io/instance: {{ .Release.Name }}
@@ -36,4 +36,4 @@ spec:
           - name: bootstrap
             mountPath: /home/step/bootstrap
             readOnly: true
-{{- end -}}
+{{- end }}

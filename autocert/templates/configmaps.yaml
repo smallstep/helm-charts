@@ -2,24 +2,24 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: {{ .Release.Name }}-autocert-config
-  namespace: {{.Release.Namespace}}
+  namespace: {{ .Release.Namespace }}
   labels: 
-{{ include "autocert.labels" . | indent 4 }}
+    {{- include "autocert.labels" . | nindent 4 }}
 data:
   config.yaml: |
-    address: :{{.Values.service.targetPort}}
+    address: :{{ .Values.service.targetPort }}
     service: {{ include "autocert.fullname" . }}
-    logFormat: {{.Values.autocert.logFormat}}
+    logFormat: {{ .Values.autocert.logFormat }}
     caUrl: {{ include "autocert.ca.url" . }}
-    certLifetime: {{.Values.autocert.certLifetime}}
-    clusterDomain: {{.Values.autocert.clusterDomain}}
-    restrictCertificatesToNamespace: {{.Values.autocert.restrictCertificatesToNamespace}}
+    certLifetime: {{ .Values.autocert.certLifetime }}
+    clusterDomain: {{ .Values.autocert.clusterDomain }}
+    restrictCertificatesToNamespace: {{ .Values.autocert.restrictCertificatesToNamespace }}
     rootCAPath: /home/step/certs/root_ca.crt
     provisionerPasswordPath: /home/step/password/password
     renewer:
       name: autocert-renewer
-      image: {{.Values.renewer.image.repository}}:{{.Values.renewer.image.tag}}
-      imagePullPolicy: {{.Values.renewer.image.pullPolicy}}
+      image: {{ .Values.renewer.image.repository }}:{{ .Values.renewer.image.tag }}
+      imagePullPolicy: {{ .Values.renewer.image.pullPolicy }}
       resources:
         {{- toYaml .Values.renewer.resources | nindent 8 }}
       volumeMounts:
@@ -27,8 +27,8 @@ data:
         mountPath: /var/run/autocert.step.sm
     bootstrapper:
       name: autocert-bootstrapper
-      image: {{.Values.bootstrapper.image.repository}}:{{.Values.bootstrapper.image.tag}}
-      imagePullPolicy: {{.Values.bootstrapper.image.pullPolicy}}
+      image: {{ .Values.bootstrapper.image.repository }}:{{ .Values.bootstrapper.image.tag }}
+      imagePullPolicy: {{ .Values.bootstrapper.image.pullPolicy }}
       resources:
         {{- toYaml .Values.bootstrapper.resources | nindent 8 }}
       volumeMounts:
