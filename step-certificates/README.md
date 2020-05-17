@@ -61,6 +61,7 @@ chart and their default values.
 | `ca.db.existingClaim`       | Persistent volume existing claim name. If defined, PVC must be created manually before volume will be bound | `""`                          |
 | `ca.runAsRoot`              | Run the CA as root.                                                                                         | `false`                       |
 | `ca.bootstrap.postInitHook` | Extra script snippet to run after `step ca init` has completed.                                             | `""`                          |
+| `ca.bootstrap.rootCA.secret`| Name of the custom root CA secret (k8s tls secret) to be used.                                              | `""`                          |
 | `service.type`              | Service type                                                                                                | `ClusterIP`                   |
 | `service.port`              | Incoming port to access Step CA                                                                             | `443`                         |
 | `service.targetPort`        | Internal port where Step CA runs                                                                            | `9000`                        |

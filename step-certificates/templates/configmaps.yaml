@@ -108,7 +108,7 @@ data:
       --provisioner "{{.Values.ca.provisioner.name}}" \
       --with-ca-url "{{include "step-certificates.url" .}}" \
       --password-file "$TMP_CA_PASSWORD" \
-      --provisioner-password-file "$TMP_CA_PROVISIONER_PASSWORD" {{ if not .Values.ca.db.enabled }}--no-db{{ end }}
+      --provisioner-password-file "$TMP_CA_PROVISIONER_PASSWORD" {{ if not .Values.ca.db.enabled }}--no-db{{ end }} {{ if .Values.ca.bootstrap.rootCA.secret }}--root /tmp/certs/tls.crt --key /tmp/certs/tls.key{{ end }}
 
     rm -f $TMP_CA_PASSWORD $TMP_CA_PROVISIONER_PASSWORD
 
