@@ -121,15 +121,15 @@ data:
     # It allows to properly remove them on helm delete
     kbreplace -n {{ .Release.Namespace }} create configmap {{ include "step-certificates.fullname" . }}-config --from-file $(step path)/config
     kbreplace -n {{ .Release.Namespace }} create configmap {{ include "step-certificates.fullname" . }}-certs --from-file $(step path)/certs
-    kbreplace -n {{ .Release.Namespace }} create configmap {{ include "step-certificates.fullname" . }}-secrets --from-file $(step path)/secrets
 
+    kbreplace -n {{ .Release.Namespace }} create secret generic {{ include "step-certificates.fullname" . }}-secrets --from-file $(step path)/secrets
     kbreplace -n {{ .Release.Namespace }} create secret generic {{ include "step-certificates.fullname" . }}-ca-password --from-literal "password=${CA_PASSWORD}"
     kbreplace -n {{ .Release.Namespace }} create secret generic {{ include "step-certificates.fullname" . }}-provisioner-password --from-literal "password=${CA_PROVISIONER_PASSWORD}"
 
     # Label all configmaps and secrets
     kubectl -n {{ .Release.Namespace }} label configmap {{ include "step-certificates.fullname" . }}-config {{ include "step-certificates.labels" . | replace ": " "=" | replace "\n" " " }}
     kubectl -n {{ .Release.Namespace }} label configmap {{ include "step-certificates.fullname" . }}-certs {{ include "step-certificates.labels" . | replace ": " "=" | replace "\n" " " }}
-    kubectl -n {{ .Release.Namespace }} label configmap {{ include "step-certificates.fullname" . }}-secrets {{ include "step-certificates.labels" . | replace ": " "=" | replace "\n" " " }}
+    kubectl -n {{ .Release.Namespace }} label secret {{ include "step-certificates.fullname" . }}-secrets {{ include "step-certificates.labels" . | replace ": " "=" | replace "\n" " " }}
     kubectl -n {{ .Release.Namespace }} label secret {{ include "step-certificates.fullname" . }}-ca-password {{ include "step-certificates.labels" . | replace ": " "=" | replace "\n" " " }}
     kubectl -n {{ .Release.Namespace }} label secret {{ include "step-certificates.fullname" . }}-provisioner-password {{ include "step-certificates.labels" . | replace ": " "=" | replace "\n" " " }}
 

@@ -95,8 +95,8 @@ spec:
         configMap:
           name: {{ include "step-certificates.fullname" . }}-config
       - name: secrets
-        configMap:
-          name: {{ include "step-certificates.fullname" . }}-secrets
+        secret:
+          secretName: {{ include "step-certificates.fullname" . }}-secrets
       - name: ca-password
         secret:
           secretName: {{ include "step-certificates.fullname" . }}-ca-password
