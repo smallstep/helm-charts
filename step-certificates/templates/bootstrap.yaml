@@ -27,6 +27,11 @@ spec:
       - name: bootstrap
         configMap:
           name: {{ include "step-certificates.fullname" . }}-bootstrap
+      {{- if .Values.ca.bootstrap.data }}
+      - name: data 
+        secret:
+          secretName: {{ .Values.ca.bootstrap.data.name }}
+      {{- end}}
       containers:
       - name: config
         image: "{{ .Values.bootstrapImage.repository }}:{{ .Values.bootstrapImage.tag }}"
@@ -36,4 +41,8 @@ spec:
           - name: bootstrap
             mountPath: /home/step/bootstrap
             readOnly: true
+          {{- if .Values.ca.bootstrap.data }}
+          - name: data
+            mountPath: /tmp/bootstrap-data
+          {{- end }}
 {{- end }}
