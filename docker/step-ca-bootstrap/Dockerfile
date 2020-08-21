@@ -1,4 +1,4 @@
-FROM smallstep/step-cli:0.14.2
+FROM smallstep/step-cli:0.15.0
 
 ENV CA_NAME="Step CA"
 ENV CA_DNS="127.0.0.1"
@@ -9,7 +9,7 @@ ENV CA_URL="https://127.0.0.1:9000"
 ENV KUBE_LATEST_VERSION="v1.18.2"
 
 USER root
-RUN curl -L https://storage.googleapis.com/kubernetes-release/release/${KUBE_LATEST_VERSION}/bin/linux/amd64/kubectl -o /usr/local/bin/kubectl \
+RUN curl -L https://storage.googleapis.com/kubernetes-release/release/${KUBE_LATEST_VERSION}/bin/linux/arm64/kubectl -o /usr/local/bin/kubectl \
  && chmod +x /usr/local/bin/kubectl
 RUN apk --update add expect
 
