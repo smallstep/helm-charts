@@ -40,7 +40,7 @@ spec:
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           command: [
-            "/usr/local/bin/step-ca", 
+            "/usr/local/bin/step-ca",
             "--password-file", "/home/step/secrets/passwords/password",
             "/home/step/config/ca.json"
           ]
@@ -132,11 +132,17 @@ spec:
       resources:
         requests:
           storage: {{ .Values.ca.db.size | quote }}
+      {{ if .Values.ca.db.existingClaim }}
+      selector:
+        matchLabels:
+          name: {{ .Values.ca.db.existingClaim | quote }}
+      {{- else }}
       {{- if .Values.ca.db.storageClass }}
       {{- if (eq "-" .Values.ca.db.storageClass) }}
       storageClassName: ""
       {{- else }}
       storageClassName: {{ .Values.ca.db.storageClass | quote }}
+      {{- end }}
       {{- end }}
       {{- end }}
   {{- end }}
