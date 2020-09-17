@@ -12,7 +12,7 @@ fullnameOverride: ""
 # image contains the docker image for step-certificates.
 image:
   repository: smallstep/step-ca
-  tag: 0.14.6
+  tag: 0.15.4
   pullPolicy: IfNotPresent
 
 # bootstrapImage contains the docker image for the bootstrap of the configuration.
