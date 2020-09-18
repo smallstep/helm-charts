@@ -294,6 +294,40 @@ entries:
     version: 0.1.0
   step-certificates:
   - apiVersion: v1
+    appVersion: 0.15.4
+    created: "2020-09-18T13:33:39.538029-07:00"
+    description: An online certificate authority and related tools for secure automated
+      certificate management, so you can use TLS everywhere.
+    digest: 21633ff571f0efa721403729859fce30d971e7a13ef83cc2ef5937adca96f8ba
+    home: https://smallstep.com
+    icon: https://raw.githubusercontent.com/smallstep/certificates/master/icon.png
+    keywords:
+    - acme
+    - authority
+    - ca
+    - certificate
+    - certificates
+    - certificate-authority
+    - kubernetes
+    - pki
+    - security
+    - security-tools
+    - smallstep
+    - ssh
+    - step
+    - step-ca
+    - tls
+    - x509
+    maintainers:
+    - email: mariano@smallstep.com
+      name: Mariano Cano
+    name: step-certificates
+    sources:
+    - https://github.com/smallstep/certificates
+    urls:
+    - https://smallstep.github.io/helm-charts/step-certificates-1.15.4.tgz
+    version: 1.15.4
+  - apiVersion: v1
     appVersion: 0.14.4
     created: "2020-09-17T10:36:45.99488-07:00"
     description: An online certificate authority and related tools for secure automated
@@ -885,4 +919,41 @@ entries:
     urls:
     - https://smallstep.github.io/helm-charts/step-certificates-0.14.5.tgz
     version: 0.14.5
-generated: "2020-09-17T10:36:45.970454-07:00"
+  step-issuer:
+  - apiVersion: v2
+    appVersion: 0.2.0
+    created: "2020-09-18T13:33:39.538524-07:00"
+    description: Step-issuer helm chart for kubernetes.
+    digest: 46e319d72f1de194daba6191b5ea0b3aa14822c55ba5ef7e8084ff985f59e3b7
+    home: https://smallstep.com
+    keywords:
+    - authority
+    - ca
+    - cert-manager
+    - certificate
+    - certificate-authority
+    - certificates
+    - kubernetes
+    - pki
+    - security
+    - security-tools
+    - smallstep
+    - ssh
+    - step
+    - step-ca
+    - step-issuer
+    - tls
+    - x509
+    maintainers:
+    - email: mariano@smallstep.com
+      name: Mariano Cano
+    - email: abigaelse2@gmail.com
+      name: Irwan Shofwan
+    - email: muhammad.fauzan.razandi.16@gmail.com
+      name: Muhammad Fauzan Razandi
+    name: step-issuer
+    type: application
+    urls:
+    - https://smallstep.github.io/helm-charts/step-issuer-0.2.0.tgz
+    version: 0.2.0
+generated: "2020-09-18T13:33:39.536863-07:00"
