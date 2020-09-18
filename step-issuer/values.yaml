@@ -1,0 +1,47 @@
+# Default values for step-issuer.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+replicaCount: 1
+
+deployment:
+  image:
+    repository: smallstep/step-issuer
+    pullPolicy: IfNotPresent
+    # custom add from deployments
+    tag: 0.2.0
+  resources:
+    limits:
+      cpu: 100m
+      memory: 50Mi
+    requests:
+      cpu: 100m
+      memory: 30Mi
+  terminationGracePeriodSeconds: 10
+
+imagePullSecrets: []
+nameOverride: ""
+fullnameOverride: ""
+
+service:
+  type: ClusterIP
+
+# custom added from service step-issuer
+  port: 8443
+  targetPorts: https
+  controlPlane: controller-manager
+  scrape: true
+
+# mandatory values to generate stepIssuer resource
+# please follow the https://github.com/smallstep/step-issuer#getting-started to setup step-ca and get step-issuer values
+stepIssuer:
+  create: false
+  caBundle: ""
+  provisioner:
+    name: ""
+    kid: ""
+    passwordRef:
+      name: ""
+      key: ""
+
+# Value from service

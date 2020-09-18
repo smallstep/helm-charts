@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: "{{ template "step-issuer.fullname" . }}-controller-manager"
+  namespace: {{ .Release.Namespace }}
+  labels:
+    control-plane: {{ .Values.service.controlPlane }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      control-plane: {{ .Values.service.controlPlane }}
+  template:
+    metadata:
+      labels:
+        control-plane: {{ .Values.service.controlPlane }}
+    spec:
+      containers:
+      - image: gcr.io/kubebuilder/kube-rbac-proxy:v0.4.0
+        name: kube-rbac-proxy
+        args: ["--secure-listen-address=0.0.0.0:8443", "--upstream=http://127.0.0.1:8080/", "--logtostderr=true", "--v=10"]
+        ports:
+        - containerPort: {{ .Values.service.port }}
+          name: {{ .Values.service.targetPorts }}
+      - image: "{{ .Values.deployment.image.repository }}:{{ .Values.deployment.image.tag }}"
+        name: manager
+        args: ["--metrics-addr=127.0.0.1:8080", "--enable-leader-election"]
+        command: ["/manager"]
+        resources:
+          limits:
+            cpu: {{ .Values.deployment.resources.limits.cpu }}
+            memory: {{ .Values.deployment.resources.limits.memory }}
+          requests:
+            cpu: {{ .Values.deployment.resources.requests.cpu }}
+            memory: {{ .Values.deployment.resources.requests.memory }}
+      terminationGracePeriodSeconds: {{ .Values.deployment.terminationGracePeriodSeconds }}
