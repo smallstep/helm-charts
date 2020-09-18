@@ -2,21 +2,11 @@ name: docker-image
 
 on:
   push:
-    # branches:
-    #   - 'master'
-    #   - 'v*'
     tags:
       - 'v*'
     paths-ignore:
       - '**.md'
       - '.github/workflows/docs.yml'
-  # pull_request:
-  #   branches:
-  #     - 'master'
-  #     - 'v*'
-  #   paths-ignore:
-  #     - '**.md'
-  #     - '.github/workflows/docs.yml'
 
 jobs:
   docker:
