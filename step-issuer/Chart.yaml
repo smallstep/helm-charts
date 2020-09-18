@@ -1,11 +1,14 @@
 apiVersion: v2
+name: step-issuer
+type: application
+version: 0.2.0
 appVersion: 0.2.0
 description: Step-issuer helm chart for kubernetes.
 home: https://smallstep.com
 keywords:
- - acme
  - authority
  - ca
+ - cert-manager
  - certificate
  - certificate-authority
  - certificates
@@ -21,10 +24,9 @@ keywords:
  - tls
  - x509
 maintainers:
+  - name: Mariano Cano
+    email: mariano@smallstep.com
   - name: Irwan Shofwan
     email: abigaelse2@gmail.com 
   - name: Muhammad Fauzan Razandi
     email: muhammad.fauzan.razandi.16@gmail.com
-name: step-issuer
-type: application
-version: 1.0.0
