@@ -16,3 +16,26 @@ Visit https://smallstep.github.io/helm-charts/ for stable releases.
 
 * [Step Issuer](./step-issuer/README.md): A certificate issuer for cert-manager
   using Step Certificates.
+
+## Distribution
+
+1. Update `version` and `appVersion` in _packageName/Chart.yaml_.
+
+2. Update image tag in _packageName/values.yaml_.
+
+3. Create helm package. For example for step-certificates:
+
+   ```sh
+   helm package ./step-certificates
+   ```
+
+4. Update repository:
+
+   ```sh
+   git checkout gh-pages
+   git pull origin gh-pages
+   git add "step-certificates-<version>.tgz"
+   helm repo index --merge index.yaml --url https://smallstep.github.io/helm-charts/ .
+   git commit -a -m "Add package for step-certificates vX.Y.Z"
+   git push origin gh-pages
+   ```
