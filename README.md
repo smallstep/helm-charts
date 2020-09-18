@@ -13,3 +13,6 @@ Visit https://smallstep.github.io/helm-charts/ for stable releases.
 
 * [Autocert](./autocert/README.md): A kubernetes add-on that automatically
   injects TLS/HTTPS certificates into your containers.
+
+* [Step Issuer](./step-issuer/README.md): A certificate issuer for cert-manager
+  using Step Certificates.
