@@ -1,21 +1,84 @@
-1. Get the application URL by running these commands:
-{{- if .Values.ingress.enabled }}
-{{- range $host := .Values.ingress.hosts }}
-  {{- range .paths }}
-  http{{ if $.Values.ingress.tls }}s{{ end }}://{{ $host.host }}{{ . }}
-  {{- end }}
-{{- end }}
-{{- else if contains "NodePort" .Values.service.type }}
-  export NODE_PORT=$(kubectl get --namespace {{ .Release.Namespace }} -o jsonpath="{.spec.ports[0].nodePort}" services {{ include "step-issuer.fullname" . }})
-  export NODE_IP=$(kubectl get nodes --namespace {{ .Release.Namespace }} -o jsonpath="{.items[0].status.addresses[0].address}")
-  echo http://$NODE_IP:$NODE_PORT
-{{- else if contains "LoadBalancer" .Values.service.type }}
-     NOTE: It may take a few minutes for the LoadBalancer IP to be available.
-           You can watch the status of by running 'kubectl get --namespace {{ .Release.Namespace }} svc -w {{ include "step-issuer.fullname" . }}'
-  export SERVICE_IP=$(kubectl get svc --namespace {{ .Release.Namespace }} {{ include "step-issuer.fullname" . }} --template "{{"{{ range (index .status.loadBalancer.ingress 0) }}{{.}}{{ end }}"}}")
-  echo http://$SERVICE_IP:{{ .Values.service.port }}
-{{- else if contains "ClusterIP" .Values.service.type }}
-  export POD_NAME=$(kubectl get pods --namespace {{ .Release.Namespace }} -l "app.kubernetes.io/name={{ include "step-issuer.name" . }},app.kubernetes.io/instance={{ .Release.Name }}" -o jsonpath="{.items[0].metadata.name}")
-  echo "Visit http://127.0.0.1:8080 to use your application"
-  kubectl --namespace {{ .Release.Namespace }} port-forward $POD_NAME 8080:80
-{{- end }}
+⚙️  To get step-issuer up and running follow the next steps:
+
+1. Apply step-issuer custom resource definition or CRD:
+  kubectl apply -f https://raw.githubusercontent.com/smallstep/step-issuer/master/config/crd/bases/certmanager.step.sm_stepissuers.yaml
+
+2. Configure a certificate issuer using step-issuer:
+
+2.1 Make sure to have step-certificates installed. If not you can install it running:
+  helm repo add smallstep  https://smallstep.github.io/helm-charts
+  helm repo update
+  helm install step-certificates smallstep/step-certificates
+
+2.2 Get step-certificates root certificate:
+  kubectl get -o jsonpath="{.data['root_ca\.crt']}" configmaps/step-certificates-certs | base64
+
+2.3 Get the step-certificate provisioner information:
+  kubectl get -o jsonpath="{.data['ca\.json']}" configmaps/step-certificates-config | jq .authority.provisioners
+
+2.4 Create a step-issuer.yaml completing this template with the information from the previous commands:
+---
+apiVersion: certmanager.step.sm/v1beta1
+kind: StepIssuer
+metadata:
+  name: step-issuer
+  namespace: default
+spec:
+  # The CA URL:
+  url: https://step-certificates.default.svc.cluster.local
+  # The base64 encoded version of the CA root certificate in PEM format:
+  caBundle: <certificate from step 2.2>
+  # The provisioner name, kid, and a reference to the provisioner password secret:
+  provisioner:
+    name: admin
+    kid: <provisioner kid from step 2.3>
+    passwordRef:
+      name: step-certificates-provisioner-password
+      key: password
+---
+
+2.5 Apply the issuer:
+  kubectl apply -f step-issuer.yaml
+
+3. Sign you first certificate:
+
+3.1 Create a test-certificate.yaml like this one:
+---
+apiVersion: cert-manager.io/v1alpha2
+kind: Certificate
+metadata:
+  name: test-example-com
+  namespace: default
+spec:
+  # The secret name to store the signed certificate:
+  secretName: test-example-com-com-tls
+  # Common Name:
+  commonName: test.example.com
+  # DNS SAN:
+  dnsNames:
+    - localhost
+    - test.example.com
+  # IP Address SAN:
+  ipAddresses:
+    - "127.0.0.1"
+  # Duration of the certificate:
+  duration: 24h
+  # Renew 8 hours before the certificate expiration:
+  renewBefore: 8h
+  # The reference to the step issuer:
+  issuerRef:
+    group: certmanager.step.sm
+    kind: CertificateRequest
+    name: step-issuer
+---
+
+3.2 Apply the certificate:
+  kubectl apply -f test-certificate.yaml
+
+3.3 Check your signed certificate:
+  kubectl get secret -o yaml test-example-com-com-tls
+
+3.4 Inspect the signed certificate:
+  kubectl get secret -o jsonpath="{.data['tls\.crt']}" test-example-com-com-tls | base64 --decode | step certificate inspect -
+
+🍻 Happy signing.
