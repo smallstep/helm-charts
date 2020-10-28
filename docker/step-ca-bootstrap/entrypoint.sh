@@ -112,15 +112,15 @@ function kbreplace() {
 # It allows to properly remove them on help delete
 kbreplace -n $NAMESPACE create configmap $PREFIX-config --from-file $(step path)/config
 kbreplace -n $NAMESPACE create configmap $PREFIX-certs --from-file $(step path)/certs
-kbreplace -n $NAMESPACE create configmap $PREFIX-secrets --from-file $(step path)/secrets
 
+kbreplace -n $NAMESPACE create secret generic $PREFIX-secrets --from-file $(step path)/secrets
 kbreplace -n $NAMESPACE create secret generic $PREFIX-ca-password --from-literal "password=${CA_PASSWORD}"
 kbreplace -n $NAMESPACE create secret generic $PREFIX-provisioner-password --from-literal "password=${CA_PROVISIONER_PASSWORD}"
 
 # Label all configmaps and secrets
 kubectl -n $NAMESPACE label configmap $PREFIX-config $LABELS
 kubectl -n $NAMESPACE label configmap $PREFIX-certs $LABELS
-kubectl -n $NAMESPACE label configmap $PREFIX-secrets $LABELS
+kubectl -n $NAMESPACE label secret $PREFIX-secrets $LABELS
 kubectl -n $NAMESPACE label secret $PREFIX-ca-password $LABELS
 kubectl -n $NAMESPACE label secret $PREFIX-provisioner-password $LABELS
 
