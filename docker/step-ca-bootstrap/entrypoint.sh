@@ -105,7 +105,7 @@ echo
 echo -e "\e[1mCreating configmaps and secrets in $NAMESPACE namespace ...\e[0m"
 
 function kbreplace() {
-  kubectl $@ -o yaml --dry-run | kubectl replace -f -
+  kubectl $@ -o yaml --dry-run=client | kubectl replace -f -
 }
 
 # Replace secrets created on helm install

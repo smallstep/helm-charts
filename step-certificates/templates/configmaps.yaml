@@ -45,7 +45,7 @@ data:
     }
 
     function kbreplace() {
-      kubectl $@ -o yaml --dry-run | kubectl replace -f -
+      kubectl $@ -o yaml --dry-run=client | kubectl replace -f -
     }
 
     echo -e "\e[1mConfiguring kubctl with service account...\e[0m"
