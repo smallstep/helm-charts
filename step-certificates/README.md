@@ -68,9 +68,12 @@ chart and their default values.
 | `image.repository`          | Repository of the Step CA image                                                                             | `smallstep/step-ca`           |
 | `image.tag`                 | Tag of the Step CA image                                                                                    | `latest`                      |
 | `image.pullPolicy`          | Step CA image pull policy                                                                                   | `IfNotPresent`                |
-| `bootstrapImage.repository` | Repository of the Step CA bootstrap image                                                                   | `smallstep/step-ca-bootstrap` |
-| `bootstrapImage.tag`        | Tag of the Step CA bootstrap image                                                                          | `latest`                      |
-| `bootstrapImage.pullPolicy` | Step CA bootstrap image pull policy                                                                         | `IfNotPresent`                |
+| `bootstrap.image.repository`| Repository of the Step CA bootstrap image                                                                   | `smallstep/step-ca-bootstrap` |
+| `bootstrap.image.tag`       | Tag of the Step CA bootstrap image                                                                          | `latest`                      |
+| `bootstrap.image.pullPolicy`| Step CA bootstrap image pull policy                                                                         | `IfNotPresent`                |
+| `bootstrap.enabled`         | If false, it does not creates the bootstrap job.                                                            | `true`                        |
+| `bootstrap.configmaps`      | If false, it does not creates the configmaps.                                                               | `true`                        |
+| `bootstrap.secrets`         | If false, it does not creates the secrets.                                                                  | `true`                        |
 | `nameOverride`              | Overrides the name of the chart                                                                             | `""`                          |
 | `fullnameOverride`          | Overrides the full name of the chart                                                                        | `""`                          |
 | `ingress.enabled`           | If true Step CA ingress will be created                                                                     | `false`                       |
