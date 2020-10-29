@@ -15,11 +15,20 @@ image:
   tag: 0.15.5
   pullPolicy: IfNotPresent
 
-# bootstrapImage contains the docker image for the bootstrap of the configuration.
-bootstrapImage:
-  repository: smallstep/step-ca-bootstrap
-  tag: latest
-  pullPolicy: IfNotPresent
+# bootstrap contains the docker image for bootstrapping the configurations.
+#
+# It's also possible to disable the creation of secrets and configmaps.
+bootstrap:
+  image:
+    repository: smallstep/step-ca-bootstrap
+    tag: latest
+    pullPolicy: IfNotPresent
+  # enabled defines if the bootstrap job is created.
+  enabled: true
+  # configmaps defines if the configmaps are created.
+  configmaps: true
+  # secrets defines if the secrets are created.
+  secrets: true
 
 # service contains configuration for the kubernetes service.
 service:

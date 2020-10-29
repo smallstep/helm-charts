@@ -1,4 +1,4 @@
-{{- if .Release.IsInstall -}}
+{{- if and .Release.IsInstall .Values.bootstrap.enabled -}}
 apiVersion: v1
 kind: ServiceAccount
 metadata:
@@ -29,8 +29,8 @@ spec:
           name: {{ include "step-certificates.fullname" . }}-bootstrap
       containers:
       - name: config
-        image: "{{ .Values.bootstrapImage.repository }}:{{ .Values.bootstrapImage.tag }}"
-        imagePullPolicy: {{ .Values.bootstrapImage.pullPolicy }}
+        image: "{{ .Values.bootstrap.image.repository }}:{{ .Values.bootstrap.image.tag }}"
+        imagePullPolicy: {{ .Values.bootstrap.image.pullPolicy }}
         command: ["/bin/sh", "/home/step/bootstrap/bootstrap.sh"]
         volumeMounts:
           - name: bootstrap
