@@ -89,19 +89,27 @@ Specify each parameter using the `--set key=value[,key=value]` argument to `helm
 install`. For example,
 
 ```console
-helm install --name my-release \
-  --set provisioner.password=secretpassword,provisioner.name=Foo \
-  step-certificates
+helm install --set provisioner.password=secretpassword,provisioner.name=Foo \
+  my-release step-certificates
 ```
 
 The above command sets the Step Certificates main provisioner `Foo` with the key
 password `secretpassword`.
 
+If you provide a custom value for `ca.dns`, be sure to append
+`,{{fullname}}.{{namespace}}.svc.cluster.local,127.0.0.1` to the end, otherwise
+accessing the CA by those DNS/IPs will fail (services internal to the cluster):
+
+```console
+helm install --set ca.dns="ca.example.com\,my-release-step-certificates.default.svc.cluster.local\,127.0.0.1" \
+  my-release step-certificates
+```
+
 Alternatively, a YAML file that specifies the values for the parameters can be
 provided while installing the chart. For example,
 
 ```console
-helm install --name my-release -f values.yaml step-certificates
+helm install -f values.yaml my-release step-certificates
 ```
 
 > **Tip**: You can use the default [values.yaml](values.yaml)
