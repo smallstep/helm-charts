@@ -62,6 +62,7 @@ chart and their default values.
 | `ca.runAsRoot`                      | Run the CA as root.                                                                                         | `false`                       |
 | `ca.bootstrap.postInitHook`         | Extra script snippet to run after `step ca init` has completed.                                             | `""`                          |
 | `service.type`                      | Service type                                                                                                | `ClusterIP`                   |
+| `service.annotations`               | Service Annotations                                                                                         | `ClusterIP`                   |
 | `service.externalIPs`               | Incoming externalIP to assign to Step CA                                                                    | `[]`                          |
 | `service.loadBalancerIP`            | Incoming loadBalancerIP to assign to Step CA                                                                | `""`                          |
 | `service.loadBalancerSourceRanges`  | Incoming loadBalancerSourceRanges to assign to Step CA                                                      | `[]`                          |
