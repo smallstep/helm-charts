@@ -1,10 +1,10 @@
 {{- if .Values.bootstrap.configmaps }}
-# ConfigMaps that will be updated by the configuration job: 
+# Secrets that will be updated by the configuration job: 
 # 1. Step CA config directory.
 # 2. Step CA certs direcotry.
 # 3. Step CA secrets directory.
 apiVersion: v1
-kind: ConfigMap
+kind: Secret
 metadata:
   name: {{ include "step-certificates.fullname" . }}-config
   namespace: {{ .Release.Namespace }}
@@ -12,7 +12,7 @@ metadata:
     {{- include "step-certificates.labels" . | nindent 4 }}
 ---
 apiVersion: v1
-kind: ConfigMap
+kind: Secret
 metadata:
   name: {{ include "step-certificates.fullname" . }}-certs
   namespace: {{ .Release.Namespace }}
@@ -20,7 +20,7 @@ metadata:
     {{- include "step-certificates.labels" . | nindent 4 }}
 ---
 apiVersion: v1
-kind: ConfigMap
+kind: Secret
 metadata:
   name: {{ include "step-certificates.fullname" . }}-secrets
   namespace: {{ .Release.Namespace }}
@@ -120,17 +120,17 @@ data:
 
     # Replace secrets created on helm install
     # It allows to properly remove them on helm delete
-    kbreplace -n {{ .Release.Namespace }} create configmap {{ include "step-certificates.fullname" . }}-config --from-file $(step path)/config
-    kbreplace -n {{ .Release.Namespace }} create configmap {{ include "step-certificates.fullname" . }}-certs --from-file $(step path)/certs
-    kbreplace -n {{ .Release.Namespace }} create configmap {{ include "step-certificates.fullname" . }}-secrets --from-file $(step path)/secrets
+    kbreplace -n {{ .Release.Namespace }} create secret generic {{ include "step-certificates.fullname" . }}-config --from-file $(step path)/config
+    kbreplace -n {{ .Release.Namespace }} create secret generic {{ include "step-certificates.fullname" . }}-certs --from-file $(step path)/certs
+    kbreplace -n {{ .Release.Namespace }} create secret generic {{ include "step-certificates.fullname" . }}-secrets --from-file $(step path)/secrets
 
     kbreplace -n {{ .Release.Namespace }} create secret generic {{ include "step-certificates.fullname" . }}-ca-password --from-literal "password=${CA_PASSWORD}"
     kbreplace -n {{ .Release.Namespace }} create secret generic {{ include "step-certificates.fullname" . }}-provisioner-password --from-literal "password=${CA_PROVISIONER_PASSWORD}"
 
     # Label all configmaps and secrets
-    kubectl -n {{ .Release.Namespace }} label configmap {{ include "step-certificates.fullname" . }}-config {{ include "step-certificates.labels" . | replace ": " "=" | replace "\n" " " }}
-    kubectl -n {{ .Release.Namespace }} label configmap {{ include "step-certificates.fullname" . }}-certs {{ include "step-certificates.labels" . | replace ": " "=" | replace "\n" " " }}
-    kubectl -n {{ .Release.Namespace }} label configmap {{ include "step-certificates.fullname" . }}-secrets {{ include "step-certificates.labels" . | replace ": " "=" | replace "\n" " " }}
+    kubectl -n {{ .Release.Namespace }} label secret {{ include "step-certificates.fullname" . }}-config {{ include "step-certificates.labels" . | replace ": " "=" | replace "\n" " " }}
+    kubectl -n {{ .Release.Namespace }} label secret {{ include "step-certificates.fullname" . }}-certs {{ include "step-certificates.labels" . | replace ": " "=" | replace "\n" " " }}
+    kubectl -n {{ .Release.Namespace }} label secret {{ include "step-certificates.fullname" . }}-secrets {{ include "step-certificates.labels" . | replace ": " "=" | replace "\n" " " }}
     kubectl -n {{ .Release.Namespace }} label secret {{ include "step-certificates.fullname" . }}-ca-password {{ include "step-certificates.labels" . | replace ": " "=" | replace "\n" " " }}
     kubectl -n {{ .Release.Namespace }} label secret {{ include "step-certificates.fullname" . }}-provisioner-password {{ include "step-certificates.labels" . | replace ": " "=" | replace "\n" " " }}
 
