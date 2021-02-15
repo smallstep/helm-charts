@@ -50,6 +50,7 @@ ca:
   url:
   # password is the password used to encrypt the keys. Leave it empty to generate a random one.
   password:
+  ssh: false
   # provisioner contains the step-certificates provisioner configuration.
   provisioner:
     # name is the new provisioner name.
