@@ -1,4 +1,4 @@
-{{- if and .Release.IsInstall .Values.bootstrap.enabled -}}
+{{- if and .Release.IsInstall .Values.bootstrap.enabled }}
 apiVersion: v1
 kind: ServiceAccount
 metadata:
@@ -27,6 +27,7 @@ spec:
       - name: bootstrap
         configMap:
           name: {{ include "step-certificates.fullname" . }}-bootstrap
+
       containers:
       - name: config
         image: "{{ .Values.bootstrap.image.repository }}:{{ .Values.bootstrap.image.tag }}"
@@ -36,4 +37,6 @@ spec:
           - name: bootstrap
             mountPath: /home/step/bootstrap
             readOnly: true
+
+
 {{- end }}
