@@ -18,6 +18,10 @@ metadata:
   namespace: {{ .Release.Namespace }}
   labels:
     {{- include "step-certificates.labels" . | nindent 4 }}
+{{- if .Values.rootCA }}
+stringData: |-
+  {{- toYaml .Values.rootCA.certs | nindent 2 }}
+{{- end }}
 ---
 apiVersion: v1
 kind: Secret
@@ -26,16 +30,10 @@ metadata:
   namespace: {{ .Release.Namespace }}
   labels:
     {{- include "step-certificates.labels" . | nindent 4 }}
----
-apiVersion: v1
-kind: Secret
-metadata:
-  name: {{ include "step-certificates.fullname" . }}-rootca-key
-  namespace: {{ .Release.Namespace }}
-  labels:
-    {{- include "step-certificates.labels" . | nindent 4 }}
-data:
-  {{- toYaml .Values.rootCA | nindent 2 }}
+{{- if .Values.rootCA }}
+stringData: |-
+  {{- toYaml .Values.rootCA.key | nindent 2 }}
+{{- end }}
 
 ---
 
@@ -116,10 +114,6 @@ data:
     step ca init \
       --name "{{.Values.ca.name}}" \
       --dns "{{include "step-certificates.dns" .}}" \
-{{- if rootCA  }}
-      --root=/home/smallstep/rootca-key/rootca.crt \
-      --key=/home/smallstep/rootca-key/rootca.pem  \
-{{- end }}
       --address "{{.Values.ca.address}}" \
       --provisioner "{{.Values.ca.provisioner.name}}" \
       --with-ca-url "{{include "step-certificates.url" .}}" \
@@ -137,9 +131,10 @@ data:
     # Replace secrets created on helm install
     # It allows to properly remove them on helm delete
     kbreplace -n {{ .Release.Namespace }} create secret generic {{ include "step-certificates.fullname" . }}-config --from-file $(step path)/config
+    {{- if not rootCA }}
     kbreplace -n {{ .Release.Namespace }} create secret generic {{ include "step-certificates.fullname" . }}-certs --from-file $(step path)/certs
     kbreplace -n {{ .Release.Namespace }} create secret generic {{ include "step-certificates.fullname" . }}-secrets --from-file $(step path)/secrets
-
+    {{- end }}
     kbreplace -n {{ .Release.Namespace }} create secret generic {{ include "step-certificates.fullname" . }}-ca-password --from-literal "password=${CA_PASSWORD}"
     kbreplace -n {{ .Release.Namespace }} create secret generic {{ include "step-certificates.fullname" . }}-provisioner-password --from-literal "password=${CA_PROVISIONER_PASSWORD}"
 

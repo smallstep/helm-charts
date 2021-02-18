@@ -27,11 +27,6 @@ spec:
       - name: bootstrap
         configMap:
           name: {{ include "step-certificates.fullname" . }}-bootstrap
-{{- if rootCA  }}
-      - name: rootca-key
-        secret:
-          secretName: {{ include "step-certificates.fullname" . }}-rootca-key
-{{- end }}
 
       containers:
       - name: config
@@ -42,11 +37,6 @@ spec:
           - name: bootstrap
             mountPath: /home/step/bootstrap
             readOnly: true
-{{- if rootCA  }}
-          - name: rootca-key
-            mountPath: /home/step/rootca-key
-            readOnly: true
-{{- end }}
 
 
 {{- end }}
