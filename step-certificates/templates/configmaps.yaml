@@ -140,8 +140,11 @@ data:
 
     # Label all configmaps and secrets
     kubectl -n {{ .Release.Namespace }} label secret {{ include "step-certificates.fullname" . }}-config {{ include "step-certificates.labels" . | replace ": " "=" | replace "\n" " " }}
+    {{- if not .Values.rootCA }}
     kubectl -n {{ .Release.Namespace }} label secret {{ include "step-certificates.fullname" . }}-certs {{ include "step-certificates.labels" . | replace ": " "=" | replace "\n" " " }}
     kubectl -n {{ .Release.Namespace }} label secret {{ include "step-certificates.fullname" . }}-secrets {{ include "step-certificates.labels" . | replace ": " "=" | replace "\n" " " }}
+    {{- end }}
+       
     kubectl -n {{ .Release.Namespace }} label secret {{ include "step-certificates.fullname" . }}-ca-password {{ include "step-certificates.labels" . | replace ": " "=" | replace "\n" " " }}
     kubectl -n {{ .Release.Namespace }} label secret {{ include "step-certificates.fullname" . }}-provisioner-password {{ include "step-certificates.labels" . | replace ": " "=" | replace "\n" " " }}
 
