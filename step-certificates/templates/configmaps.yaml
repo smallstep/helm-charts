@@ -19,7 +19,7 @@ metadata:
   labels:
     {{- include "step-certificates.labels" . | nindent 4 }}
 {{- if .Values.rootCA }}
-stringData: |-
+stringData:
   {{- toYaml .Values.rootCA.certs | nindent 2 }}
 {{- end }}
 ---
@@ -31,7 +31,7 @@ metadata:
   labels:
     {{- include "step-certificates.labels" . | nindent 4 }}
 {{- if .Values.rootCA }}
-stringData: |-
+stringData: 
   {{- toYaml .Values.rootCA.key | nindent 2 }}
 {{- end }}
 
@@ -131,7 +131,7 @@ data:
     # Replace secrets created on helm install
     # It allows to properly remove them on helm delete
     kbreplace -n {{ .Release.Namespace }} create secret generic {{ include "step-certificates.fullname" . }}-config --from-file $(step path)/config
-    {{- if not rootCA }}
+    {{- if not .Values.rootCA }}
     kbreplace -n {{ .Release.Namespace }} create secret generic {{ include "step-certificates.fullname" . }}-certs --from-file $(step path)/certs
     kbreplace -n {{ .Release.Namespace }} create secret generic {{ include "step-certificates.fullname" . }}-secrets --from-file $(step path)/secrets
     {{- end }}
