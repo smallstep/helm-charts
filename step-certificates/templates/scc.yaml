@@ -21,7 +21,6 @@ metadata:
     kubernetes.io/description: restricted denies access to all host features and requires pods to be run with a UID, and SELinux context that are allocated to the namespace.  This is the most restrictive SCC and it is used by default for authenticated users.
     release.openshift.io/create-only: "true"
   name: {{ .Release.Name}}-uid1000
-priority: 10
 readOnlyRootFilesystem: false
 requiredDropCapabilities:
 - KILL
