@@ -13,8 +13,7 @@ fsGroup:
   - min: 1000
     max: 1000
 
-groups:
-- system:authenticated
+groups: []
 kind: SecurityContextConstraints
 metadata:
   annotations:
