@@ -9,7 +9,7 @@ deployment:
     repository: smallstep/step-issuer
     pullPolicy: IfNotPresent
     # custom add from deployments
-    tag: 0.2.0
+    tag: 0.3.0
   resources:
     limits:
       cpu: 100m
