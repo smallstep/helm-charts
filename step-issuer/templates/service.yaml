@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: "{{ template "step-issuer.fullname" . }}-controller-manager-metrics-service"
+  name: "{{ template "step-issuer.fullname" . }}"
   namespace: {{ .Release.Namespace }}
   annotations:
     prometheus.io/port: "{{ .Values.service.ports }}"
