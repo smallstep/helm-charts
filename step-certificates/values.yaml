@@ -35,6 +35,12 @@ service:
   type: ClusterIP
   port: 443
   targetPort: 9000
+  # externalIPs: []
+  # loadBalancerIP: ""
+  # loadBalancerSourceRanges: []
+  # externalTrafficPolicy: "local"
+  # sessionAffinity: ""
+  # annotations: 
 
 # ca contains the certificate authority configuration.
 ca:
