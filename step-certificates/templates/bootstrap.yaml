@@ -24,6 +24,11 @@ spec:
       serviceAccountName: {{ include "step-certificates.fullname" . }}-config
       restartPolicy: Never
       volumes:
+      {{- if .Values.ca.bootstrap.rootCA.secret }}
+      - name: {{ include "step-certificates.fullname" . }}-ca-volume
+        secret:
+          secretName: "{{ .Values.ca.bootstrap.rootCA.secret }}"
+      {{- end }}
       - name: bootstrap
         configMap:
           name: {{ include "step-certificates.fullname" . }}-bootstrap
@@ -36,4 +41,8 @@ spec:
           - name: bootstrap
             mountPath: /home/step/bootstrap
             readOnly: true
+          {{- if .Values.ca.bootstrap.rootCA.secret }}
+          - name: {{ include "step-certificates.fullname" . }}-ca-volume
+            mountPath: /tmp/certs
+          {{- end }}
 {{- end }}
