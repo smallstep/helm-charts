@@ -65,7 +65,7 @@ chart and their default values.
 | `service.port`              | Incoming port to access Step CA                                                                             | `443`                         |
 | `service.targetPort`        | Internal port where Step CA runs                                                                            | `9000`                        |
 | `replicaCount`              | Number of Step CA replicas. Only one replica is currently supported.                                        | `1`                           |
-| `image.repository`          | Repository of the Step CA image                                                                             | `smallstep/step-ca`           |
+| `image.repository`          | Repository of the Step CA image                                                                             | `cr.step.sm/smallstep/step-ca`|
 | `image.tag`                 | Tag of the Step CA image                                                                                    | `latest`                      |
 | `image.pullPolicy`          | Step CA image pull policy                                                                                   | `IfNotPresent`                |
 | `bootstrap.image.repository`| Repository of the Step CA bootstrap image                                                                   | `smallstep/step-ca-bootstrap` |
