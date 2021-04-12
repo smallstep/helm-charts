@@ -6,7 +6,7 @@ replicaCount: 1
 
 deployment:
   image:
-    repository: smallstep/step-issuer
+    repository: cr.step.sm/smallstep/step-issuer
     pullPolicy: IfNotPresent
     # custom add from deployments
     tag: 0.2.0

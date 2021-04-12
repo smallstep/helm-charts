@@ -20,7 +20,7 @@ image:
 # It's also possible to disable the creation of secrets and configmaps.
 bootstrap:
   image:
-    repository: smallstep/step-ca-bootstrap
+    repository: cr.step.sm/smallstep/step-ca-bootstrap
     tag: latest
     pullPolicy: IfNotPresent
   # enabled defines if the bootstrap job is created.
