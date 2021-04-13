@@ -66,39 +66,39 @@ default       Active   59m   enabled
 The following table lists the configurable parameters of the Autocert chart and
 their default values.
 
-| Parameter                                  | Description                                                                       | Default                                 |
-|--------------------------------------------|-----------------------------------------------------------------------------------|-----------------------------------------|
-| `replicaCount`                             | Number of Autocert replicas                                                       | `1`                                     |
-| `nameOverride`                             | Overrides the name of the chart                                                   | `""`                                    |
-| `fullnameOverride`                         | Overrides the full name of the chart                                              | `""`                                    |
-| `service.type`                             | Service type                                                                      | `ClusterIP`                             |
-| `service.port`                             | Incoming port to access Autocert                                                  | `443`                                   |
-| `service.targetPort`                       | Internal port where Autocert runs                                                 | `4443`                                  |
-| `autocert.image.repository`                | Repository of the Autocert image                                                  | `smallstep/autocert-controller`         |
-| `autocert.image.tag`                       | Tag of the Autocert image                                                         | `0.12.2`                                |
-| `autocert.image.pullPolicy`                | Autocert image pull policy                                                        | `IfNotPresent`                          |
-| `autocert.label`                           | Label uses to enable Autocert in a namespaces (should not be changed)             | `autocert.step.sm`                      |
-| `autocert.logFormat`                       | Log format, `json` or `text`                                                      | `json`                                  |
-| `autocert.restrictCertificatesToNamespace` | If certificate names are restricted to the namespace                              | `false`                                 |
-| `autocert.closterDomain`                   | Cluster domain name                                                               | `cluster.local`                         |
-| `autocert.certLifetime`                    | Certificate lifetime                                                              | `24h`                                   |
-| `autocert.resources`                       | CPU/memory resource requests/limits (YAML)                                        | `{requests: {cpu: 100m, memory: 20Mi}}` |
-| `autocert.nodeSelector`                    | Node labels for pod assignment (YAML)                                             | `{}`                                    |
-| `autocert.tolerations`                     | Toleration labels for pod assignment (YAML)                                       | `[]`                                    |
-| `autocert.affinity`                        | Affinity settings for pod assignment (YAML)                                       | `{}`                                    |
-| `bootstrapper.image.repository`            | Repository of the Autocert bootstrapper image                                     | `smallstep/autocert-bootstrapper`       |
-| `bootstrapper.image.tag`                   | Tag of the Autocert bootstrapper image                                            | `0.12.2`                                |
-| `bootstrapper.image.pullPolicy`            | Autocert bootstrapper image pull policy                                           | `IfNotPresent`                          |
-| `bootstrapper.resources`                   | CPU/memory resource requests/limits (YAML)                                        | `{}`                                    |
-| `renewer.image.repository`                 | Repository of the Autocert renewer image                                          | `smallstep/autocert-renewer`            |
-| `renewer.image.tag`                        | Tag of the Autocert renewer image                                                 | `0.12.2`                                |
-| `renewer.image.pullPolicy`                 | Autocert renewer image pull policy                                                | `IfNotPresent`                          |
-| `renewer.resources`                        | CPU/memory resource requests/limits (YAML)                                        | `{}`                                    |
-| `ingress.enabled`                          | If true Autocert ingress will be created                                          | `false`                                 |
-| `ingress.annotations`                      | Autocert ingress annotations (YAML)                                               | `{}`                                    |
-| `ingress.hosts`                            | Autocert ingress hostNAMES (YAML)                                                 | `[]`                                    |
-| `ingress.tls`                              | Autocert ingress TLS configuration (YAML)                                         | `[]`                                    |
-| `step-certificates.autocert.enabled`       | Enables autocert in step-certificates sub-chart (should not be changed)           | `true`                                  |
+| Parameter                                  | Description                                                                       | Default                                       |
+|--------------------------------------------|-----------------------------------------------------------------------------------|-----------------------------------------------|
+| `replicaCount`                             | Number of Autocert replicas                                                       | `1`                                           |
+| `nameOverride`                             | Overrides the name of the chart                                                   | `""`                                          |
+| `fullnameOverride`                         | Overrides the full name of the chart                                              | `""`                                          |
+| `service.type`                             | Service type                                                                      | `ClusterIP`                                   |
+| `service.port`                             | Incoming port to access Autocert                                                  | `443`                                         |
+| `service.targetPort`                       | Internal port where Autocert runs                                                 | `4443`                                        |
+| `autocert.image.repository`                | Repository of the Autocert image                                                  | `cr.step.sm/smallstep/autocert-controller`    |
+| `autocert.image.tag`                       | Tag of the Autocert image                                                         | `0.12.2`                                      |
+| `autocert.image.pullPolicy`                | Autocert image pull policy                                                        | `IfNotPresent`                                |
+| `autocert.label`                           | Label uses to enable Autocert in a namespaces (should not be changed)             | `autocert.step.sm`                            |
+| `autocert.logFormat`                       | Log format, `json` or `text`                                                      | `json`                                        |
+| `autocert.restrictCertificatesToNamespace` | If certificate names are restricted to the namespace                              | `false`                                       |
+| `autocert.closterDomain`                   | Cluster domain name                                                               | `cluster.local`                               |
+| `autocert.certLifetime`                    | Certificate lifetime                                                              | `24h`                                         |
+| `autocert.resources`                       | CPU/memory resource requests/limits (YAML)                                        | `{requests: {cpu: 100m, memory: 20Mi}}`       |
+| `autocert.nodeSelector`                    | Node labels for pod assignment (YAML)                                             | `{}`                                          |
+| `autocert.tolerations`                     | Toleration labels for pod assignment (YAML)                                       | `[]`                                          |
+| `autocert.affinity`                        | Affinity settings for pod assignment (YAML)                                       | `{}`                                          |
+| `bootstrapper.image.repository`            | Repository of the Autocert bootstrapper image                                     | `cr.step.sm/smallstep/autocert-bootstrapper`  |
+| `bootstrapper.image.tag`                   | Tag of the Autocert bootstrapper image                                            | `0.12.2`                                      |
+| `bootstrapper.image.pullPolicy`            | Autocert bootstrapper image pull policy                                           | `IfNotPresent`                                |
+| `bootstrapper.resources`                   | CPU/memory resource requests/limits (YAML)                                        | `{}`                                          |
+| `renewer.image.repository`                 | Repository of the Autocert renewer image                                          | `cr.step.sm/smallstep/autocert-renewer`       |
+| `renewer.image.tag`                        | Tag of the Autocert renewer image                                                 | `0.12.2`                                      |
+| `renewer.image.pullPolicy`                 | Autocert renewer image pull policy                                                | `IfNotPresent`                                |
+| `renewer.resources`                        | CPU/memory resource requests/limits (YAML)                                        | `{}`                                          |
+| `ingress.enabled`                          | If true Autocert ingress will be created                                          | `false`                                       |
+| `ingress.annotations`                      | Autocert ingress annotations (YAML)                                               | `{}`                                          |
+| `ingress.hosts`                            | Autocert ingress hostNAMES (YAML)                                                 | `[]`                                          |
+| `ingress.tls`                              | Autocert ingress TLS configuration (YAML)                                         | `[]`                                          |
+| `step-certificates.autocert.enabled`       | Enables autocert in step-certificates sub-chart (should not be changed)           | `true`                                        |
 
 Specify each parameter using the `--set key=value[,key=value]` argument to `helm
 install`. For example,
