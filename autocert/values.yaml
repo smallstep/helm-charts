@@ -20,8 +20,9 @@ autocert:
   # image contains the docker image for step-certificates.
   image:
     repository: cr.step.sm/smallstep/autocert-controller
-    tag: 0.12.2
     pullPolicy: IfNotPresent
+    # Overrides the image tag whose default is the chart appVersion.
+    tag: ""
   # label is the label used used to enable autocert in a namespace.
   # This value is rightnow hardcoded in autocert and it should not be changed.
   label: autocert.step.sm
@@ -46,16 +47,18 @@ autocert:
 bootstrapper:
   image:
     repository: cr.step.sm/smallstep/autocert-bootstrapper
-    tag: 0.12.2
     pullPolicy: IfNotPresent
+    # Overrides the image tag whose default is the chart appVersion.
+    tag: ""
   resources: {requests: {cpu: 10m, memory: 20Mi}}
 
 # renewer contains the autocert-renewer image and configuration.
 renewer:
   image:
     repository: cr.step.sm/smallstep/autocert-renewer
-    tag: 0.12.2
     pullPolicy: IfNotPresent
+    # Overrides the image tag whose default is the chart appVersion.
+    tag: ""
   resources: {requests: {cpu: 10m, memory: 20Mi}}
 
 # Enables autocert in the step-certificates subchart.

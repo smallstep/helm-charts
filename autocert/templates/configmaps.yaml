@@ -18,7 +18,7 @@ data:
     provisionerPasswordPath: /home/step/password/password
     renewer:
       name: autocert-renewer
-      image: {{ .Values.renewer.image.repository }}:{{ .Values.renewer.image.tag }}
+      image: "{{ .Values.renewer.image.repository }}:{{ .Values.renewer.image.tag | default .Chart.AppVersion }}"
       imagePullPolicy: {{ .Values.renewer.image.pullPolicy }}
       resources:
         {{- toYaml .Values.renewer.resources | nindent 8 }}
@@ -27,7 +27,7 @@ data:
         mountPath: /var/run/autocert.step.sm
     bootstrapper:
       name: autocert-bootstrapper
-      image: {{ .Values.bootstrapper.image.repository }}:{{ .Values.bootstrapper.image.tag }}
+      image: "{{ .Values.bootstrapper.image.repository }}:{{ .Values.bootstrapper.image.tag | default .Chart.AppVersion }}"
       imagePullPolicy: {{ .Values.bootstrapper.image.pullPolicy }}
       resources:
         {{- toYaml .Values.bootstrapper.resources | nindent 8 }}

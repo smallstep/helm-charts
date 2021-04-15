@@ -25,7 +25,7 @@ spec:
       {{- end }}
       containers:
       - name: {{ .Chart.Name }}
-        image: {{ .Values.autocert.image.repository }}:{{ .Values.autocert.image.tag }}
+        image: "{{ .Values.autocert.image.repository }}:{{ .Values.autocert.image.tag | default .Chart.AppVersion }}"
         imagePullPolicy: {{ .Values.autocert.image.pullPolicy }}
         resources: 
           {{- toYaml .Values.autocert.resources | nindent 10 }}
