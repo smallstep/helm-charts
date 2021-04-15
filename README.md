@@ -19,9 +19,9 @@ Visit https://smallstep.github.io/helm-charts/ for stable releases.
 
 ## Distribution
 
-1. Update `version` and `appVersion` in _packageName/Chart.yaml_.
+1. Update `version` in _packageName/Chart.yaml_.
 
-2. Update image tag in _packageName/values.yaml_.
+2. Update `appVersion` to the image tag in _packageName/Chart.yaml_.
 
 3. Create helm package. For example for step-certificates:
 
