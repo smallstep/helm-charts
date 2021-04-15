@@ -8,8 +8,8 @@ deployment:
   image:
     repository: cr.step.sm/smallstep/step-issuer
     pullPolicy: IfNotPresent
-    # custom add from deployments
-    tag: 0.2.0
+    # Overrides the image tag whose default is the chart appVersion.
+    tag: ""
   resources:
     limits:
       cpu: 100m

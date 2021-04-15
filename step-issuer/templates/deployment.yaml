@@ -22,7 +22,7 @@ spec:
         ports:
         - containerPort: {{ .Values.service.port }}
           name: {{ .Values.service.targetPorts }}
-      - image: "{{ .Values.deployment.image.repository }}:{{ .Values.deployment.image.tag }}"
+      - image: "{{ .Values.deployment.image.repository }}:{{ .Values.deployment.image.tag | default .Chart.AppVersion }}"
         name: manager
         args: ["--metrics-addr=127.0.0.1:8080", "--enable-leader-election"]
         command: ["/manager"]
