@@ -4,29 +4,41 @@
 
 replicaCount: 1
 
-deployment:
-  image:
-    repository: cr.step.sm/smallstep/step-issuer
-    pullPolicy: IfNotPresent
-    # Overrides the image tag whose default is the chart appVersion.
-    tag: ""
-  resources:
-    limits:
-      cpu: 100m
-      memory: 50Mi
-    requests:
-      cpu: 100m
-      memory: 30Mi
-  terminationGracePeriodSeconds: 10
+image:
+  repository: cr.step.sm/smallstep/step-issuer
+  pullPolicy: IfNotPresent
+  # Overrides the image tag whose default is the chart appVersion.
+  tag: ""
 
 imagePullSecrets: []
 nameOverride: ""
 fullnameOverride: ""
 
+deployment:
+  # Configure arguments to pass to the step issuer
+  args:
+    enableLeaderElection: true
+    disableApprovalCheck: false
+  terminationGracePeriodSeconds: 10
+
+tunnel:
+  enabled: false
+  crt: "/opt/tunnel/tls.crt"
+  key: "/opt/tunnel/tls.key"
+  host: "" # host:port
+  root: "/opt/tunnel/ca.crt"
+  secretName: ""
+
+resources:
+  limits:
+    cpu: 100m
+    memory: 50Mi
+  requests:
+    cpu: 100m
+    memory: 30Mi
+
 service:
   type: ClusterIP
-
-# custom added from service step-issuer
   port: 8443
   targetPorts: https
   controlPlane: controller-manager
@@ -43,5 +55,3 @@ stepIssuer:
     passwordRef:
       name: ""
       key: ""
-
-# Value from service

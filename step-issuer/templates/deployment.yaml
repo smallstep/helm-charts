@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: "{{ template "step-issuer.fullname" . }}-controller-manager"
+  name: "{{ template "step-issuer.fullname" . }}"
   namespace: {{ .Release.Namespace }}
   labels:
     control-plane: {{ .Values.service.controlPlane }}
@@ -28,15 +28,46 @@ spec:
         ports:
         - containerPort: {{ .Values.service.port }}
           name: {{ .Values.service.targetPorts }}
-      - image: "{{ .Values.deployment.image.repository }}:{{ .Values.deployment.image.tag | default .Chart.AppVersion }}"
+      - image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
         name: manager
-        args: ["--metrics-addr=127.0.0.1:8080", "--enable-leader-election"]
+        args: [
+          "--metrics-addr=127.0.0.1:8080",
+          {{- if .Values.deployment.args.enableLeaderElection }}
+          "--enable-leader-election",
+          {{- end }}
+          {{- if .Values.deployment.args.disableApprovalCheck }}
+          ---disable-approval-check,
+          {{- end }}
+        ]
         command: ["/manager"]
+        {{- if .Values.tunnel.enabled }}
+        env:
+          - name: STEP_TLS_TUNNEL
+            value: /opt/config/tunnel.json
+        {{- end }}
         resources:
           limits:
-            cpu: {{ .Values.deployment.resources.limits.cpu }}
-            memory: {{ .Values.deployment.resources.limits.memory }}
+            cpu: {{ .Values.resources.limits.cpu }}
+            memory: {{ .Values.resources.limits.memory }}
           requests:
-            cpu: {{ .Values.deployment.resources.requests.cpu }}
-            memory: {{ .Values.deployment.resources.requests.memory }}
+            cpu: {{ .Values.resources.requests.cpu }}
+            memory: {{ .Values.resources.requests.memory }}
+        {{- if .Values.tunnel.enabled }}
+        volumeMounts:
+          - name: tunnel-config
+            mountPath: /opt/config
+            readOnly: true
+          - name: tunnel-tls
+            mountPath: /opt/tunnel
+            readOnly: true
+        {{- end }}
+      {{- if .Values.tunnel.enabled }}
+      volumes:
+      - name: tunnel-config
+        configMap:
+          name: {{ include "step-issuer.fullname" . }}-tunnel
+      - name: tunnel-tls
+        secret:
+          secretName: {{ .Values.tunnel.secretName }}
+      {{- end }}
       terminationGracePeriodSeconds: {{ .Values.deployment.terminationGracePeriodSeconds }}
