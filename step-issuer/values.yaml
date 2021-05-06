@@ -27,7 +27,13 @@ tunnel:
   key: "/opt/tunnel/tls.key"
   host: "" # host:port
   root: "/opt/tunnel/ca.crt"
-  secretName: ""
+  tlsCertsRef:
+    secret:
+      secretName: ""
+
+# Configure extra volumes and volume mounts as YAML expressions.
+volumes: false
+volumeMounts: false
 
 resources:
   limits:

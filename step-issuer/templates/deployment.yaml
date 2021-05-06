@@ -52,22 +52,31 @@ spec:
           requests:
             cpu: {{ .Values.resources.requests.cpu }}
             memory: {{ .Values.resources.requests.memory }}
-        {{- if .Values.tunnel.enabled }}
         volumeMounts:
+          {{- if .Values.tunnel.enabled }}
+          # Tunnel configuration
           - name: tunnel-config
             mountPath: /opt/config
             readOnly: true
           - name: tunnel-tls
             mountPath: /opt/tunnel
             readOnly: true
-        {{- end }}
-      {{- if .Values.tunnel.enabled }}
+          {{- end }}
+{{- with .Values.volumeMounts }}
+           # Extra volumeMounts
+{{ toYaml . | indent 10 }}
+{{- end }}
       volumes:
-      - name: tunnel-config
-        configMap:
-          name: {{ include "step-issuer.fullname" . }}-tunnel
-      - name: tunnel-tls
-        secret:
-          secretName: {{ .Values.tunnel.secretName }}
-      {{- end }}
+        {{- if or .Values.tunnel.enabled }}
+        # Tunnel configuration
+        - name: tunnel-config
+          configMap:
+            name: {{ include "step-issuer.fullname" . }}-tunnel
+        - name: tunnel-tls
+{{ toYaml .Values.tunnel.tlsCertsRef | indent 10 }}
+        {{- end }}
+{{- with .Values.volumes }}
+        # Extra volumes
+{{ toYaml . | indent 8 }}
+{{- end }}
       terminationGracePeriodSeconds: {{ .Values.deployment.terminationGracePeriodSeconds }}
