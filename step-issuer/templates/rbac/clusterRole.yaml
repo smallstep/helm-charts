@@ -21,20 +21,13 @@ rules:
   resources: ["stepissuers"]
   verbs: ["create", "delete", "get", "list", "patch", "update", "watch"]
 - apiGroups: ["certmanager.step.sm"]
-  resources: ["stepclusterissuers"]
-  verbs: ["create", "delete", "get", "list", "patch", "update", "watch"]
-- apiGroups: ["certmanager.step.sm"]
   resources: ["stepissuers/status"]
-  verbs: ["get", "patch", "update"]
-- apiGroups: ["certmanager.step.sm"]
-  resources: ["stepclusterissuers/status"]
   verbs: ["get", "patch", "update"]
 - apiGroups: ["cert-manager.io"]
   resources: ["signers"]
   verbs: ["approve"]
   resourceNames: 
     - stepissuers.certmanager.step.sm/*
-    - stepclusterissuers.certmanager.step.sm/*
 - apiGroups: [ "coordination.k8s.io" ]
   resources: [ "leases" ]
   verbs: [ "create", "get", "list", "update" ]
@@ -64,4 +57,3 @@ rules:
   - approve
   resourceNames:
   - stepissuers.certmanager.step.sm/*
-  - stepclusterissuers.certmanager.step.sm/*
