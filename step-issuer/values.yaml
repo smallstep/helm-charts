@@ -61,3 +61,9 @@ stepIssuer:
     passwordRef:
       name: ""
       key: ""
+
+# For the cert-manager approver
+certManager:
+  serviceAccount:
+    name: cert-manager
+    namespace: cert-manager
