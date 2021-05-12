@@ -2,7 +2,6 @@
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRole
 metadata:
-  creationTimestamp: null
   name: "{{ template "step-issuer.fullname" . }}-manager-role"
 rules:
 - apiGroups: [""]
@@ -39,3 +38,13 @@ rules:
 - apiGroups: ["authorization.k8s.io"]
   resources: ["subjectaccessreviews"]
   verbs: ["create"]
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: "{{ template "step-issuer.fullname" . }}-approver-role"
+rules:
+  - apiGroups: ["cert-manager.io"]
+    resources: ["signers"]
+    verbs: ["approve"]
+    resourceNames: ["stepissuers.certmanager.step.sm/*"]
