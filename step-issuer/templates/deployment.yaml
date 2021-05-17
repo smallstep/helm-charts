@@ -46,12 +46,7 @@ spec:
             value: /opt/config/tunnel.json
         {{- end }}
         resources:
-          limits:
-            cpu: {{ .Values.resources.limits.cpu }}
-            memory: {{ .Values.resources.limits.memory }}
-          requests:
-            cpu: {{ .Values.resources.requests.cpu }}
-            memory: {{ .Values.resources.requests.memory }}
+          {{- toYaml .Values.resources | nindent 10 }}
         volumeMounts:
           {{- if .Values.tunnel.enabled }}
           # Tunnel configuration
