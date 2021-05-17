@@ -48,6 +48,8 @@ and their default values.
 | `image.repository`                        | Repository of the Step Issuer image.                                     | `cr.step.sm/smallstep/step-issuer`  |
 | `image.tag`                               | Tag of the image. If empty it will use .Chart.appVersion.                | `""`                                |
 | `image.pullPolicy`                        | Step Issuer image pull policy                                            | `IfNotPresent`                      |
+| `deployment.args.enableLeaderElection`    | Enable k8s controller leader election.                                   | `true`                              |
+| `deployment.args.disableApprovalCheck`    | To disable cert-manager approvals on old version of cert-manager.        | `false`                             |
 | `stepIssuer.created`                      | If we should automatically create an step-issuer.                        | `false`                             |
 | `stepIssuer.caBundler`                    | Step Certificates root certificate in base64.                            | `""`                                |
 | `stepIssuer.provisioner.name`             | Name of the provisioner used for authorizing the sign of certificates.   | `""`                                |
