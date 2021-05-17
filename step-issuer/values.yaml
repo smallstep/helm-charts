@@ -21,27 +21,13 @@ deployment:
     disableApprovalCheck: false
   terminationGracePeriodSeconds: 10
 
-tunnel:
-  enabled: false
-  crt: "/opt/tunnel/tls.crt"
-  key: "/opt/tunnel/tls.key"
-  host: "" # host:port
-  root: "/opt/tunnel/ca.crt"
-  tlsCertsRef:
-    secret:
-      secretName: ""
-
-# Configure extra volumes and volume mounts as YAML expressions.
-volumes: false
-volumeMounts: false
-
 resources:
   limits:
     cpu: 100m
-    memory: 50Mi
+    memory: 128Mi
   requests:
     cpu: 100m
-    memory: 30Mi
+    memory: 50Mi
 
 service:
   type: ClusterIP
@@ -67,3 +53,19 @@ certManager:
   serviceAccount:
     name: cert-manager
     namespace: cert-manager
+
+# Experimental support for the TLS-over-TLS tunnel in the step-ca client.
+# Do not enable this unless you know what to use.
+tunnel:
+  enabled: false
+  crt: "/opt/tunnel/tls.crt"
+  key: "/opt/tunnel/tls.key"
+  host: "" # host:port
+  root: "/opt/tunnel/ca.crt"
+  tlsCertsRef:
+    secret:
+      secretName: ""
+
+# Configure extra volumes and volume mounts as YAML expressions.
+volumes: false
+volumeMounts: false
