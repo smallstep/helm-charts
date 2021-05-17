@@ -4,29 +4,33 @@
 
 replicaCount: 1
 
-deployment:
-  image:
-    repository: cr.step.sm/smallstep/step-issuer
-    pullPolicy: IfNotPresent
-    # Overrides the image tag whose default is the chart appVersion.
-    tag: ""
-  resources:
-    limits:
-      cpu: 100m
-      memory: 50Mi
-    requests:
-      cpu: 100m
-      memory: 30Mi
-  terminationGracePeriodSeconds: 10
+image:
+  repository: cr.step.sm/smallstep/step-issuer
+  pullPolicy: IfNotPresent
+  # Overrides the image tag whose default is the chart appVersion.
+  tag: ""
 
 imagePullSecrets: []
 nameOverride: ""
 fullnameOverride: ""
 
+deployment:
+  # Configure arguments to pass to the step issuer
+  args:
+    enableLeaderElection: true
+    disableApprovalCheck: false
+  terminationGracePeriodSeconds: 10
+
+resources:
+  limits:
+    cpu: 100m
+    memory: 128Mi
+  requests:
+    cpu: 100m
+    memory: 50Mi
+
 service:
   type: ClusterIP
-
-# custom added from service step-issuer
   port: 8443
   targetPorts: https
   controlPlane: controller-manager
@@ -44,4 +48,24 @@ stepIssuer:
       name: ""
       key: ""
 
-# Value from service
+# For the cert-manager approver
+certManager:
+  serviceAccount:
+    name: cert-manager
+    namespace: cert-manager
+
+# Experimental support for the TLS-over-TLS tunnel in the step-ca client.
+# Do not enable this unless you know what to use.
+tunnel:
+  enabled: false
+  crt: "/opt/tunnel/tls.crt"
+  key: "/opt/tunnel/tls.key"
+  host: "" # host:port
+  root: "/opt/tunnel/ca.crt"
+  tlsCertsRef:
+    secret:
+      secretName: ""
+
+# Configure extra volumes and volume mounts as YAML expressions.
+volumes: false
+volumeMounts: false

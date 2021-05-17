@@ -12,7 +12,7 @@ helm install step-issuer step-issuer
 
 ## Prerequisites
 
--   Kubernetes 1.10+
+- Kubernetes 1.10+
 
 ## Installing the Chart
 
@@ -45,9 +45,11 @@ and their default values.
 | Parameter                                 | Description                                                              | Default                             |
 | ----------------------------------------- | ------------------------------------------------------------------------ | ----------------------------------- |
 | `replicaCount`                            | Number of Step Issuer replicas.                                          | `1`                                 |
-| `deployment.image.repository`             | Repository of the Step Issuer image.                                     | `cr.step.sm/smallstep/step-issuer`  |
-| `deployment.image.tag`                    | Tag of the Step Step Issuer image .                                      | `0.2.0`                             |
-| `deployment.image.pullPolicy`             | Step Issuer image pull policy                                            | `IfNotPresent`                      |
+| `image.repository`                        | Repository of the Step Issuer image.                                     | `cr.step.sm/smallstep/step-issuer`  |
+| `image.tag`                               | Tag of the image. If empty it will use .Chart.appVersion.                | `""`                                |
+| `image.pullPolicy`                        | Step Issuer image pull policy                                            | `IfNotPresent`                      |
+| `deployment.args.enableLeaderElection`    | Enable k8s controller leader election.                                   | `true`                              |
+| `deployment.args.disableApprovalCheck`    | To disable cert-manager approvals on old version of cert-manager.        | `false`                             |
 | `stepIssuer.created`                      | If we should automatically create an step-issuer.                        | `false`                             |
 | `stepIssuer.caBundler`                    | Step Certificates root certificate in base64.                            | `""`                                |
 | `stepIssuer.provisioner.name`             | Name of the provisioner used for authorizing the sign of certificates.   | `""`                                |
