@@ -36,6 +36,7 @@ service:
   type: ClusterIP
   port: 443
   targetPort: 9000
+# nodePort: 32400
 
 # ca contains the certificate authority configuration.
 ca:
