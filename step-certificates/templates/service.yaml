@@ -11,6 +11,9 @@ spec:
       targetPort: {{ .Values.service.targetPort }}
       protocol: TCP
       name: https
+      {{ if eq .Values.service.type "NodePort" }}
+      nodePort: {{ .Values.service.nodePort }}
+      {{ end }}
   selector:
     app.kubernetes.io/name: {{ include "step-certificates.name" . }}
     app.kubernetes.io/instance: {{ .Release.Name }}
