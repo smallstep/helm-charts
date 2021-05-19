@@ -318,6 +318,39 @@ entries:
     version: 0.1.0
   step-certificates:
   - apiVersion: v1
+    appVersion: 0.15.15
+    created: "2021-05-18T17:28:25.291806-07:00"
+    description: An online certificate authority and related tools for secure automated certificate management, so you can use TLS everywhere.
+    digest: b9c232792a389dc3f8791726772960dd1f174bd80202c7d6e2a56dbfe18a659c
+    home: https://smallstep.com
+    icon: https://raw.githubusercontent.com/smallstep/certificates/master/icon.png
+    keywords:
+    - acme
+    - authority
+    - ca
+    - certificate
+    - certificates
+    - certificate-authority
+    - kubernetes
+    - pki
+    - security
+    - security-tools
+    - smallstep
+    - ssh
+    - step
+    - step-ca
+    - tls
+    - x509
+    maintainers:
+    - email: mariano@smallstep.com
+      name: Mariano Cano
+    name: step-certificates
+    sources:
+    - https://github.com/smallstep/certificates
+    urls:
+    - https://smallstep.github.io/helm-charts/step-certificates-1.15.15.tgz
+    version: 1.15.15
+  - apiVersion: v1
     appVersion: 0.15.13
     created: "2021-04-15T11:19:41.187651-07:00"
     description: An online certificate authority and related tools for secure automated certificate management, so you can use TLS everywhere.
@@ -1204,4 +1237,4 @@ entries:
     urls:
     - https://smallstep.github.io/helm-charts/step-issuer-0.2.0.tgz
     version: 0.2.0
-generated: "2021-05-17T17:29:05.179003-07:00"
+generated: "2021-05-18T17:28:25.290645-07:00"
