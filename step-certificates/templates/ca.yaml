@@ -94,15 +94,22 @@ spec:
       - name: config
         configMap:
           name: {{ include "step-certificates.fullname" . }}-config
+      {{- if not .Values.inject.secrets.enabled }}
       - name: secrets
         configMap:
           name: {{ include "step-certificates.fullname" . }}-secrets
+      {{- end }}
       - name: ca-password
         secret:
           secretName: {{ include "step-certificates.fullname" . }}-ca-password
       {{- if and .Values.ca.db.enabled (not .Values.ca.db.persistent) }}
       - name: database
         emptyDir: {}
+      {{- end }}
+      {{- if .Values.inject.secrets.enabled }}
+      - name: secrets
+        secret:
+          secretName: {{ include "step-certificates.fullname" . }}-secrets
       {{- end }}
       {{- with .Values.nodeSelector }}
       nodeSelector:
