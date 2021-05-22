@@ -147,3 +147,39 @@ data:
     echo "CA Fingerprint: $(step certificate fingerprint $(step path)/certs/root_ca.crt)"
     echo
 {{- end }}
+---
+{{- if .Values.inject.config.enabled }}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ include "step-certificates.fullname" . }}-config
+  namespace: {{ .Release.Namespace }}
+  labels:
+    {{- include "step-certificates.labels" . | nindent 4 }}
+data:
+  {{- range $key, $val := .Values.inject.config.files }}
+  {{ $key }}: |
+    {{- $val | toPrettyJson | nindent 4 }}
+  {{- end }}
+  {{- range $key, $val := .Values.inject.config.templates }}
+  {{ $key }}: |
+    {{- $val | nindent 4 }}
+  {{- end }}
+{{- end }}
+---
+{{- if .Values.inject.certificates.enabled }}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ include "step-certificates.fullname" . }}-certs
+  namespace: {{ .Release.Namespace }}
+  labels:
+    {{- include "step-certificates.labels" . | nindent 4 }}
+data:
+  intermediate_ca.crt: |-
+    {{- .Values.inject.certificates.intermediate_ca | nindent 4 }}
+  root_ca.crt: |-
+    {{- .Values.inject.certificates.root_ca | nindent 4 }}
+  ssh_host_ca_key.pub: {{ .Values.inject.certificates.ssh_host_ca }}
+  ssh_user_ca_key.pub:  {{ .Values.inject.certificates.ssh_host_ca }}
+{{- end }}
