@@ -87,6 +87,10 @@ spec:
             mountPath: /home/step/db
             readOnly: false
           {{- end }}
+          {{- if .Values.ca.ssh }}
+          - name: templates-ssh
+            mountPath: /home/step/templates/ssh
+          {{- end }}
       volumes:
       - name: certs
         configMap:
@@ -103,6 +107,11 @@ spec:
       {{- if and .Values.ca.db.enabled (not .Values.ca.db.persistent) }}
       - name: database
         emptyDir: {}
+      {{- end }}
+      {{- if .Values.ca.ssh }}
+      - name: templates-ssh
+        configMap:
+          name: {{ include "step-certificates.fullname" . }}-templates-ssh
       {{- end }}
       {{- with .Values.nodeSelector }}
       nodeSelector:
