@@ -1,5 +1,9 @@
 # Default values for step-certificates.
 
+# kind is the type of object to use when deploying the CA.
+# Changing the deployment type is experimental.
+kind: StatefulSet
+
 # replicaCount is the number of replicas of step-certificates.
 # Only one replica is supported at this time.
 replicaCount: 1
@@ -33,8 +37,8 @@ bootstrap:
 
 # inject contains values to be injected into config maps and secrets
 inject:
+  enabled: false
   config:
-    enabled: false
     files:
       ca.json:
         root: /home/step/certs/root_ca.crt
@@ -100,8 +104,6 @@ inject:
         }
 
   certificates:
-    enabled: false
-
     # intermediate_ca contains the text of the intermediate CA Certificate
     intermediate_ca: ""
     # intermediate_ca: |
@@ -125,12 +127,10 @@ inject:
     # ssh_user_ca: "ecdsa-sha2-nistp384 public-key-here=="
 
   secrets:
-    # enabled tells the helmchart to inject these values as secrets.
-    enabled: false
-
     # ca_password contains the password used to encrypt x509.intermediate_ca_key, ssh.host_ca_key and ssh.user_ca_key
     # This value must be base64 encoded.
-    ca_password: ""
+    ca_password: Cg==
+    provisioner_password: Cg==
 
     x509:
       # intermediate_ca_key contains the contents of your encrypted intermediate CA key
