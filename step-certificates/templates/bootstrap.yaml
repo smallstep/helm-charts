@@ -1,4 +1,4 @@
-{{- if and .Release.IsInstall .Values.bootstrap.enabled -}}
+{{- if .Release.IsInstall -}}
 apiVersion: v1
 kind: ServiceAccount
 metadata:
@@ -7,6 +7,7 @@ metadata:
   labels:
     {{- include "step-certificates.labels" . | nindent 4 }}
 ---
+{{- if and .Values.bootstrap.enabled (not .Values.inject.enabled) -}}
 apiVersion: batch/v1
 kind: Job
 metadata:
@@ -36,4 +37,5 @@ spec:
           - name: bootstrap
             mountPath: /home/step/bootstrap
             readOnly: true
+{{- end }}
 {{- end }}

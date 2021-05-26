@@ -1,13 +1,12 @@
 apiVersion: apps/v1
-kind: StatefulSet
+kind: {{ .Values.kind }}
 metadata:
   name: {{ include "step-certificates.fullname" . }}
   labels:
     {{- include "step-certificates.labels" . | nindent 4 }}
 spec:
   # Only one replica is supported at this moment
-  # Requested {{ .Values.replicaCount }}
-  replicas: 1
+  replicas: {{ .Values.replicaCount }}
   selector:
     matchLabels:
       app.kubernetes.io/name: {{ include "step-certificates.name" . }}
@@ -94,8 +93,11 @@ spec:
       - name: config
         configMap:
           name: {{ include "step-certificates.fullname" . }}-config
-      {{- if not .Values.inject.secrets.enabled }}
       - name: secrets
+      {{- if .Values.inject.enabled }}
+        secret:
+          secretName: {{ include "step-certificates.fullname" . }}-secrets
+      {{- else }}
         configMap:
           name: {{ include "step-certificates.fullname" . }}-secrets
       {{- end }}
@@ -105,11 +107,6 @@ spec:
       {{- if and .Values.ca.db.enabled (not .Values.ca.db.persistent) }}
       - name: database
         emptyDir: {}
-      {{- end }}
-      {{- if .Values.inject.secrets.enabled }}
-      - name: secrets
-        secret:
-          secretName: {{ include "step-certificates.fullname" . }}-secrets
       {{- end }}
       {{- with .Values.nodeSelector }}
       nodeSelector:
