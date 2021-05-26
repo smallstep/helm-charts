@@ -85,18 +85,17 @@ chart and their default values.
 | `nodeSelector`                | Node labels for pod assignment (YAML)                                                                       | `{}`                                     |
 | `tolerations`                 | Toleration labels for pod assignment (YAML)                                                                 | `[]`                                     |
 | `affinity`                    | Affinity settings for pod assignment (YAML)                                                                 | `{}`                                     |
-| `inject.config.enabled`       | When true, configuration files and templates are injected into a Kubernetes configmap.                      | `false`                                  |
+| `inject.enabled`              | When true, configuration files and templates are injected into a Kubernetes objects and bootstrap capability is disabled.                      | `false`                                  |
 | `inject.config.files.ca.json` | Yaml representation of the step-ca ca.json file.  This map object is converted to its equivalent json representation before being injected into a configMap.  See the step-ca [documentation](https://smallstep.com/docs/step-ca/configuration). | See [values.yaml](./values.yaml) |
 | `inject.config.files.default.json` | Yaml representation of the step-cli defaults.json file.  This map object is converted to its equivalent json representation before being injected into a configMap.  See the step-cli [documentation](https://smallstep.com/docs/step-cli/reference). | See [values.yaml](./values.yaml) |
 | `inject.config.templates.x509_leaf.tpl`   | Example X509 Leaf Certifixate Template to inject into the configMap.                            | See [values.yaml](./values.yaml)         |
 | `inject.config.templates.ssh.tpl`         | Example SSH Certificate Template to inject into the configMap.                                  | See [values.yaml](./values.yaml)         |
-| `inject.certificates.enabled`             | When true, certificates are injected into a configmap.                                          | `false`                                  |
 | `inject.certificates.intermediate_ca`     | Plain text PEM representation of the intermediate CA certificate.                               | `""`                                     |
 | `inject.certificates.root_ca`             | Plain text PEM representation of the root CA certificate.                                       | `""`                                     |
 | `inject.certificates.ssh_host_ca`         | Plain text representation of the ssh host CA public key.                                        | `""`                                     |
 | `inject.certificates.ssh_user_ca`         | Plain text representation of the ssh user CA public key.                                        | `""`                                     |
-| `inject.secrets.enabled`                  | When true, secrets are injected into a Kubernetes Secret.                                       | `false`                                  |
-| `inject.secrets.ca_password`              | Base64 encoded string.  Password used to encrypt intermediate and ssh keys.                     | `""`                                     |
+| `inject.secrets.ca_password`              | Base64 encoded string.  Password used to encrypt intermediate and ssh keys.                     | `Cg==`                                     |
+| `inject.secrets.provisioner_password`     | Base64 encoded string.  Password used to encrypt JWK provisioner.                     | `Cg==`                                     |
 | `inject.secrets.x509.intermediate_ca_key` | Plain text PEM representation of the intermediate CA private key.                               | `""`                                     |
 | `inject.secrets.x509.root_ca_key`         | Plain text PEM representation of the root CA private key.                                       | `""`                                     |
 | `inject.secrets.ssh.host_ca_key `         | Plain text representation of the ssh host CA private key.                                       | `""`                                     |
