@@ -16,6 +16,7 @@ fullnameOverride: ""
 # image contains the docker image for step-certificates.
 image:
   repository: cr.step.sm/smallstep/step-ca
+  initContainerRepository: busybox:latest
   pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
   tag: ""

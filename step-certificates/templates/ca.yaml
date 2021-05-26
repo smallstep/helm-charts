@@ -21,7 +21,7 @@ spec:
       {{- if .Release.IsInstall }}
       initContainers:
         - name: {{ .Chart.Name }}-init
-          image: busybox:latest
+          image: {{ .Values.image.initContainerRepository }}
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           command: ["sleep", "20"]
       {{- end }}
