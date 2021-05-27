@@ -1,13 +1,12 @@
 apiVersion: apps/v1
-kind: StatefulSet
+kind: {{ .Values.kind }}
 metadata:
   name: {{ include "step-certificates.fullname" . }}
   labels:
     {{- include "step-certificates.labels" . | nindent 4 }}
 spec:
   # Only one replica is supported at this moment
-  # Requested {{ .Values.replicaCount }}
-  replicas: 1
+  replicas: {{ .Values.replicaCount }}
   selector:
     matchLabels:
       app.kubernetes.io/name: {{ include "step-certificates.name" . }}
@@ -19,10 +18,10 @@ spec:
         app.kubernetes.io/name: {{ include "step-certificates.name" . }}
         app.kubernetes.io/instance: {{ .Release.Name }}
     spec:
-      {{- if .Release.IsInstall }}
+      {{- if and .Release.IsInstall (not .Values.inject.enabled) }}
       initContainers:
         - name: {{ .Chart.Name }}-init
-          image: busybox:latest
+          image: {{ .Values.image.initContainerRepository }}
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           command: ["sleep", "20"]
       {{- end }}
@@ -95,8 +94,13 @@ spec:
         configMap:
           name: {{ include "step-certificates.fullname" . }}-config
       - name: secrets
+      {{- if .Values.inject.enabled }}
+        secret:
+          secretName: {{ include "step-certificates.fullname" . }}-secrets
+      {{- else }}
         configMap:
           name: {{ include "step-certificates.fullname" . }}-secrets
+      {{- end }}
       - name: ca-password
         secret:
           secretName: {{ include "step-certificates.fullname" . }}-ca-password
