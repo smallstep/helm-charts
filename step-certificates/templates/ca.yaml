@@ -18,7 +18,7 @@ spec:
         app.kubernetes.io/name: {{ include "step-certificates.name" . }}
         app.kubernetes.io/instance: {{ .Release.Name }}
     spec:
-      {{- if .Release.IsInstall }}
+      {{- if and .Release.IsInstall (not .Values.inject.enabled) }}
       initContainers:
         - name: {{ .Chart.Name }}-init
           image: {{ .Values.image.initContainerRepository }}
