@@ -154,14 +154,14 @@ inject:
     ssh:
       # ssh_host_ca_key contains the contents of your encrypted SSH Host CA key
       host_ca_key: ""
-      # ssh_host_ca_key: |
+      # host_ca_key: |
       #   -----BEGIN OPENSSH PRIVATE KEY-----
       #   ...
       #   -----END OPENSSH PRIVATE KEY-----
 
       # ssh_user_ca_key contains the contents of your encrypted SSH User CA key
       user_ca_key: ""
-      # ssh_user_ca_key: |
+      # user_ca_key: |
       #   -----BEGIN OPENSSH PRIVATE KEY-----
       #   ...
       #   -----END OPENSSH PRIVATE KEY-----
