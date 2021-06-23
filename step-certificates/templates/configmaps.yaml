@@ -38,7 +38,7 @@ data:
   root_ca.crt: |-
     {{- .Values.inject.certificates.root_ca | nindent 4 }}
   ssh_host_ca_key.pub: {{ .Values.inject.certificates.ssh_host_ca }}
-  ssh_user_ca_key.pub:  {{ .Values.inject.certificates.ssh_host_ca }}
+  ssh_user_ca_key.pub:  {{ .Values.inject.certificates.ssh_user_ca }}
 {{- end }}
 {{- end }}
 ---
