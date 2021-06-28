@@ -86,10 +86,15 @@ spec:
             mountPath: /home/step/db
             readOnly: false
           {{- end }}
-      volumes:
+      volumes: 
       - name: certs
+      {{- if .Values.inject.enabled }}           
+        secret:
+          secretName: {{ include "step-certificates.fullname" . }}-certs
+      {{- else }}              
         configMap:
           name: {{ include "step-certificates.fullname" . }}-certs
+      {{- end }}          
       - name: config
         configMap:
           name: {{ include "step-certificates.fullname" . }}-config
