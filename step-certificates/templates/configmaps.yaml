@@ -23,7 +23,7 @@ data:
 {{- end }}
 {{- end }}
 ---
-{{- if or .Values.bootstrap.configmaps .Values.inject.enabled }}
+{{- if and .Values.bootstrap.configmaps (not .Values.inject.enabled) }}
 apiVersion: v1
 kind: ConfigMap
 metadata:
@@ -31,15 +31,6 @@ metadata:
   namespace: {{ .Release.Namespace }}
   labels:
     {{- include "step-certificates.labels" . | nindent 4 }}
-{{- if .Values.inject.enabled }}
-data:
-  intermediate_ca.crt: |-
-    {{- .Values.inject.certificates.intermediate_ca | nindent 4 }}
-  root_ca.crt: |-
-    {{- .Values.inject.certificates.root_ca | nindent 4 }}
-  ssh_host_ca_key.pub: {{ .Values.inject.certificates.ssh_host_ca }}
-  ssh_user_ca_key.pub:  {{ .Values.inject.certificates.ssh_user_ca }}
-{{- end }}
 {{- end }}
 ---
 {{- if and .Values.bootstrap.configmaps (not .Values.inject.enabled) }}
