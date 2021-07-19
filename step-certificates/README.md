@@ -8,7 +8,8 @@ To learn more, visit <https://github.com/smallstep/certificates>.
 ## TL;DR
 
 ```console
-helm install step-certificates
+helm repo add smallstep https://smallstep.github.io/helm-charts/
+helm install smallstep/step-certificates
 ```
 
 ## Prerequisites
