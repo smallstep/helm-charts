@@ -134,6 +134,8 @@ inject:
     provisioner_password: Cg==
 
     x509:
+      # enabled disables injection of x509 certificates and keys when set to false.
+      enabled: true
       # intermediate_ca_key contains the contents of your encrypted intermediate CA key
       intermediate_ca_key: ""
       # intermediate_ca_key: |
@@ -152,6 +154,8 @@ inject:
       #   -----END EC PRIVATE KEY-----
 
     ssh:
+      # enabled disables injection of ssh certificates and keys when set to false.
+      enabled: true
       # ssh_host_ca_key contains the contents of your encrypted SSH Host CA key
       host_ca_key: ""
       # host_ca_key: |

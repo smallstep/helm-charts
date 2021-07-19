@@ -33,12 +33,16 @@ metadata:
     {{- include "step-certificates.labels" . | nindent 4 }}
 {{- if .Values.inject.enabled }}
 data:
+  {{- if .Values.inject.secrets.x509.enabled }}
   intermediate_ca.crt: |-
     {{- .Values.inject.certificates.intermediate_ca | nindent 4 }}
   root_ca.crt: |-
     {{- .Values.inject.certificates.root_ca | nindent 4 }}
+  {{- end }}
+  {{- if .Values.inject.secrets.ssh.enabled }}
   ssh_host_ca_key.pub: {{ .Values.inject.certificates.ssh_host_ca }}
   ssh_user_ca_key.pub:  {{ .Values.inject.certificates.ssh_user_ca }}
+  {{- end }}
 {{- end }}
 {{- end }}
 ---
