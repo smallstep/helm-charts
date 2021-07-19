@@ -33,6 +33,10 @@ metadata:
     {{- include "step-certificates.labels" . | nindent 4 }}
 {{- if .Values.inject.enabled }}
 data:
+  {{- if and .Values.inject.secrets.certificate_issuer_key.enabled .Values.inject.certificates.certificate_issuer!="" }}
+  certificate_issuer.crt: |-
+    {{- .Values.inject.certificates.certificate_issuer }}
+  {{- end }}
   {{- if .Values.inject.secrets.x509.enabled }}
   intermediate_ca.crt: |-
     {{- .Values.inject.certificates.intermediate_ca | nindent 4 }}

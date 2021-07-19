@@ -105,6 +105,15 @@ inject:
         }
 
   certificates:
+    # certificate_issuer_crt contains the text of the Certificate Issuer certificate in PEM format.
+    # when set to "", certificate issuer crt is not injected, this is the default for the JWK provisioner.
+    # Provide a value if using the X5C provisioner.
+    certificate_issuer_crt: ""
+    # certificate_issuer_crt: |
+    #   -----BEGIN CERTIFICATE-----
+    #   ...
+    #   -----END CERTIFICATE-----
+
     # intermediate_ca contains the text of the intermediate CA Certificate
     intermediate_ca: ""
     # intermediate_ca: |
@@ -132,6 +141,16 @@ inject:
     # This value must be base64 encoded.
     ca_password: Cg==
     provisioner_password: Cg==
+    
+    certificate_issuer:
+      # enabled enables injection of certificate issuer certificates and keys when set to true.
+      enabled: false
+      # key: |
+      #   -----BEGIN ENCRYPTED PRIVATE KEY-----
+      #   ...
+      #   -----END ENCRYPTED PRIVATE KEY-----
+      # password sets the certificate issuer password that decrypts the encrypted certificate issuer key.  Must be base64 encoded.
+      # password: Cg==
 
     x509:
       # enabled enables injection of x509 certificates and keys when set to true.
