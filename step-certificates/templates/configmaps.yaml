@@ -33,13 +33,15 @@ metadata:
     {{- include "step-certificates.labels" . | nindent 4 }}
 {{- if .Values.inject.enabled }}
 data:
-  {{- if and .Values.inject.secrets.certificate_issuer_key.enabled (not (eq .Values.inject.certificates.certificate_issuer "")) }}
+  {{- if and .Values.inject.secrets.certificate_issuer.enabled (not (eq "" (.Values.inject.certificates.certificate_issuer | default "" ))) }}
   certificate_issuer.crt: |-
     {{- .Values.inject.certificates.certificate_issuer }}
   {{- end }}
-  {{- if .Values.inject.secrets.x509.enabled }}
+  {{- if not (eq "" (.Values.inject.certificates.intermediate_ca | default "" )) }}
   intermediate_ca.crt: |-
     {{- .Values.inject.certificates.intermediate_ca | nindent 4 }}
+  {{- end }}
+  {{- if not (eq "" (.Values.inject.certificates.root_ca | default "" )) }}
   root_ca.crt: |-
     {{- .Values.inject.certificates.root_ca | nindent 4 }}
   {{- end }}
