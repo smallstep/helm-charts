@@ -53,6 +53,9 @@ inject:
           - 127.0.0.1
         logger:
           format: json
+        db:
+          type: badger
+          dataSource: /home/step/db
         authority:
           claims:
             minTLSCertDuration: 5m
