@@ -28,9 +28,6 @@ inject:
               type: ACME
           type: stepcas
         crt: ''
-        db:
-          dataSource: /home/step/db
-          type: badger
         dnsNames:
           - your-local-dns.your-internal-zone.com
           - step-step-certificates.your-k8s-namespace.svc.cluster.local
