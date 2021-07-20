@@ -11,7 +11,9 @@ spec:
     matchLabels:
       app.kubernetes.io/name: {{ include "step-certificates.name" . }}
       app.kubernetes.io/instance: {{ .Release.Name }}
+  {{- if eq .Values.kind "StatefulSet" }}
   serviceName: {{ include "step-certificates.fullname" . }}
+  {{- end }}
   template:
     metadata:
       labels:
