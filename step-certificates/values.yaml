@@ -108,7 +108,7 @@ inject:
         }
 
   certificates:
-    # certificate_issuer_crt contains the text of the Certificate Issuer certificate in PEM format.
+    # certificate_issuer contains the text of the Certificate Issuer certificate in PEM format.
     # when set to "", certificate issuer crt is not injected, this is the default for the JWK provisioner.
     # Provide a value if using the X5C provisioner.
     certificate_issuer: ""
