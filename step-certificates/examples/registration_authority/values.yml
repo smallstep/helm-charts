@@ -20,7 +20,6 @@ inject:
           certificateAuthority: https://your-ca-name.your-org.ca.smallstep.com
           certificateAuthorityFingerprint: your-ca-fingerprint-here
           certificateIssuer:
-            key: /home/step/secrets/certificate_issuer_key
             provisioner: registration-authority
             type: jwk
           provisioners:
@@ -49,10 +48,6 @@ inject:
     secrets:
       certificate_issuer:
         enabled: true
-        key: |-
-          -----BEGIN ENCRYPTED PRIVATE KEY-----
-          your pem encoded encrypted provisioner key here
-          -----END ENCRYPTED PRIVATE KEY-----
         password: your-base-64-encoded-key-password
       ssh:
         enabled: false
