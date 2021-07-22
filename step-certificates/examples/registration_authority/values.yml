@@ -35,7 +35,7 @@ inject:
           minVersion: 1.2
           renegotiation: false
       defaults.json:
-        ca-url: https:/your-ca-name.your-org.ca.smallstep.com
+        ca-url: https://your-ca-name.your-org.ca.smallstep.com
         fingerprint: your-ca-fingerprint-here
         redirect-url: ''
     enabled: true
