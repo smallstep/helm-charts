@@ -108,6 +108,15 @@ inject:
         }
 
   certificates:
+    # certificate_issuer contains the text of the Certificate Issuer certificate in PEM format.
+    # when set to "", certificate issuer crt is not injected, this is the default for the JWK provisioner.
+    # Provide a value if using the X5C provisioner.
+    certificate_issuer: ""
+    # certificate_issuer: |
+    #   -----BEGIN CERTIFICATE-----
+    #   ...
+    #   -----END CERTIFICATE-----
+
     # intermediate_ca contains the text of the intermediate CA Certificate
     intermediate_ca: ""
     # intermediate_ca: |
@@ -133,10 +142,23 @@ inject:
   secrets:
     # ca_password contains the password used to encrypt x509.intermediate_ca_key, ssh.host_ca_key and ssh.user_ca_key
     # This value must be base64 encoded.
-    ca_password: Cg==
-    provisioner_password: Cg==
+    ca_password: ""
+    provisioner_password: ""
+    
+    certificate_issuer:
+      # enabled enables injection of certificate issuer certificates and keys when set to true.
+      enabled: false
+      key: ""
+      # key: |
+      #   -----BEGIN ENCRYPTED PRIVATE KEY-----
+      #   ...
+      #   -----END ENCRYPTED PRIVATE KEY-----
+      # password sets the certificate issuer password that decrypts the encrypted certificate issuer key.  Must be base64 encoded.
+      password: ""
 
     x509:
+      # enabled enables injection of x509 certificates and keys when set to true.
+      enabled: true
       # intermediate_ca_key contains the contents of your encrypted intermediate CA key
       intermediate_ca_key: ""
       # intermediate_ca_key: |
@@ -155,6 +177,8 @@ inject:
       #   -----END EC PRIVATE KEY-----
 
     ssh:
+      # enabled enables injection of ssh certificates and keys when set to true.
+      enabled: true
       # ssh_host_ca_key contains the contents of your encrypted SSH Host CA key
       host_ca_key: ""
       # host_ca_key: |
