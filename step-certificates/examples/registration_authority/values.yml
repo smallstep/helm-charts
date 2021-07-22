@@ -7,11 +7,6 @@ ca:
       enabled: true
       persistent: false
 inject:
-  certificates:
-    root_ca: |-
-      -----BEGIN CERTIFICATE-----
-      your pem encoded root ca certificate here
-      -----END CERTIFICATE-----
   config:
     files:
       ca.json:
@@ -43,7 +38,6 @@ inject:
         ca-url: https:/your-ca-name.your-org.ca.smallstep.com
         fingerprint: your-ca-fingerprint-here
         redirect-url: ''
-        root: /home/step/certs/root_ca.crt
     enabled: true
     secrets:
       certificate_issuer:
