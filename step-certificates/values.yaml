@@ -148,6 +148,7 @@ inject:
     certificate_issuer:
       # enabled enables injection of certificate issuer certificates and keys when set to true.
       enabled: false
+      key: ""
       # key: |
       #   -----BEGIN ENCRYPTED PRIVATE KEY-----
       #   ...
