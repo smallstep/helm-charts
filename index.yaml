@@ -4,7 +4,8 @@ entries:
   - apiVersion: v1
     appVersion: 0.15.0
     created: "2021-05-19T13:03:52.723478-07:00"
-    description: A kubernetes add-on that automatically injects TLS/HTTPS certificates into your containers.
+    description: A kubernetes add-on that automatically injects TLS/HTTPS certificates
+      into your containers.
     digest: 320eabf19ab170d6a994f9e2e6e4fbbc61af2d2219a514a42ea229afbf0546e0
     home: https://smallstep.com
     icon: https://raw.githubusercontent.com/smallstep/autocert/master/icon.png
@@ -36,7 +37,8 @@ entries:
   - apiVersion: v1
     appVersion: 0.14.0
     created: "2021-04-15T12:54:59.799254-07:00"
-    description: A kubernetes add-on that automatically injects TLS/HTTPS certificates into your containers.
+    description: A kubernetes add-on that automatically injects TLS/HTTPS certificates
+      into your containers.
     digest: 9beaf1a147bdc833ffbe0f2eca2eda13b9c1662a0545c2df7296884490bd00f0
     home: https://smallstep.com
     icon: https://raw.githubusercontent.com/smallstep/autocert/master/icon.png
@@ -72,7 +74,8 @@ entries:
     - name: step-certificates
       repository: https://smallstep.github.io/helm-charts
       version: 1.14.5
-    description: A kubernetes add-on that automatically injects TLS/HTTPS certificates into your containers.
+    description: A kubernetes add-on that automatically injects TLS/HTTPS certificates
+      into your containers.
     digest: 3702129064489abd8359fc4a5890d3191f8a0ac1862ae6901078d67573abe13c
     home: https://smallstep.com
     icon: https://raw.githubusercontent.com/smallstep/autocert/master/icon.png
@@ -108,7 +111,8 @@ entries:
     - name: step-certificates
       repository: https://smallstep.github.io/helm-charts
       version: 1.14.4
-    description: A kubernetes add-on that automatically injects TLS/HTTPS certificates into your containers.
+    description: A kubernetes add-on that automatically injects TLS/HTTPS certificates
+      into your containers.
     digest: e30762a5e6356fe9dc40b99dea23f4f07ca127e620dd1b970bfe33d2803f9bb7
     home: https://smallstep.com
     icon: https://raw.githubusercontent.com/smallstep/autocert/master/icon.png
@@ -144,7 +148,8 @@ entries:
     - name: step-certificates
       repository: https://smallstep.github.io/helm-charts
       version: 1.13.4
-    description: A kubernetes add-on that automatically injects TLS/HTTPS certificates into your containers.
+    description: A kubernetes add-on that automatically injects TLS/HTTPS certificates
+      into your containers.
     digest: aa24f57a0f814599d451310df58a070e4629bd4d1938d06834e7969a2797af12
     home: https://smallstep.com
     icon: https://raw.githubusercontent.com/smallstep/autocert/master/icon.png
@@ -180,7 +185,8 @@ entries:
     - name: step-certificates
       repository: https://smallstep.github.io/helm-charts
       version: 1.13.2
-    description: A kubernetes add-on that automatically injects TLS/HTTPS certificates into your containers.
+    description: A kubernetes add-on that automatically injects TLS/HTTPS certificates
+      into your containers.
     digest: 727bab314f1c9d6227dd18637ee5a1592656a734dec9eda38c4cc48070d70c29
     home: https://smallstep.com
     icon: https://raw.githubusercontent.com/smallstep/autocert/master/icon.png
@@ -216,7 +222,8 @@ entries:
     - name: step-certificates
       repository: https://smallstep.github.io/helm-charts
       version: 1.13.0
-    description: A kubernetes add-on that automatically injects TLS/HTTPS certificates into your containers.
+    description: A kubernetes add-on that automatically injects TLS/HTTPS certificates
+      into your containers.
     digest: 41de5c77ab18f360497db967f7ad5227ac0501f969738edd0a9f78060b0aa1ff
     home: https://smallstep.com
     icon: https://raw.githubusercontent.com/smallstep/autocert/master/icon.png
@@ -252,7 +259,8 @@ entries:
     - name: step-certificates
       repository: https://smallstep.github.io/helm-charts
       version: 1.0.5
-    description: A kubernetes add-on that automatically injects TLS/HTTPS certificates into your containers.
+    description: A kubernetes add-on that automatically injects TLS/HTTPS certificates
+      into your containers.
     digest: fe83735271bdcc1d35deef5673ab290bfba77c57df609f5e9b27b0412c2bca1a
     home: https://smallstep.com
     icon: https://raw.githubusercontent.com/smallstep/autocert/master/icon.png
@@ -288,7 +296,8 @@ entries:
     - name: step-certificates
       repository: https://smallstep.github.io/helm-charts
       version: 1.0.2
-    description: A kubernetes add-on that automatically injects TLS/HTTPS certificates into your containers.
+    description: A kubernetes add-on that automatically injects TLS/HTTPS certificates
+      into your containers.
     digest: bc60b17a7c10767fab35bc002cf257c8b474ca87dc8d111a9faaad543fac3ef1
     home: https://smallstep.com
     icon: https://raw.githubusercontent.com/smallstep/autocert/master/icon.png
@@ -324,7 +333,8 @@ entries:
     - name: step-certificates
       repository: https://smallstep.github.io/helm-charts
       version: 1.0.0
-    description: A kubernetes add-on that automatically injects TLS/HTTPS certificates into your containers.
+    description: A kubernetes add-on that automatically injects TLS/HTTPS certificates
+      into your containers.
     digest: a9fc6084c92aa981b7287b275950d0588e015b66c20bab3a0006f0c4538abdab
     home: https://smallstep.com
     icon: https://raw.githubusercontent.com/smallstep/autocert/master/icon.png
@@ -351,8 +361,43 @@ entries:
   step-certificates:
   - apiVersion: v1
     appVersion: 0.16.0
+    created: "2021-07-22T12:13:29.933888-07:00"
+    description: An online certificate authority and related tools for secure automated
+      certificate management, so you can use TLS everywhere.
+    digest: 715c383eb05804e5cdc959d92441771d4c8ba7c8009fc6a6a70d99bdf6970abc
+    home: https://smallstep.com
+    icon: https://raw.githubusercontent.com/smallstep/certificates/master/icon.png
+    keywords:
+    - acme
+    - authority
+    - ca
+    - certificate
+    - certificates
+    - certificate-authority
+    - kubernetes
+    - pki
+    - security
+    - security-tools
+    - smallstep
+    - ssh
+    - step
+    - step-ca
+    - tls
+    - x509
+    maintainers:
+    - email: mariano@smallstep.com
+      name: Mariano Cano
+    name: step-certificates
+    sources:
+    - https://github.com/smallstep/certificates
+    urls:
+    - https://smallstep.github.io/helm-charts/step-certificates-1.16.1.tgz
+    version: 1.16.1
+  - apiVersion: v1
+    appVersion: 0.16.0
     created: "2021-07-08T18:20:10.690352-07:00"
-    description: An online certificate authority and related tools for secure automated certificate management, so you can use TLS everywhere.
+    description: An online certificate authority and related tools for secure automated
+      certificate management, so you can use TLS everywhere.
     digest: c28ab6f7bd05d4380c582591b5cff6c5378cef4537d7c7184a22099ccb9dbba8
     home: https://smallstep.com
     icon: https://raw.githubusercontent.com/smallstep/certificates/master/icon.png
@@ -385,7 +430,8 @@ entries:
   - apiVersion: v1
     appVersion: 0.15.16
     created: "2021-07-06T15:29:39.830439-07:00"
-    description: An online certificate authority and related tools for secure automated certificate management, so you can use TLS everywhere.
+    description: An online certificate authority and related tools for secure automated
+      certificate management, so you can use TLS everywhere.
     digest: bcc5cf0a2e734ec6ddd6d8ba83380a05c8f058058558d3d17fdcc8c67d7dd32c
     home: https://smallstep.com
     icon: https://raw.githubusercontent.com/smallstep/certificates/master/icon.png
@@ -418,7 +464,8 @@ entries:
   - apiVersion: v1
     appVersion: 0.15.15
     created: "2021-06-28T17:09:42.011008+02:00"
-    description: An online certificate authority and related tools for secure automated certificate management, so you can use TLS everywhere.
+    description: An online certificate authority and related tools for secure automated
+      certificate management, so you can use TLS everywhere.
     digest: 3fe25ab8751da6138e2e2fab8d47d51cfad6718dbb45fcb15897365890f4deed
     home: https://smallstep.com
     icon: https://raw.githubusercontent.com/smallstep/certificates/master/icon.png
@@ -451,7 +498,8 @@ entries:
   - apiVersion: v1
     appVersion: 0.15.15
     created: "2021-06-24T21:32:29.747358+02:00"
-    description: An online certificate authority and related tools for secure automated certificate management, so you can use TLS everywhere.
+    description: An online certificate authority and related tools for secure automated
+      certificate management, so you can use TLS everywhere.
     digest: e77508ebb67793edf843cec8fe2888bcf2e5b09392b4fdd89f19c9418caca673
     home: https://smallstep.com
     icon: https://raw.githubusercontent.com/smallstep/certificates/master/icon.png
@@ -484,7 +532,8 @@ entries:
   - apiVersion: v1
     appVersion: 0.15.15
     created: "2021-06-01T09:48:34.039632-07:00"
-    description: An online certificate authority and related tools for secure automated certificate management, so you can use TLS everywhere.
+    description: An online certificate authority and related tools for secure automated
+      certificate management, so you can use TLS everywhere.
     digest: dd2b2391435279e0c8cb1ba6a2cbf1cc94bbae8993948b44ee7258260053f238
     home: https://smallstep.com
     icon: https://raw.githubusercontent.com/smallstep/certificates/master/icon.png
@@ -517,7 +566,8 @@ entries:
   - apiVersion: v1
     appVersion: 0.15.15
     created: "2021-05-18T17:28:25.291806-07:00"
-    description: An online certificate authority and related tools for secure automated certificate management, so you can use TLS everywhere.
+    description: An online certificate authority and related tools for secure automated
+      certificate management, so you can use TLS everywhere.
     digest: b9c232792a389dc3f8791726772960dd1f174bd80202c7d6e2a56dbfe18a659c
     home: https://smallstep.com
     icon: https://raw.githubusercontent.com/smallstep/certificates/master/icon.png
@@ -550,7 +600,8 @@ entries:
   - apiVersion: v1
     appVersion: 0.15.13
     created: "2021-04-15T11:19:41.187651-07:00"
-    description: An online certificate authority and related tools for secure automated certificate management, so you can use TLS everywhere.
+    description: An online certificate authority and related tools for secure automated
+      certificate management, so you can use TLS everywhere.
     digest: 139477f7030f3faefb1fb59721887a0713a774a1b2751b59a5b496f5e6cdb966
     home: https://smallstep.com
     icon: https://raw.githubusercontent.com/smallstep/certificates/master/icon.png
@@ -583,7 +634,8 @@ entries:
   - apiVersion: v1
     appVersion: 0.15.6
     created: "2020-12-17T16:05:22.350475-08:00"
-    description: An online certificate authority and related tools for secure automated certificate management, so you can use TLS everywhere.
+    description: An online certificate authority and related tools for secure automated
+      certificate management, so you can use TLS everywhere.
     digest: 00b2c5b99dbf808e77a5bf1298475c4fbb219c5896e248fb1d9d795a6ecd805a
     home: https://smallstep.com
     icon: https://raw.githubusercontent.com/smallstep/certificates/master/icon.png
@@ -616,7 +668,8 @@ entries:
   - apiVersion: v1
     appVersion: 0.15.5
     created: "2020-10-23T08:08:20.51812-07:00"
-    description: An online certificate authority and related tools for secure automated certificate management, so you can use TLS everywhere.
+    description: An online certificate authority and related tools for secure automated
+      certificate management, so you can use TLS everywhere.
     digest: f387488b421708e3dce33ff51ebe9c7363e19f64383237819ee18108fc2e302a
     home: https://smallstep.com
     icon: https://raw.githubusercontent.com/smallstep/certificates/master/icon.png
@@ -649,7 +702,8 @@ entries:
   - apiVersion: v1
     appVersion: 0.15.4
     created: "2020-10-23T08:08:20.517559-07:00"
-    description: An online certificate authority and related tools for secure automated certificate management, so you can use TLS everywhere.
+    description: An online certificate authority and related tools for secure automated
+      certificate management, so you can use TLS everywhere.
     digest: 21633ff571f0efa721403729859fce30d971e7a13ef83cc2ef5937adca96f8ba
     home: https://smallstep.com
     icon: https://raw.githubusercontent.com/smallstep/certificates/master/icon.png
@@ -682,7 +736,8 @@ entries:
   - apiVersion: v1
     appVersion: 0.14.4
     created: "2020-10-23T08:08:20.516807-07:00"
-    description: An online certificate authority and related tools for secure automated certificate management, so you can use TLS everywhere.
+    description: An online certificate authority and related tools for secure automated
+      certificate management, so you can use TLS everywhere.
     digest: 589d344135b4b6637133e7f627640df28f61fc478efa9a54f89de09087f278e5
     home: https://smallstep.com
     icon: https://raw.githubusercontent.com/smallstep/certificates/master/icon.png
@@ -715,7 +770,8 @@ entries:
   - apiVersion: v1
     appVersion: 0.14.4
     created: "2020-10-23T08:08:20.516249-07:00"
-    description: An online certificate authority and related tools for secure automated certificate management, so you can use TLS everywhere.
+    description: An online certificate authority and related tools for secure automated
+      certificate management, so you can use TLS everywhere.
     digest: 41c28153b913d9f21ff534b4f53d65059a087b3fadebc9de7ddc7ce894837af4
     home: https://smallstep.com
     icon: https://raw.githubusercontent.com/smallstep/certificates/master/icon.png
@@ -748,7 +804,8 @@ entries:
   - apiVersion: v1
     appVersion: 0.14.3
     created: "2020-10-23T08:08:20.515464-07:00"
-    description: An online certificate authority and related tools for secure automated certificate management, so you can use TLS everywhere.
+    description: An online certificate authority and related tools for secure automated
+      certificate management, so you can use TLS everywhere.
     digest: 5109c2d57f6b941320d33ede038e465d43d153a688f9e04f0a5bea62ad5a8b6f
     home: https://smallstep.com
     icon: https://raw.githubusercontent.com/smallstep/certificates/master/icon.png
@@ -781,7 +838,8 @@ entries:
   - apiVersion: v1
     appVersion: 0.14.2
     created: "2020-10-23T08:08:20.514847-07:00"
-    description: An online certificate authority and related tools for secure automated certificate management, so you can use TLS everywhere.
+    description: An online certificate authority and related tools for secure automated
+      certificate management, so you can use TLS everywhere.
     digest: ea910958b668cae97b7c6a84cf5ca7f6faabed92959e78b4463f68c9fa64c292
     home: https://smallstep.com
     icon: https://raw.githubusercontent.com/smallstep/certificates/master/icon.png
@@ -814,7 +872,8 @@ entries:
   - apiVersion: v1
     appVersion: 0.13.3
     created: "2020-10-23T08:08:20.514184-07:00"
-    description: An online certificate authority and related tools for secure automated certificate management, so you can use TLS everywhere.
+    description: An online certificate authority and related tools for secure automated
+      certificate management, so you can use TLS everywhere.
     digest: 4e8331f0556347e12c3dcb7df4c2fba073c8e6bcafe5d97dc58def9aa39b7ea2
     home: https://smallstep.com
     icon: https://raw.githubusercontent.com/smallstep/certificates/master/icon.png
@@ -847,7 +906,8 @@ entries:
   - apiVersion: v1
     appVersion: 0.13.3
     created: "2020-10-23T08:08:20.513548-07:00"
-    description: An online certificate authority and related tools for secure automated certificate management, so you can use TLS everywhere.
+    description: An online certificate authority and related tools for secure automated
+      certificate management, so you can use TLS everywhere.
     digest: bbef8b4f333b51f601800704b7f167714b17d21eec430e1bc49dfe2940bd4231
     home: https://smallstep.com
     icon: https://raw.githubusercontent.com/smallstep/certificates/master/icon.png
@@ -880,7 +940,8 @@ entries:
   - apiVersion: v1
     appVersion: 0.13.2
     created: "2020-10-23T08:08:20.512905-07:00"
-    description: An online certificate authority and related tools for secure automated certificate management, so you can use TLS everywhere.
+    description: An online certificate authority and related tools for secure automated
+      certificate management, so you can use TLS everywhere.
     digest: da3553fc80e553b69306d5cf4eecad57373893b4cc9af94f798f2a740b0ff6cc
     home: https://smallstep.com
     icon: https://raw.githubusercontent.com/smallstep/certificates/master/icon.png
@@ -913,7 +974,8 @@ entries:
   - apiVersion: v1
     appVersion: 0.13.0
     created: "2020-10-23T08:08:20.511361-07:00"
-    description: An online certificate authority and related tools for secure automated certificate management, so you can use TLS everywhere.
+    description: An online certificate authority and related tools for secure automated
+      certificate management, so you can use TLS everywhere.
     digest: 08713c418a5c3a953ac46a8404e20633ce9ca487105a796158943837dc72ace8
     home: https://smallstep.com
     icon: https://raw.githubusercontent.com/smallstep/certificates/master/icon.png
@@ -946,7 +1008,8 @@ entries:
   - apiVersion: v1
     appVersion: 0.13.0
     created: "2020-10-23T08:08:20.510819-07:00"
-    description: An online certificate authority and related tools for secure automated certificate management, so you can use TLS everywhere.
+    description: An online certificate authority and related tools for secure automated
+      certificate management, so you can use TLS everywhere.
     digest: 4a977fd25a3e1685470f55d5e87636c9a8d81b4d9e5b140c308eaf3a795ccd60
     home: https://smallstep.com
     icon: https://raw.githubusercontent.com/smallstep/certificates/master/icon.png
@@ -979,7 +1042,8 @@ entries:
   - apiVersion: v1
     appVersion: 0.12.0
     created: "2020-10-23T08:08:20.510262-07:00"
-    description: An online certificate authority and related tools for secure automated certificate management, so you can use TLS everywhere.
+    description: An online certificate authority and related tools for secure automated
+      certificate management, so you can use TLS everywhere.
     digest: 59f766fad960b83ea28bef38858911a64383a42721bc13e5aa7a6630640f8f4f
     home: https://smallstep.com
     icon: https://raw.githubusercontent.com/smallstep/certificates/master/icon.png
@@ -1011,7 +1075,8 @@ entries:
   - apiVersion: v1
     appVersion: 0.12.0
     created: "2020-10-23T08:08:20.509695-07:00"
-    description: An online certificate authority and related tools for secure automated certificate management, so you can use TLS everywhere.
+    description: An online certificate authority and related tools for secure automated
+      certificate management, so you can use TLS everywhere.
     digest: a2fe4d685fd711f2d7016386e123297b0c9e866700d971ab5efde3a656254e2b
     home: https://smallstep.com
     icon: https://raw.githubusercontent.com/smallstep/certificates/master/icon.png
@@ -1043,7 +1108,8 @@ entries:
   - apiVersion: v1
     appVersion: 0.11.0
     created: "2020-10-23T08:08:20.509125-07:00"
-    description: An online certificate authority and related tools for secure automated certificate management, so you can use TLS everywhere.
+    description: An online certificate authority and related tools for secure automated
+      certificate management, so you can use TLS everywhere.
     digest: fb1b2965adae68baa3d3a0569e1e833e54544e4b936da5870f6fa1ddc0856ad8
     home: https://smallstep.com
     icon: https://raw.githubusercontent.com/smallstep/certificates/master/icon.png
@@ -1074,7 +1140,8 @@ entries:
   - apiVersion: v1
     appVersion: 0.10.0
     created: "2020-10-23T08:08:20.508468-07:00"
-    description: An online certificate authority and related tools for secure automated certificate management, so you can use TLS everywhere.
+    description: An online certificate authority and related tools for secure automated
+      certificate management, so you can use TLS everywhere.
     digest: f2a377bb38c4a0fb81168a33a3f86f3b7cdaaab91ad4239c5227f7c7fb51aca9
     home: https://smallstep.com
     icon: https://raw.githubusercontent.com/smallstep/certificates/master/icon.png
@@ -1105,7 +1172,8 @@ entries:
   - apiVersion: v1
     appVersion: 0.10.0
     created: "2020-10-23T08:08:20.507792-07:00"
-    description: An online certificate authority and related tools for secure automated certificate management, so you can use TLS everywhere.
+    description: An online certificate authority and related tools for secure automated
+      certificate management, so you can use TLS everywhere.
     digest: ad00f93f89b104ae6d96cdbcde3f0435e162a6d21368fc57e3e927c23f9aed28
     home: https://smallstep.com
     icon: https://raw.githubusercontent.com/smallstep/certificates/master/icon.png
@@ -1131,7 +1199,8 @@ entries:
   - apiVersion: v1
     appVersion: 0.10.0
     created: "2020-10-23T08:08:20.507199-07:00"
-    description: An online certificate authority and related tools for secure automated certificate management, so you can use TLS everywhere.
+    description: An online certificate authority and related tools for secure automated
+      certificate management, so you can use TLS everywhere.
     digest: 4f85f6a32370658a304e67a797c1913bafd0e2879f645d0b14dfe7d85f0d214b
     home: https://smallstep.com
     icon: https://smallstep.com/images/logo.png
@@ -1157,7 +1226,8 @@ entries:
   - apiVersion: v1
     appVersion: 0.15.4
     created: "2020-12-17T16:04:21.701871-08:00"
-    description: An online certificate authority and related tools for secure automated certificate management, so you can use TLS everywhere.
+    description: An online certificate authority and related tools for secure automated
+      certificate management, so you can use TLS everywhere.
     digest: fa2325ed1c52d4099a5899466085ce0d2c6d47eeaac08065438ecf958adb65d4
     home: https://smallstep.com
     icon: https://raw.githubusercontent.com/smallstep/certificates/master/icon.png
@@ -1190,7 +1260,8 @@ entries:
   - apiVersion: v1
     appVersion: 0.14.6
     created: "2020-10-23T08:08:20.506118-07:00"
-    description: An online certificate authority and related tools for secure automated certificate management, so you can use TLS everywhere.
+    description: An online certificate authority and related tools for secure automated
+      certificate management, so you can use TLS everywhere.
     digest: 1e322652f351d5b213d77149e9bed6b82582100f226d1038018bf4f5f1cc9653
     home: https://smallstep.com
     icon: https://raw.githubusercontent.com/smallstep/certificates/master/icon.png
@@ -1223,7 +1294,8 @@ entries:
   - apiVersion: v1
     appVersion: 0.14.5
     created: "2020-10-23T08:08:20.505525-07:00"
-    description: An online certificate authority and related tools for secure automated certificate management, so you can use TLS everywhere.
+    description: An online certificate authority and related tools for secure automated
+      certificate management, so you can use TLS everywhere.
     digest: b028bf0626bb812f15206bb36d3c9d05ef5273c1b427dc8e704d716fbca1f92e
     home: https://smallstep.com
     icon: https://raw.githubusercontent.com/smallstep/certificates/master/icon.png
@@ -1434,4 +1506,4 @@ entries:
     urls:
     - https://smallstep.github.io/helm-charts/step-issuer-0.2.0.tgz
     version: 0.2.0
-generated: "2021-07-08T18:20:10.687144-07:00"
+generated: "2021-07-22T12:13:29.931125-07:00"
