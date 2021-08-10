@@ -53,6 +53,13 @@ spec:
           env:
           - name: NAMESPACE
             value: "{{ .Release.Namespace }}"
+          {{- if or .Values.linkedca.token (and .Values.linkedca.secretKeyRef.name .Values.linkedca.secretKeyRef.key) }}
+          - name: STEP_CA_TOKEN
+            valueFrom:
+              secretKeyRef:
+                name: {{ include "step-certificates.linkedca.secretKeyRef.name" . }}
+                key: {{ include "step-certificates.linkedca.secretKeyRef.key" . }}
+          {{- end }}
           ports:
             - name: https
               containerPort: {{ .Values.service.targetPort }}
