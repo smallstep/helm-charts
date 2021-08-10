@@ -9,7 +9,7 @@ To learn more, visit <https://github.com/smallstep/certificates>.
 
 ```console
 helm repo add smallstep https://smallstep.github.io/helm-charts/
-helm install smallstep/step-certificates
+helm install step-certificates smallstep/step-certificates
 ```
 
 ## Prerequisites
@@ -21,7 +21,7 @@ helm install smallstep/step-certificates
 To install the chart with the release name `my-release`:
 
 ```console
-helm install --name my-release step-certificates
+helm install my-release smallstep/step-certificates
 ```
 
 The command deploys Step certificates on the Kubernetes cluster in the default
@@ -32,16 +32,62 @@ that can be configured during installation.
 
 ## Uninstalling the Chart
 
-To uninstall/delete the `my-release` deployment:
+To uninstall the `my-release` deployment:
 
 ```console
-helm delete my-release
+helm uninstall my-release
 ```
 
 The command removes all the Kubernetes components associated with the chart and
 deletes the release.
 
+## Linked CA
+
+Linked CA is an instance of step-ca that you run that connects to your
+[Certificate Manager](https://smallstep.com/certificate-manager/)) account for
+reporting, alerting, revocation, and other managed services.
+
+When you create a Linked CA authority, you will get a token that you will use to
+connect your instance to it.
+
+There're two ways to configure the token. You can define the value for `linkedca.token`:
+
+```console
+helm install --set linkedca.token=xxx \
+  step-certificates smallstep/step-certificates
+```
+
+Or set the reference to another secret managed with your preferred
+infrastructure automation tool.
+
+```console
+helm install \
+  --set linkedca.secretKeyRef.name=my-secret-name \
+  --set linkedca.secretKeyRef.key=my-key-name \
+  step-certificates smallstep/step-certificates
+```
+
 ## Configuration
+
+The best way to configure step-certificates is to use [step](https://github.com/smallstep/cli).
+
+Starting with `step` v0.17+ and `step-certificates` Chart v1.17+, you can use
+`step ca init` to create a values.yaml that you can use to configure your CA:
+
+```console
+step ca init --helm > values.yaml
+```
+
+And then:
+
+```console
+helm install -f values.yaml step-certificates smallstep/step-certificates
+```
+
+With this method, the automatic bootstrap of the PKI is deprecated and it will
+be removed in future releases.
+
+### Configuration parameters
 
 The following table lists the configurable parameters of the Step certificates
 chart and their default values.
@@ -62,13 +108,16 @@ chart and their default values.
 | `ca.db.existingClaim`         | Persistent volume existing claim name. If defined, PVC must be created manually before volume will be bound | `""`                                     |
 | `ca.runAsRoot`                | Run the CA as root.                                                                                         | `false`                                  |
 | `ca.bootstrap.postInitHook`   | Extra script snippet to run after `step ca init` has completed.                                             | `""`                                     |
+| `linkedca.token`              | The token used to configure step-ca using the linkedca mode.                                                | `""`                                     |
+| `linkedca.secretKeyRef.name`  | The secret name where the linkedca token can be found.                                                      | `""`                                     |
+| `linkedca.secretKeyRef.key`   | The secret key where the linkedca token can be found.                                                       | `""`                                     |
 | `service.type`                | Service type                                                                                                | `ClusterIP`                              |
 | `service.port`                | Incoming port to access Step CA                                                                             | `443`                                    |
 | `service.nodePort`            | Incoming port to access Step CA                                                                             | `""`                                     |
 | `service.targetPort`          | Internal port where Step CA runs                                                                            | `9000`                                   |
 | `replicaCount`                | Number of Step CA replicas. Only one replica is currently supported.                                        | `1`                                      |
 | `image.repository`            | Repository of the Step CA image                                                                             | `cr.step.sm/smallstep/step-ca`           |
-| `image.initContainerRepository`            | Repository of the Step CA Init Container image                                                                             | `busybox:latest`           |
+| `image.initContainerRepository` | Repository of the Step CA Init Container image.                                                           | `busybox:latest`                         |
 | `image.tag`                   | Tag of the Step CA image                                                                                    | `latest`                                 |
 | `image.pullPolicy`            | Step CA image pull policy                                                                                   | `IfNotPresent`                           |
 | `bootstrap.image.repository`  | Repository of the Step CA bootstrap image                                                                   | `cr.step.sm/smallstep/step-ca-bootstrap` |
@@ -96,8 +145,8 @@ chart and their default values.
 | `inject.certificates.root_ca`             | Plain text PEM representation of the root CA certificate.                                       | `""`                                     |
 | `inject.certificates.ssh_host_ca`         | Plain text representation of the ssh host CA public key.                                        | `""`                                     |
 | `inject.certificates.ssh_user_ca`         | Plain text representation of the ssh user CA public key.                                        | `""`                                     |
-| `inject.secrets.ca_password`              | Base64 encoded string.  Password used to encrypt intermediate and ssh keys.                     | `Cg==`                                     |
-| `inject.secrets.provisioner_password`     | Base64 encoded string.  Password used to encrypt JWK provisioner.                     | `Cg==`                                     |
+| `inject.secrets.ca_password`              | Base64 encoded string.  Password used to encrypt intermediate and ssh keys.                     | `Cg==`                                   |
+| `inject.secrets.provisioner_password`     | Base64 encoded string.  Password used to encrypt JWK provisioner.                               | `Cg==`                                   |
 | `inject.secrets.x509.intermediate_ca_key` | Plain text PEM representation of the intermediate CA private key.                               | `""`                                     |
 | `inject.secrets.x509.root_ca_key`         | Plain text PEM representation of the root CA private key.                                       | `""`                                     |
 | `inject.secrets.ssh.host_ca_key `         | Plain text representation of the ssh host CA private key.                                       | `""`                                     |

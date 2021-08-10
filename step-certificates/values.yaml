@@ -193,13 +193,24 @@ inject:
       #   ...
       #   -----END OPENSSH PRIVATE KEY-----
 
-
 # service contains configuration for the kubernetes service.
 service:
   type: ClusterIP
   port: 443
   targetPort: 9000
   nodePort: ""
+
+# linkedca contains the token to configure step-ca using the linkedca mode.
+#
+# The linked ca token can be provided using the linkedca.token value or using a
+# reference to a secret.
+linkedca:
+  # the linked ca token.
+  token:
+  # Reference to a secret name and key.
+  secretKeyRef:
+    name:
+    key:
 
 # ca contains the certificate authority configuration.
 ca:
