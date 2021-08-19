@@ -43,7 +43,7 @@ deletes the release.
 
 ## Linked CA
 
-Linked CA is an instance of step-ca that you run that connects to your
+Linked CA is an instance of `step-ca` that you run that connects to your
 [Certificate Manager](https://smallstep.com/certificate-manager/)) account for
 reporting, alerting, revocation, and other managed services.
 
