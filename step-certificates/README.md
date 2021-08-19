@@ -9,7 +9,8 @@ To learn more, visit <https://github.com/smallstep/certificates>.
 
 ```console
 helm repo add smallstep https://smallstep.github.io/helm-charts/
-helm install step-certificates smallstep/step-certificates
+step ca init --helm > values.yaml
+helm install -f values.yaml step-certificates smallstep/step-certificates
 ```
 
 ## Prerequisites
