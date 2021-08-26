@@ -46,8 +46,12 @@ data:
     {{- .Values.inject.certificates.root_ca | nindent 4 }}
   {{- end }}
   {{- if .Values.inject.secrets.ssh.enabled }}
+  {{- if not (eq "" .Values.inject.certificates.ssh_host_ca) }}
   ssh_host_ca_key.pub: {{ .Values.inject.certificates.ssh_host_ca }}
+  {{- end }}
+  {{- if not (eq "" .Values.inject.certificates.ssh_user_ca) }}
   ssh_user_ca_key.pub:  {{ .Values.inject.certificates.ssh_user_ca }}
+  {{- end }}
   {{- end }}
 {{- end }}
 {{- end }}
