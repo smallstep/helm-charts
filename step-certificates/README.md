@@ -15,7 +15,7 @@ helm install -f values.yaml step-certificates smallstep/step-certificates
 
 ## Prerequisites
 
--   Kubernetes 1.10+
+- Kubernetes 1.10+
 
 ## Installing the Chart
 
@@ -150,8 +150,8 @@ chart and their default values.
 | `inject.secrets.provisioner_password`     | Base64 encoded string.  Password used to encrypt JWK provisioner.                               | `Cg==`                                   |
 | `inject.secrets.x509.intermediate_ca_key` | Plain text PEM representation of the intermediate CA private key.                               | `""`                                     |
 | `inject.secrets.x509.root_ca_key`         | Plain text PEM representation of the root CA private key.                                       | `""`                                     |
-| `inject.secrets.ssh.host_ca_key `         | Plain text representation of the ssh host CA private key.                                       | `""`                                     |
-| `inject.secrets.ssh.user_ca_key `         | Plain text representation of the ssh user CA private key.                                       | `""`                                     |
+| `inject.secrets.ssh.host_ca_key`          | Plain text representation of the ssh host CA private key.                                       | `""`                                     |
+| `inject.secrets.ssh.user_ca_key`          | Plain text representation of the ssh user CA private key.                                       | `""`                                     |
 
 Specify each parameter using the `--set key=value[,key=value]` argument to `helm
 install`. For example,
