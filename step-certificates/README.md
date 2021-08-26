@@ -10,7 +10,11 @@ To learn more, visit <https://github.com/smallstep/certificates>.
 ```console
 helm repo add smallstep https://smallstep.github.io/helm-charts/
 step ca init --helm > values.yaml
-helm install -f values.yaml step-certificates smallstep/step-certificates
+echo "password" | base64 > password.txt
+helm install -f values.yaml \
+     --set inject.secrets.ca_password=$(cat password.txt) \
+     --set inject.secrets.provisioner_password=$(cat password.txt) \
+     step-certificates smallstep/step-certificates
 ```
 
 ## Prerequisites
@@ -79,10 +83,16 @@ Starting with `step` v0.17+ and `step-certificates` Chart v1.17+, you can use
 step ca init --helm > values.yaml
 ```
 
-And then:
+By default, the values.yaml won't contain the password used to encrypt the keys,
+nor the password of the default provisioner, so we have to pass it as values
+using the base64 encoding:
 
 ```console
-helm install -f values.yaml step-certificates smallstep/step-certificates
+echo "password" | base64 > password.txt
+helm install -f values.yaml \
+     --set inject.secrets.ca_password=$(cat password.txt) \
+     --set inject.secrets.provisioner_password=$(cat password.txt) \
+     step-certificates smallstep/step-certificates
 ```
 
 With this method, the automatic bootstrap of the PKI is deprecated and it will
