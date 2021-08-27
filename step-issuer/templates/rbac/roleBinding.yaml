@@ -9,5 +9,5 @@ roleRef:
   name: "{{ template "step-issuer.fullname" . }}-leader-election-role"
 subjects:
 - kind: ServiceAccount
-  name: default
+  name: {{ include "step-issuer.serviceAccountName" . }}
   namespace: {{ .Release.Namespace }}

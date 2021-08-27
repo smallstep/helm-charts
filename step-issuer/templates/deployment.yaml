@@ -21,6 +21,9 @@ spec:
         - name: {{ $key }}
         {{- end }}
       {{- end }}
+      {{- if .Values.serviceAccount.create }}
+      serviceAccountName: {{ include "step-issuer.serviceAccountName" . }}
+      {{- end }}
       containers:
       - image: gcr.io/kubebuilder/kube-rbac-proxy:v0.8.0
         name: kube-rbac-proxy
