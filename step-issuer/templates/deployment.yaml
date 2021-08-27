@@ -17,7 +17,9 @@ spec:
     spec:
       {{- if $.Values.imagePullSecrets }}
       imagePullSecrets:
-        {{- toYaml .Values.imagePullSecrets | nindent 8 }}
+        {{- range $key := $.Values.imagePullSecrets }}
+        - name: {{ $key }}
+        {{- end }}
       {{- end }}
       containers:
       - image: gcr.io/kubebuilder/kube-rbac-proxy:v0.4.0

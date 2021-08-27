@@ -10,6 +10,7 @@ image:
   # Overrides the image tag whose default is the chart appVersion.
   tag: ""
 
+# List of secret keys used to pull images from private registries.
 imagePullSecrets: []
 nameOverride: ""
 fullnameOverride: ""
