@@ -31,7 +31,7 @@ rules:
 - apiGroups: ["cert-manager.io"]
   resources: ["signers"]
   verbs: ["approve"]
-  resourceNames: 
+  resourceNames:
     - stepissuers.certmanager.step.sm/*
     - stepclusterissuers.certmanager.step.sm/*
 - apiGroups: [ "coordination.k8s.io" ]
