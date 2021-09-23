@@ -1,8 +1,3 @@
-# Helm Configuration Examples
-
-## Self Hosted Single Instance Certificate Authority
-
-```bash
 ROOT_CA_NAME='example-root-ca'
 INTERMEDIATE_CA_NAME='example-intermediate-ca'
 CA_ORG_NAME='Example CA Org'
@@ -74,42 +69,3 @@ SSH_USER_KEY=`cat user-ssh.key | sed 's/^/        /'`
 export ROOT_TLS_PASSWORD_B64 INTERMEDIATE_TLS_PASSWORD_B64 TLS_ROOT_CRT TLS_ROOT_KEY TLS_INTERMEDIATE_CRT TLS_INTERMEDIATE_KEY SSH_HOST_PASSWORD_B64 SSH_HOST_CRT SSH_HOST_KEY SSH_USER_PASSWORD_B64 SSH_USER_CRT SSH_USER_KEY
 
 cat values.yml.tpl | envsubst | tee values.yml
-```
-
-## Registration Authority Connected to Smallstep Certificate Manager Hosted Certificate Authority.
-
-```bash
-CA_NAME='example-ca'
-CA_FINGERPRINT='ca-fingerprint'
-ORG_NAME='example-org'
-
-# Install Step If Not already installed.
-brew install step
-
-# Bootstrap Step against the CA if not already bootstrapped.
-step ca bootstrap --ca-url https://${CA_NAME}.${ORG_NAME}.ca.smallstep.com --fingerprint ${CA_FINGERPRINT}
-
-# Create a registration-authority JWK Provisioner
-step beta ca provisioner add registration-authority --create
-
-# Encode the JWK Provisioner password in base64
-JWK_ISSUER_PASSWORD=`echo 'your-password-here' | base64`
-
-# Download the example values.yml
-curl -o step_values.yml https://raw.githubusercontent.com/smallstep/helm-charts/master/step-certificates/examples/registration_authority/values.yml
-
-# Replace dummy values with your own values
-sed -e "s/your-ca-name/${CA_NAME}/g" -i step_values.yml
-sed -e "s/your-org/${ORG_NAME}/g" -i step_values.yml
-sed -e "s/your-ca-fingerprint-here/${CA_FINGERPRINT}/g" -i step_values.yml
-sed -e "s/your-base-64-encoded-key-password/${JWK_ISSUER_PASSWORD}/g" -i step_values.yml
-
-# Add the smallstep helm repo, if not already added
-helm repo add smallstep https://smallstep.github.io/helm-charts/
-
-# Update helm repos to ensure you have the latest version
-helm repo update smallstep
-
-# Install the step-certificates helm chart.
-helm install -f step_values.yml smallstep/step-certificates
-```

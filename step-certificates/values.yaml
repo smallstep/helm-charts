@@ -185,6 +185,7 @@ inject:
       #   -----BEGIN OPENSSH PRIVATE KEY-----
       #   ...
       #   -----END OPENSSH PRIVATE KEY-----
+      host_ca_password: ""
 
       # ssh_user_ca_key contains the contents of your encrypted SSH User CA key
       user_ca_key: ""
@@ -192,6 +193,8 @@ inject:
       #   -----BEGIN OPENSSH PRIVATE KEY-----
       #   ...
       #   -----END OPENSSH PRIVATE KEY-----
+      user_ca_password: ""
+
 
 # service contains configuration for the kubernetes service.
 service:
