@@ -149,12 +149,12 @@ spec:
           secretName: {{ include "step-certificates.fullname" . }}-certificate-issuer-password
       {{- end }}
       {{- if and .Values.inject.enabled (and .Values.inject.secrets.ssh.enabled (not (eq .Values.inject.secrets.ssh.host_ca_password ""))) }}
-      - name: certificate-issuer
+      - name: ssh-host-ca-password
         secret:
           secretName: {{ include "step-certificates.fullname" . }}-ssh-host-ca-password
       {{- end }}
       {{- if and .Values.inject.enabled (and .Values.inject.secrets.ssh.enabled (not (eq .Values.inject.secrets.ssh.user_ca_password ""))) }}
-      - name: certificate-issuer
+      - name: ssh-user-ca-password
         secret:
           secretName: {{ include "step-certificates.fullname" . }}-ssh-user-ca-password
       {{- end }}
