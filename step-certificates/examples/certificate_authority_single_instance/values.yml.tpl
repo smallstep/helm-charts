@@ -18,10 +18,7 @@ inject:
         crt: /home/step/certs/intermediate_ca.crt
         key: /home/step/secrets/intermediate_ca_key
         address: 0.0.0.0:9000
-        dnsNames:
-          - ca.example.com
-          - mysteprelease-step-certificates.default.svc.cluster.local
-          - 127.0.0.1
+        dnsNames: ${CA_DNS_NAMES}
         logger:
           format: json
         db:
@@ -44,6 +41,23 @@ inject:
               name: acme
               forceCN: true
               claims: {}
+            - type: SSHPOP
+              name: sshpop
+              claims:
+                enableSSHCA: true
+            - type: JWK
+              name: ansible_automation_token
+              key: 
+                alg: "${JWK_PROVISIONER_CRT_ALG}"
+                crv: "${JWK_PROVISIONER_CRT_CRV}"
+                kid: "${JWK_PROVISIONER_CRT_KID}"
+                kty: "${JWK_PROVISIONER_CRT_KTY}"
+                use: "${JWK_PROVISIONER_CRT_USE}"
+                x: "${JWK_PROVISIONER_CRT_X}"
+                'y': "${JWK_PROVISIONER_CRT_Y}"
+              encryptedKey: "${JWK_PROVISIONER_KEY}"
+              claims:
+                enableSSHCA: true
         tls:
           cipherSuites:
             - TLS_ECDHE_ECDSA_WITH_CHACHA20_POLY1305
@@ -86,7 +100,7 @@ ${TLS_ROOT_CRT}
     ssh_user_ca: "${SSH_USER_CRT}"
   secrets:
     ca_password: "${INTERMEDIATE_TLS_PASSWORD_B64}"
-    provisioner_password: ""
+    provisioner_password: "${JWK_PROVISIONER_PASSWORD_B64}"
     certificate_issuer:
       enabled: false
     x509:

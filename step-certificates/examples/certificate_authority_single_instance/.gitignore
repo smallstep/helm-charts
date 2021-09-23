@@ -1,6 +1,6 @@
 *.json
 *.crt
 *.key
-*.key.pub
+*.pub
 *.password
 *.yml
