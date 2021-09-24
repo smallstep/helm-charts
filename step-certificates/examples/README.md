@@ -1,5 +1,46 @@
 # Helm Configuration Examples
 
+## Self Hosted Single Instance Certificate Authority
+
+1. Edit `./certificate_authority_single_instance/ca.config` to reflect your CA environment.
+
+```json
+{
+  "root_ca_name": "example-root-ca",
+  "intermediate_ca_name": "example-intermediate-ca",
+  "ca_org_name": "Example CA Org",
+  "ca_country_name": "US",
+  "ca_locality_name": "Minnesota",
+  "ca_dns_names": [
+    "ca.example.com",
+    "mysteprelease-step-certificates.default.svc.cluster.local",
+    "127.0.0.1"
+  ]
+}
+```
+
+2. Run the following bash script
+
+```bash
+# Navigate to the example directory.
+cd ./certificate_authority_single_instance
+
+# Generate key material and inject into values.yaml
+./generate-values.sh
+
+# Add the smallstep helm repo, if not already added
+helm repo add smallstep https://smallstep.github.io/helm-charts/
+
+# Update helm repos to ensure you have the latest version
+helm repo update
+
+# Install the step-certificates helm chart.
+helm install mysteprelease -f ./values.yml smallstep/step-certificate
+
+# Save generated files somewhere safe then remove from your local machine
+rm -f ./*.yml ./*.json ./*.crt ./*.key ./*.pub ./*.password
+```
+
 ## Registration Authority Connected to Smallstep Certificate Manager Hosted Certificate Authority.
 
 ```bash
@@ -32,7 +73,7 @@ sed -e "s/your-base-64-encoded-key-password/${JWK_ISSUER_PASSWORD}/g" -i step_va
 helm repo add smallstep https://smallstep.github.io/helm-charts/
 
 # Update helm repos to ensure you have the latest version
-helm repo update smallstep
+helm repo update
 
 # Install the step-certificates helm chart.
 helm install -f step_values.yml smallstep/step-certificates
