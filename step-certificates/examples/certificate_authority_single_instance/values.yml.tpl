@@ -46,7 +46,7 @@ inject:
               claims:
                 enableSSHCA: true
             - type: JWK
-              name: ansible_automation_token
+              name: ${JWK_PROVISIONER_NAME}
               key: 
                 alg: "${JWK_PROVISIONER_CRT_ALG}"
                 crv: "${JWK_PROVISIONER_CRT_CRV}"
@@ -67,9 +67,9 @@ inject:
           maxVersion: 1.3
           renegotiation: false
       defaults.json:
-        ca-url: https://mysteprelease-step-certificates.default.svc.cluster.local
+        ca-url: ${CA_URL}
         ca-config: /home/step/config/ca.json
-        fingerprint: fingerprint
+        fingerprint: ${TLS_ROOT_FINGERPRINT}
         root: /home/step/certs/root_ca.crt
     templates:
       x509_leaf.tpl: |

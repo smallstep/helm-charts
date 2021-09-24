@@ -4,8 +4,10 @@ CA_ORG_NAME=`jq -r '.ca_org_name' ca.config`
 CA_COUNTRY_NAME=`jq -r '.ca_country_name' ca.config`
 CA_LOCALITY_NAME=`jq -r '.ca_locality_name' ca.config`
 CA_DNS_NAMES=`jq -c .ca_dns_names ca.config`
+CA_URL=`jq -r .ca_url ca.config`
+JWK_PROVISIONER_NAME=`jq -r .jwk_provisioner_name ca.config`
 
-export ROOT_CA_NAME INTERMEDIATE_CA_NAME CA_ORG_NAME CA_COUNTRY_NAME CA_LOCALITY_NAME CA_DNS_NAMES
+export ROOT_CA_NAME INTERMEDIATE_CA_NAME CA_ORG_NAME CA_COUNTRY_NAME CA_LOCALITY_NAME CA_DNS_NAMES CA_URL JWK_PROVISIONER_NAME
 
 # Write Out Root and Intermediate Certificate Templates
 cat root-tls.json.tpl | envsubst | tee root-tls.json
@@ -30,6 +32,7 @@ step certificate create \
 
 TLS_ROOT_CRT=`cat root-tls.crt | sed 's/^/        /'`
 TLS_ROOT_KEY=`cat root-tls.key | sed 's/^/        /'`
+TLS_ROOT_FINGERPRINT=`step certificate fingerprint root-tls.crt`
 
 # Generate Intermediate CA Certificate Pair
 step certificate create \
@@ -91,7 +94,7 @@ JWK_PROVISIONER_CRT_X=`jq '.x' -r jwk_provisioner.pub`
 JWK_PROVISIONER_CRT_Y=`jq '.y' -r jwk_provisioner.pub`
 
 export \
-  ROOT_TLS_PASSWORD_B64 TLS_ROOT_CRT TLS_ROOT_KEY\
+  ROOT_TLS_PASSWORD_B64 TLS_ROOT_CRT TLS_ROOT_KEY TLS_ROOT_FINGERPRINT \
   INTERMEDIATE_TLS_PASSWORD_B64 TLS_INTERMEDIATE_CRT TLS_INTERMEDIATE_KEY \
   SSH_HOST_PASSWORD_B64 SSH_HOST_CRT SSH_HOST_KEY \
   SSH_USER_PASSWORD_B64 SSH_USER_CRT SSH_USER_KEY \
