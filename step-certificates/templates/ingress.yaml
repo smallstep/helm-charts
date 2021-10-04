@@ -35,7 +35,13 @@ spec:
       http:
         paths:
           {{- range .paths }}
+            {{- if eq (typeOf .) "string" }}
           - path: {{ . }}
+            pathType: ImplementationSpecific
+            {{- else }}
+          - path: {{ .path }}
+            pathType: {{ default "ImplementationSpecific" .type }}
+            {{- end }}
             backend:
             {{- if semverCompare ">=1.19-0" $apiVersion }}
               service:
