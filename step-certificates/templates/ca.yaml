@@ -49,10 +49,10 @@ spec:
             "--password-file", "/home/step/secrets/passwords/password",
             {{- end }}
             {{- if and .Values.inject.enabled (and .Values.inject.secrets.ssh.enabled (not (eq .Values.inject.secrets.ssh.host_ca_password ""))) }}
-            "--ssh-host-ca-key-password", "/home/step/secrets/ssh-host-ca/password",
+            "--ssh-host-password-file", "/home/step/secrets/ssh-host-ca/password",
             {{- end }}
             {{- if and .Values.inject.enabled (and .Values.inject.secrets.ssh.enabled (not (eq .Values.inject.secrets.ssh.user_ca_password ""))) }}
-            "--ssh-client-ca-key-password", "/home/step/secrets/ssh-user-ca/password",
+            "--ssh-user-password-file", "/home/step/secrets/ssh-user-ca/password",
             {{- end }}
             "/home/step/config/ca.json"
           ]
