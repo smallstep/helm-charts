@@ -2,6 +2,7 @@ apiVersion: apps/v1
 kind: {{ .Values.kind }}
 metadata:
   name: {{ include "step-certificates.fullname" . }}
+  namespace: {{ .Release.Namespace }}
   labels:
     {{- include "step-certificates.labels" . | nindent 4 }}
 spec:
