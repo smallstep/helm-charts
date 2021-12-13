@@ -62,7 +62,31 @@ renewer:
   resources: {requests: {cpu: 10m, memory: 20Mi}}
 
 # Enables autocert in the step-certificates subchart.
-# This configuration value should not be changed.
 step-certificates:
+  enabled: true
   autocert:
     enabled: true
+
+# These values allows to configure an existing step-certificates deployment with
+# autocert.
+#
+# Future version of the autocert helm-chart will not install step-certificates
+# by default and it will require these values.
+ca:
+  # ca is the step-certificates url to use.
+  url: ""
+  # provisioner is the provisioner name and the plaintext password that autocert
+  # will use.
+  provisioner:
+    name: ""
+    password: ""
+  # certs is the configmap in yaml that should contain the CA root certificate.
+  certs:
+    root_ca.crt: |-
+      -----BEGIN CERTIFICATE-----
+      ...
+      -----END CERTIFICATE-----
+  # config is the configmap in yaml to use. This is currently optional only.
+  config:
+    defaults.json: |-
+      {}

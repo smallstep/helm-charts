@@ -8,7 +8,7 @@ To learn more, visit https://github.com/smallstep/certificates/tree/master/autoc
 ## TL;DR
 
 ```console
-helm install autocert
+helm install autocert smallstep/autocert
 kubectl label namespace default autocert.step.sm=enabled
 ```
 
@@ -21,7 +21,7 @@ kubectl label namespace default autocert.step.sm=enabled
 To install the chart with the release name `my-release`:
 
 ```console
-helm install --name my-release autocert
+helm install my-release smallstep/autocert
 ```
 
 The command deploys Autocert on the Kubernetes cluster in the default
@@ -29,6 +29,46 @@ configuration. The [configuration](#configuration) section lists the parameters
 that can be configured during installation.
 
 > **Tip**: List all releases using `helm list`
+
+By default `autocert` helm chart installs a new `step-certificates` deployment.
+But if you already have an instance of `step-certificates` running you can
+configure it with autocert setting the values in the `ca` block like this:
+
+```yaml
+ca:
+  url: https://ca.example.com
+  # provisioner is the provisioner name and password that autocert will use
+  provisioner:
+    name: admin
+    password: my-plaintext-password
+  # certs is the configmap in yaml that should contain the CA root certificate.
+  certs:
+    root_ca.crt: |-
+      -----BEGIN CERTIFICATE-----
+      MIIBdjCCAR2gAwIBAgIQNFvgRJo4ZuvaRquC9gB3WTAKBggqhkjOPQQDAjAaMRgw
+      FgYDVQQDEw9FeGFtcGxlIFJvb3QgQ0EwHhcNMjExMjEzMjMxNTU4WhcNMzExMjEx
+      MjMxNTU4WjAaMRgwFgYDVQQDEw9FeGFtcGxlIFJvb3QgQ0EwWTATBgcqhkjOPQIB
+      BggqhkjOPQMBBwNCAAQlQRnmP9NZ2/L1iMWE1vGwOraPR3hUeashSdIWZk+snrQG
+      Mt+DXBEz8AxlV5+nNtncYErtzIV8exX+fY7V8agVo0UwQzAOBgNVHQ8BAf8EBAMC
+      AQYwEgYDVR0TAQH/BAgwBgEB/wIBATAdBgNVHQ4EFgQUxjwLhVkVREOolv5CA/J1
+      QQ6SqhowCgYIKoZIzj0EAwIDRwAwRAIgf0MmZJhkAdyXscYQXLANdMUKJXx/JPjL
+      XwH5kIIJvB0CIB+aMuA8aFpK/Ld1hkqrdzuvCLiD3cSaOAFzNJqFdCuo
+      -----END CERTIFICATE-----
+  # config is the configmap in yaml to use. This is currently optional only.
+  config:
+    defaults.json: |-
+      {}
+```
+
+And then install autocert using a config.yaml like the above one, and setting
+the value `step-certificates.enabled` to `false`:
+
+```console
+helm install --set step-certificates.enabled=false -f config.yaml my-release smallstep/autocert
+```
+
+> **Note**: Future version of the autocert helm-chart will not install
+> step-certificates and it will require these values.
 
 ## Uninstalling the Chart
 
@@ -98,13 +138,19 @@ their default values.
 | `ingress.annotations`                      | Autocert ingress annotations (YAML)                                               | `{}`                                          |
 | `ingress.hosts`                            | Autocert ingress hostNAMES (YAML)                                                 | `[]`                                          |
 | `ingress.tls`                              | Autocert ingress TLS configuration (YAML)                                         | `[]`                                          |
-| `step-certificates.autocert.enabled`       | Enables autocert in step-certificates sub-chart (should not be changed)           | `true`                                        |
+| `step-certificates.enabled`                | Enables the installation of the `step-certificates` sub-chart                     | `true`                                        |
+| `step-certificates.autocert.enabled`       | Enables autocert in `step-certificates` sub-chart                                 | `true`                                        |
+| `ca.url`                                   | Sets a custom CA URL, to be used with an existing `step-certificates`             | `""`                                          |
+| `ca.provisioner.name`                      | The provisioner name to use                                                       | `""`                                          |
+| `ca.provisioner.password`                  | The plaintext version of provisioner password                                     | `""`                                          |
+| `ca.certs`                                 | The files to write in the certs configmap, it should contain the root_ca.crt      | `""`                                          |
+| `ca.config`                                | The files to write in the config configmap, it might contain a defaults.json      | `{}`                                          |
 
 Specify each parameter using the `--set key=value[,key=value]` argument to `helm
 install`. For example,
 
 ```console
-helm install --name my-release \
+helm install my-release \
   --set autocert.logFormat=text,step-certificates.ca.name=Foo \
   autocert
 ```
