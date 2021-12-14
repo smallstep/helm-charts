@@ -16,7 +16,7 @@ spec:
         app.kubernetes.io/name: {{ include "autocert.name" . }}
         app.kubernetes.io/instance: {{ .Release.Name }}
     spec:
-      {{- if .Release.IsInstall }}
+      {{- if and .Release.IsInstall (index .Values "step-certificates" "enabled") }}
       initContainers:
         - name: {{ .Chart.Name }}-init
           image: busybox:latest
@@ -31,7 +31,7 @@ spec:
           {{- toYaml .Values.autocert.resources | nindent 10 }}
         env:
         - name: PROVISIONER_NAME
-          value: admin
+          value: {{ .Values.ca.provisioner.name | default "admin" }}
         - name: NAMESPACE
           value: {{ .Release.Namespace }}
         volumeMounts:

@@ -48,5 +48,9 @@ app.kubernetes.io/managed-by: {{ .Release.Service }}
 Create CA URL
 */}}
 {{- define "autocert.ca.url" -}}
+{{- if .Values.ca.url }}
+{{- .Values.ca.url -}}
+{{- else }}
 {{- printf "https://%s-step-certificates.%s.svc.%s" .Release.Name .Release.Namespace .Values.autocert.clusterDomain -}}
+{{- end }}
 {{- end -}}
