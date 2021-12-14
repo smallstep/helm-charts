@@ -67,13 +67,13 @@ step-certificates:
   autocert:
     enabled: true
 
-# These values allows to configure an existing step-certificates deployment with
-# autocert.
+# These values allow configuration of an existing step-certificates deployment
+# with autocert.
 #
 # Future version of the autocert helm-chart will not install step-certificates
 # by default and it will require these values.
 ca:
-  # ca is the step-certificates url to use.
+  # url is the step-certificates url to use.
   url: ""
   # provisioner is the provisioner name and the plaintext password that autocert
   # will use.
