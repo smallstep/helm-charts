@@ -11,6 +11,9 @@ metadata:
 webhooks:
   - name: {{ .Values.autocert.label }}
     clientConfig:
+      {{- if not (index .Values "step-certificates" "enabled") }}
+      caBundle: {{ index .Values.ca.certs "root_ca.crt" | b64enc }}
+      {{- end }}
       service:
         name: {{ include "autocert.fullname" .}}
         namespace: {{ .Release.Namespace }}
