@@ -202,6 +202,7 @@ service:
   port: 443
   targetPort: 9000
   nodePort: ""
+  annotations: {}
 
 # linkedca contains the token to configure step-ca using the linkedca mode.
 #
