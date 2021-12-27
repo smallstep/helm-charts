@@ -163,6 +163,11 @@ spec:
       - name: database
         emptyDir: {}
       {{- end }}
+      {{- if and .Values.ca.db.enabled (and .Values.ca.db.persistent .Values.ca.db.existingClaim) }}
+      - name: database
+        persistentVolumeClaim:
+          claimName: {{ .Values.ca.db.existingClaim }}
+      {{- end }}
       {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}
@@ -175,7 +180,7 @@ spec:
       tolerations:
         {{- toYaml . | nindent 8 }}
       {{- end }}
-  {{- if and .Values.ca.db.enabled .Values.ca.db.persistent }}
+  {{- if and .Values.ca.db.enabled .Values.ca.db.persistent (not .Values.ca.db.existingClaim) }}
   volumeClaimTemplates:
   - metadata:
       name: database
@@ -191,17 +196,11 @@ spec:
       resources:
         requests:
           storage: {{ .Values.ca.db.size | quote }}
-      {{ if .Values.ca.db.existingClaim }}
-      selector:
-        matchLabels:
-          name: {{ .Values.ca.db.existingClaim | quote }}
-      {{- else }}
       {{- if .Values.ca.db.storageClass }}
       {{- if (eq "-" .Values.ca.db.storageClass) }}
       storageClassName: ""
       {{- else }}
       storageClassName: {{ .Values.ca.db.storageClass | quote }}
-      {{- end }}
       {{- end }}
       {{- end }}
   {{- end }}
