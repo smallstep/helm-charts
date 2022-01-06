@@ -20,6 +20,11 @@ spec:
       labels:
         app.kubernetes.io/name: {{ include "step-certificates.name" . }}
         app.kubernetes.io/instance: {{ .Release.Name }}
+      {{- if .Values.inject.enabled }}
+      annotations:
+        checksum/config: {{ include (print $.Template.BasePath "/configmaps.yaml") . | sha256sum }}
+        checksum/secret: {{ include (print $.Template.BasePath "/secrets.yaml") . | sha256sum }}
+      {{- end }}
     spec:
       {{- if and .Release.IsInstall (not .Values.inject.enabled) }}
       initContainers:
