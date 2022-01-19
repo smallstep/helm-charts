@@ -3,6 +3,39 @@ entries:
   autocert:
   - apiVersion: v1
     appVersion: 0.16.0
+    created: "2022-01-18T17:50:22.131705-08:00"
+    description: A kubernetes add-on that automatically injects TLS/HTTPS certificates
+      into your containers.
+    digest: b6e996a01bfc1b3b3890271dd9a2228f4aa62142f26f59a7d5cd66431729f4b9
+    home: https://smallstep.com
+    icon: https://raw.githubusercontent.com/smallstep/autocert/master/icon.png
+    keywords:
+    - ca
+    - tls
+    - pki
+    - x509
+    - step
+    - step-ca
+    - step-certificates
+    - smallstep
+    - certificate
+    - certificates
+    - authority
+    - security
+    - security-tools
+    - certificate-authority
+    - kubernetes
+    maintainers:
+    - email: mariano@smallstep.com
+      name: Mariano Cano
+    name: autocert
+    sources:
+    - https://github.com/smallstep/autocert
+    urls:
+    - https://smallstep.github.io/helm-charts/autocert-1.16.2.tgz
+    version: 1.16.2
+  - apiVersion: v1
+    appVersion: 0.16.0
     created: "2021-12-15T13:12:19.057694-08:00"
     description: A kubernetes add-on that automatically injects TLS/HTTPS certificates
       into your containers.
@@ -1983,4 +2016,4 @@ entries:
     urls:
     - https://smallstep.github.io/helm-charts/step-issuer-0.2.0.tgz
     version: 0.2.0
-generated: "2022-01-06T12:42:54.982168-08:00"
+generated: "2022-01-18T17:50:22.129572-08:00"
