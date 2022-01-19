@@ -87,7 +87,7 @@ What would you like to name your new PKI?
 ✔ (e.g. Smallstep): Smallstep
 What DNS names or IP addresses would you like to add to your new CA?
 ✔ (e.g. ca.smallstep.com[,1.1.1.1,etc.]): step-certificates.default.svc.cluster.local
-What IP and port will your new CA bind to, it should match service.targetPort?
+What IP and port will your new CA bind to (it should match service.targetPort)?
 ✔ (e.g. :443 or 127.0.0.1:443): :9000
 What would you like to name the CA's first provisioner?
 ✔ (e.g. you@smallstep.com): me@example.org
