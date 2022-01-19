@@ -14,6 +14,7 @@ echo "password" | base64 > password.txt
 helm install -f values.yaml \
      --set inject.secrets.ca_password=$(cat password.txt) \
      --set inject.secrets.provisioner_password=$(cat password.txt) \
+     --set service.targetPort=9000 \
      step-certificates smallstep/step-certificates
 ```
 
@@ -80,18 +81,34 @@ Starting with `step` v0.17+ and `step-certificates` Chart v1.17+, you can use
 `step ca init` to create a values.yaml that you can use to configure your CA:
 
 ```console
-step ca init --helm > values.yaml
+$ step ca init --helm > values.yaml
+✔ Deployment Type: Standalone
+What would you like to name your new PKI?
+✔ (e.g. Smallstep): Smallstep
+What DNS names or IP addresses would you like to add to your new CA?
+✔ (e.g. ca.smallstep.com[,1.1.1.1,etc.]): step-certificates.default.svc.cluster.local
+What IP and port will your new CA bind to (it should match service.targetPort)?
+✔ (e.g. :443 or 127.0.0.1:443): :9000
+What would you like to name the CA's first provisioner?
+✔ (e.g. you@smallstep.com): me@example.org
+Choose a password for your CA keys and first provisioner.
+✔ [leave empty and we'll generate one]:
+
+Generating root certificate... done!
+Generating intermediate certificate... done!
 ```
 
 By default, the values.yaml won't contain the password used to encrypt the keys,
 nor the password of the default provisioner, so we have to pass it as values
-using the base64 encoding:
+using the base64 encoding. And the port where the CA binds to, in the example,
+`:9000` must be set as `service.targetPort=9000`.
 
 ```console
 echo "password" | base64 > password.txt
 helm install -f values.yaml \
      --set inject.secrets.ca_password=$(cat password.txt) \
      --set inject.secrets.provisioner_password=$(cat password.txt) \
+     --set service.targetPort=9000 \
      step-certificates smallstep/step-certificates
 ```
 
