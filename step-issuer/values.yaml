@@ -10,6 +10,11 @@ image:
   # Overrides the image tag whose default is the chart appVersion.
   tag: ""
 
+kubeRBACproxy:
+  image:
+    repository: gcr.io/kubebuilder/kube-rbac-proxy
+    tag: v0.8.0
+
 # List of secret keys used to pull images from private registries.
 imagePullSecrets: []
 nameOverride: ""
