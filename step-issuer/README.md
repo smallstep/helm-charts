@@ -50,8 +50,8 @@ and their default values.
 | `image.pullPolicy`                        | Step Issuer image pull policy                                            | `IfNotPresent`                      |
 | `deployment.args.enableLeaderElection`    | Enable k8s controller leader election.                                   | `true`                              |
 | `deployment.args.disableApprovalCheck`    | To disable cert-manager approvals on old version of cert-manager.        | `false`                             |
-| `stepIssuer.created`                      | If we should automatically create an step-issuer.                        | `false`                             |
-| `stepIssuer.caBundler`                    | Step Certificates root certificate in base64.                            | `""`                                |
+| `stepIssuer.create`                       | If we should automatically create an step-issuer.                        | `false`                             |
+| `stepIssuer.caBundle`                     | Step Certificates root certificate in a single-line base64 string.       | `""`                                |
 | `stepIssuer.provisioner.name`             | Name of the provisioner used for authorizing the sign of certificates.   | `""`                                |
 | `stepIssuer.provisioner.kid`              | Key id of the provisioner used for authorizing the sign of certificates. | `""`                                |
 | `stepIssuer.provisioner.passwordRef.name` | Name of the secret with the provisioner password.                        | `""`                                |
