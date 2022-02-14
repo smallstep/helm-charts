@@ -134,6 +134,10 @@ chart and their default values.
 | `ca.db.accessModes`           | Persistent volume access mode                                                                               | `["ReadWriteOnce"]`                      |
 | `ca.db.size`                  | Persistent volume size                                                                                      | `10Gi`                                   |
 | `ca.db.existingClaim`         | Persistent volume existing claim name. If defined, PVC must be created manually before volume will be bound | `""`                                     |
+| `ca.kms.type`                 | Key management system to use.                                                                               | `""`                                     |
+| `ca.kms.id`                   | Identifier for KMS authentication (e.g. Azure KeyVault ClientID)                                            | `""`                                     |
+| `ca.kms.secret`               | Secret/password for KMS authentication (e.g. Azure KeyVault ClientSecret)                                   | `""`                                     |
+| `ca.kms.tenant`               | Tenant for KMS authentication (e.g. Azure KeyVault TenantID)                                                | `""`                                     |
 | `ca.runAsRoot`                | Run the CA as root.                                                                                         | `false`                                  |
 | `ca.bootstrap.postInitHook`   | Extra script snippet to run after `step ca init` has completed.                                             | `""`                                     |
 | `linkedca.token`              | The token used to configure step-ca using the linkedca mode.                                                | `""`                                     |

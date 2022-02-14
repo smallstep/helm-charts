@@ -236,7 +236,7 @@ ca:
     name: admin
     # password is the password used to encrypt the provisioner private key.
     password:
-  # db contains the step-certificate dataabase configuration.
+  # db contains the step-certificate database configuration.
   db:
     # enabled defines if the database is enabled.
     enabled: true
@@ -257,6 +257,16 @@ ca:
     - ReadWriteOnce
     # size is the Persistent Volume size.
     size: 10Gi
+  # kms contains the step-certificates key management system configuration
+  kms:
+    # type of KMS to use (e.g. azurekms for Azure KeyVault)
+    type: ""
+    # identifier for KMS credentials (e.g. service principal ClientID for Azure)
+    id: ""
+    # secret for KMS credentials (e.g. service principal ClientSecret for Azure)
+    secret: ""
+    # secret for KMS credentials (e.g. service principal ClientSecret for Azure)
+    tenant: ""
   # runAsRoot runs the ca as root instead of the step user. This is required in
   # some storage provisioners.
   runAsRoot: false
