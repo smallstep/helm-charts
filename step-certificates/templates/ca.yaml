@@ -65,6 +65,12 @@ spec:
           env:
           - name: NAMESPACE
             value: "{{ .Release.Namespace }}"
+          {{- if eq .Values.ca.kms.type "azurekms"}}
+          - name: AZURE_CLIENT_ID
+            value: {{ .Values.ca.kms.id | quote }}
+          - name: AZURE_CLIENT_SECRET
+            value: {{ .Values.ca.kms.secret | quote }}
+          {{- end }}
           {{- if or .Values.linkedca.token (and .Values.linkedca.secretKeyRef.name .Values.linkedca.secretKeyRef.key) }}
           - name: STEP_CA_TOKEN
             valueFrom:
