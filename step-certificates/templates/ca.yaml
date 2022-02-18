@@ -65,6 +65,9 @@ spec:
           env:
           - name: NAMESPACE
             value: "{{ .Release.Namespace }}"
+          {{- if .Values.ca.env }}
+            {{- toYaml .Values.ca.env | nindent 10 }}
+          {{- end }}
           {{- if or .Values.linkedca.token (and .Values.linkedca.secretKeyRef.name .Values.linkedca.secretKeyRef.key) }}
           - name: STEP_CA_TOKEN
             valueFrom:

@@ -236,7 +236,7 @@ ca:
     name: admin
     # password is the password used to encrypt the provisioner private key.
     password:
-  # db contains the step-certificate dataabase configuration.
+  # db contains the step-certificate database configuration.
   db:
     # enabled defines if the database is enabled.
     enabled: true
@@ -257,6 +257,10 @@ ca:
     - ReadWriteOnce
     # size is the Persistent Volume size.
     size: 10Gi
+  # kms type to utilize 
+  kms: ""
+  # additional environment variables to set in the step-certificates container
+  env: []
   # runAsRoot runs the ca as root instead of the step user. This is required in
   # some storage provisioners.
   runAsRoot: false
