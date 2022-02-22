@@ -39,7 +39,7 @@ spec:
           "--enable-leader-election",
           {{- end }}
           {{- if .Values.deployment.args.disableApprovalCheck }}
-          ---disable-approval-check,
+          "--disable-approval-check",
           {{- end }}
         ]
         command: ["/manager"]
