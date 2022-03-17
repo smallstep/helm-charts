@@ -258,7 +258,8 @@ ca:
     # size is the Persistent Volume size.
     size: 10Gi
   # kms type to utilize 
-  kms: ""
+  kms:
+    type: ""
   # additional environment variables to set in the step-certificates container
   env: []
   # runAsRoot runs the ca as root instead of the step user. This is required in
@@ -276,6 +277,7 @@ autocert:
 ingress:
   enabled: false
   annotations: {}
+  ingressClassName: ""
   hosts: []
   tls: []
 
