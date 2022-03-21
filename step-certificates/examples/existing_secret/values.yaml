@@ -1,0 +1,28 @@
+bootstrap:
+  secrets: false
+  enabled: false
+  configmaps: false
+
+inject:
+  enabled: false
+
+existingSecrets:
+  enabled: true
+
+
+ca:
+  name: "demo"
+  existingSecrets:
+    enabled: true
+
+certificate_issuer:
+  existingSecrets:
+    enabled: true
+
+ssh:
+  host_ca:
+    existingSecrets:
+      enabled: true
+  user_ca:
+    existingSecrets:
+      enabled: true
