@@ -137,8 +137,13 @@ spec:
         configMap:
           name: {{ include "step-certificates.fullname" . }}-certs
       - name: config
+      {{- if .Values.config.existingSecrets }}
+        secret:
+          secretName: {{ include "step-certificates.fullname" . }}-config
+      {{- else }}
         configMap:
           name: {{ include "step-certificates.fullname" . }}-config
+      {{- end }}
       - name: secrets
       {{- if or .Values.inject.enabled .Values.existingSecrets }}
         secret:

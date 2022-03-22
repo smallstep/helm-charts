@@ -19,6 +19,10 @@ certificate_issuer:
   existingSecrets:
     enabled: true
 
+config:
+  existingSecrets:
+    enabled: true
+
 ssh:
   host_ca:
     existingSecrets:
