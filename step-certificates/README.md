@@ -139,23 +139,30 @@ inject:
   enabled: false
 ```
 
-Enabling existingSecrets can't be combined with enabling `bootstrap` nor `inject` elements from helm chart.
-Therefore the bootstrap and inject in disabled in the example above.
+Enabling `existingSecrets` can't be combined with enabling `bootstrap` nor `inject` elements from helm chart.
+Therefore the bootstrap and inject are disabled in the example above.
 
-Note, the MutatingWebhookConfiguration created by autocert is not patched with CA bundle as the bootstrap init-container is not started when existingSecrets are enabled.
+Note, the MutatingWebhookConfiguration created by autocert is not patched with CA bundle as the bootstrap init-container is not started when `existingSecrets` are enabled.
 
 The following naming conventions are used for secret names:  
 
 secret name: `{{ include "step-certificates.fullname" . }}-secrets`  
-which contains `intermediate_ca_key` and `root_ca_key` and optionally `certificate_issuer_key` and `ssh_host_ca_key` and `ssh_user_ca_key`  
+which contains:
+- `intermediate_ca_key`
+- `root_ca_key`
+- `certificate_issuer_key` (optional)
+- `ssh_host_ca_key` (optional)
+- `ssh_user_ca_key` (optional)
 
 When `existingSecrets.configAsSecret` is `true`  
 secret name: `{{ include "step-certificates.fullname" . }}-config`  
-which contains `ca.json` and `default.json`
+which contains:
+- `ca.json`
+- `default.json`
 
 When `existingSecrets.ca` is `true`  
 secret name: `{{ include "step-certificates.fullname" . }}-ca-password`  
-secret type: `smallstep.com/ca-password` 
+secret type: `smallstep.com/ca-password`  
 which contains `password`
 
 When `existingSecrets.issuer` is `true`  
