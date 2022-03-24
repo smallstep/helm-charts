@@ -21,27 +21,15 @@ image:
   # Overrides the image tag whose default is the chart appVersion.
   tag: ""
 
-# Use existing secrets. When set to true the inject secrets and bootstrap are disabled
-existingSecrets:
+# Use existing secrets instead of 'bootstrap' init-container or 'inject'-element from helm chart
+# Note, the MutatingWebhookConfiguration created by autocert is not patched with CA bundle as the bootstrap init-container is not run
+existingSecrets: 
   enabled: false
-
-certificate_issuer:
-  existingSecrets:
-    enabled: false
-
-config:
-  existingSecrets:
-    enabled: false
-
-
-ssh:
-  host_ca:
-    existingSecrets:
-      enabled: false
-
-  user_ca:
-    existingSecrets:
-      enabled: false
+  ca: false
+  issuer: false
+  configAsSecret: false
+  sshHostCa: false
+  sshUserCa: false
 
 # bootstrap contains the docker image for bootstrapping the configurations.
 #
