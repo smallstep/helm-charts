@@ -1,3 +1,6 @@
+{{- if or (and .Values.bootstrap.enabled .Values.existingSecrets.enabled) ( and .Values.inject.enabled  .Values.existingSecrets.enabled) -}}
+{{ required "Can not combine existingSecrets with bootstap nor inject" .Values.notdefined }}
+{{- end }}
 # ConfigMaps that will be updated by the configuration job: 
 # 1. Step CA config directory.
 # 2. Step CA certs direcotry.

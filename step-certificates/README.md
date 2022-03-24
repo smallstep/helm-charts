@@ -75,7 +75,7 @@ helm install \
 
 ## Configuration
 
-The best way to configure step-certificates is to use [step](https://github.com/smallstep/cli).
+The easiest way to configure step-certificates is to use [step](https://github.com/smallstep/cli).
 
 Starting with `step` v0.17+ and `step-certificates` Chart v1.17+, you can use
 `step ca init` to create a values.yaml that you can use to configure your CA:
@@ -114,6 +114,74 @@ helm install -f values.yaml \
 
 With this method, the automatic bootstrap of the PKI is deprecated and it will
 be removed in future releases.
+
+
+### Advanced configuration
+
+In some circumstainces it is not an option to use Helm install or to inject secrets at the command line. For example when using GitOps / ArgoCD.
+Secrets and configurations can be provided before the helm chart is deployed by defining `existingSecrets` in the values file:
+
+```
+existingSecrets: 
+  enabled: true
+  ca: true
+  issuer: true
+  configAsSecret: true
+  sshHostCa: true
+  sshUserCa: true
+
+bootstrap:
+  secrets: false
+  enabled: false
+  configmaps: false
+
+inject:
+  enabled: false
+```
+
+Enabling `existingSecrets` can't be combined with enabling `bootstrap` nor `inject` elements from helm chart.
+Therefore the bootstrap and inject are disabled in the example above.
+
+Note, the MutatingWebhookConfiguration created by autocert is not patched with CA bundle as the bootstrap init-container is not started when `existingSecrets` are enabled.
+
+The following naming conventions are used for secret names:  
+
+secret name: `{{ include "step-certificates.fullname" . }}-secrets`  
+which contains:
+- `intermediate_ca_key`
+- `root_ca_key`
+- `certificate_issuer_key` (optional)
+- `ssh_host_ca_key` (optional)
+- `ssh_user_ca_key` (optional)
+
+When `existingSecrets.configAsSecret` is `true`  
+secret name: `{{ include "step-certificates.fullname" . }}-config`  
+which contains:
+- `ca.json`
+- `default.json`
+
+When `existingSecrets.ca` is `true`  
+secret name: `{{ include "step-certificates.fullname" . }}-ca-password`  
+secret type: `smallstep.com/ca-password`  
+which contains `password`
+
+When `existingSecrets.issuer` is `true`  
+secret name: `{{ include "step-certificates.fullname" . }}--certificate-issuer-password`  
+secret type: `smallstep.com/certificate-issuer-password`  
+which contains `password`
+
+When `existingSecrets.sshHostCa` is `true`  
+secret name: `{{ include "step-certificates.fullname" . }}-ssh-host-ca-password`  
+secret type: `smallstep.com/ssh-host-ca-password`  
+which contains `password`
+
+When `existingSecrets.sshUserCa` is `true`  
+secret name: `{{ include "step-certificates.fullname" . }}-ssh-user-ca-password`  
+secret type: `smallstep.com/ssh-user-ca-password`  
+which contains `password`
+
+Further more the secret name `{{ include "step-certificates.fullname" . }}-provisioner-password` is used for the password used to encrypt JWK provisioner.  
+
 
 ### Configuration parameters
 
@@ -182,6 +250,13 @@ chart and their default values.
 | `inject.secrets.x509.root_ca_key`         | Plain text PEM representation of the root CA private key.                                       | `""`                                     |
 | `inject.secrets.ssh.host_ca_key`          | Plain text representation of the ssh host CA private key.                                       | `""`                                     |
 | `inject.secrets.ssh.user_ca_key`          | Plain text representation of the ssh user CA private key.                                       | `""`                                     |
+| `existingSecrets.enabled`                 | Use secrets and configurations from existing secrets created outside of this chart              | `false`                                  |
+| `existingSecrets.ca`                      | When `true`use existing secret for the ca-password.                                             | `false`                                  |
+| `existingSecrets.issuer`                  | When `true`use existing secret for the issuer.                                                  | `false`                                  |
+| `existingSecrets.sshHostCa`               | When `true`use existing secret for the ssh host CA public key.                                  | `false`                                  |
+| `existingSecrets.sshUserCa`               | When `true`use existing secret for the ssh user CA public key.                                  | `false`                                  |
+| `existingSecrets.configAsSecret`          | When `true`use existing secret for configuration instead of ConfigMap                           | `false`                                  |
+
 
 Specify each parameter using the `--set key=value[,key=value]` argument to `helm
 install`. For example,
@@ -216,3 +291,11 @@ helm install -f values.yaml my-release step-certificates
 
 At this moment only one replica is supported, step certificates supports
 multiple ones using MariaDB or MySQL.
+
+
+# Development
+
+Testing chart by using an example yaml file:
+```
+helm template . -f examples/existing_secrets/value.yaml | kubectl apply -f - --dry-run=client
+```

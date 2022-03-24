@@ -26,7 +26,7 @@ spec:
         checksum/secret: {{ include (print $.Template.BasePath "/secrets.yaml") . | sha256sum }}
       {{- end }}
     spec:
-      {{- if and .Release.IsInstall (not .Values.inject.enabled) }}
+      {{- if and .Release.IsInstall (not (or .Values.inject.enabled .Values.existingSecrets.enabled )) }}
       initContainers:
         - name: {{ .Chart.Name }}-init
           image: {{ .Values.image.initContainerRepository }}
@@ -48,16 +48,16 @@ spec:
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           command: [
             "/usr/local/bin/step-ca",
-            {{- if and .Values.inject.enabled (and .Values.inject.secrets.certificate_issuer.enabled (not (eq .Values.inject.secrets.certificate_issuer.password ""))) }}
+            {{- if or (and .Values.existingSecrets.enabled .Values.existingSecrets.issuer) (and .Values.inject.enabled (and .Values.inject.secrets.certificate_issuer.enabled (not (eq .Values.inject.secrets.certificate_issuer.password "")))) }}
             "--issuer-password-file", "/home/step/secrets/certificate-issuer/password",
             {{- end }}
-            {{- if or (and .Values.bootstrap.enabled .Values.bootstrap.secrets) (and .Values.inject.enabled (not (eq .Values.inject.secrets.ca_password ""))) }}
+            {{- if or .Values.existingSecrets.enabled (or (and .Values.bootstrap.enabled .Values.bootstrap.secrets) (and .Values.inject.enabled (not (eq .Values.inject.secrets.ca_password "")))) }}
             "--password-file", "/home/step/secrets/passwords/password",
             {{- end }}
-            {{- if and .Values.inject.enabled (and .Values.inject.secrets.ssh.enabled (not (eq .Values.inject.secrets.ssh.host_ca_password ""))) }}
+            {{- if or (and .Values.existingSecrets.enabled .Values.existingSecrets.sshHostCa) (and .Values.inject.enabled (and .Values.inject.secrets.ssh.enabled (not (eq .Values.inject.secrets.ssh.host_ca_password "")))) }}
             "--ssh-host-password-file", "/home/step/secrets/ssh-host-ca/password",
             {{- end }}
-            {{- if and .Values.inject.enabled (and .Values.inject.secrets.ssh.enabled (not (eq .Values.inject.secrets.ssh.user_ca_password ""))) }}
+            {{- if or (and .Values.existingSecrets.enabled .Values.existingSecrets.sshUserCa) (and .Values.inject.enabled (and .Values.inject.secrets.ssh.enabled (not (eq .Values.inject.secrets.ssh.user_ca_password "")))) }}
             "--ssh-user-password-file", "/home/step/secrets/ssh-user-ca/password",
             {{- end }}
             "/home/step/config/ca.json"
@@ -107,7 +107,7 @@ spec:
           - name: secrets
             mountPath: /home/step/secrets
             readOnly: true
-          {{- if or (and .Values.bootstrap.enabled .Values.bootstrap.secrets) (and .Values.inject.enabled (not (eq .Values.inject.secrets.ca_password ""))) }}
+          {{- if or (and .Values.existingSecrets.enabled .Values.existingSecrets.ca)  (or (and .Values.bootstrap.enabled .Values.bootstrap.secrets) (and .Values.inject.enabled (not (eq .Values.inject.secrets.ca_password "")))) }}
           - name: ca-password
             mountPath: /home/step/secrets/passwords
             readOnly: true
@@ -117,17 +117,17 @@ spec:
             mountPath: /home/step/db
             readOnly: false
           {{- end }}
-          {{- if and .Values.inject.enabled (and .Values.inject.secrets.certificate_issuer.enabled (not (eq .Values.inject.secrets.certificate_issuer.password ""))) }}
+          {{- if or (and .Values.existingSecrets.enabled .Values.existingSecrets.issuer)  (and .Values.inject.enabled (and .Values.inject.secrets.certificate_issuer.enabled (not (eq .Values.inject.secrets.certificate_issuer.password "")))) }}
           - name: certificate-issuer
             mountPath: /home/step/secrets/certificate-issuer
             readOnly: true
           {{- end }}
-          {{- if and .Values.inject.enabled (and .Values.inject.secrets.ssh.enabled (not (eq .Values.inject.secrets.ssh.host_ca_password ""))) }}
+          {{- if or (and .Values.existingSecrets.enabled .Values.existingSecrets.sshHostCa)  (and .Values.inject.enabled (and .Values.inject.secrets.ssh.enabled (not (eq .Values.inject.secrets.ssh.host_ca_password "")))) }}
           - name: ssh-host-ca-password
             mountPath: /home/step/secrets/ssh-host-ca
             readOnly: true
           {{- end }}
-          {{- if and .Values.inject.enabled (and .Values.inject.secrets.ssh.enabled (not (eq .Values.inject.secrets.ssh.user_ca_password ""))) }}
+          {{- if or (and .Values.existingSecrets.enabled .Values.existingSecrets.sshUserCa) (and .Values.inject.enabled (and .Values.inject.secrets.ssh.enabled (not (eq .Values.inject.secrets.ssh.user_ca_password "")))) }}
           - name: ssh-user-ca-password
             mountPath: /home/step/secrets/ssh-user-ca
             readOnly: true
@@ -137,32 +137,37 @@ spec:
         configMap:
           name: {{ include "step-certificates.fullname" . }}-certs
       - name: config
+      {{- if and .Values.existingSecrets.enabled .Values.existingSecrets.configAsSecret }}
+        secret:
+          secretName: {{ include "step-certificates.fullname" . }}-config
+      {{- else }}
         configMap:
           name: {{ include "step-certificates.fullname" . }}-config
+      {{- end }}
       - name: secrets
-      {{- if .Values.inject.enabled }}
+      {{- if or .Values.inject.enabled .Values.existingSecrets.enabled }}
         secret:
           secretName: {{ include "step-certificates.fullname" . }}-secrets
       {{- else }}
         configMap:
           name: {{ include "step-certificates.fullname" . }}-secrets
       {{- end }}
-      {{- if or (and .Values.bootstrap.enabled .Values.bootstrap.secrets) (and .Values.inject.enabled (not (eq .Values.inject.secrets.ca_password ""))) }}
+      {{- if or (and .Values.existingSecrets.enabled .Values.existingSecrets.ca) (or (and .Values.bootstrap.enabled .Values.bootstrap.secrets) (and .Values.inject.enabled (not (eq .Values.inject.secrets.ca_password "")))) }}
       - name: ca-password
         secret:
           secretName: {{ include "step-certificates.fullname" . }}-ca-password
       {{- end }}
-      {{- if and .Values.inject.enabled (and .Values.inject.secrets.certificate_issuer.enabled (not (eq .Values.inject.secrets.certificate_issuer.password ""))) }}
+      {{- if or (and .Values.existingSecrets.enabled .Values.existingSecrets.issuer) (and .Values.inject.enabled (and .Values.inject.secrets.certificate_issuer.enabled (not (eq .Values.inject.secrets.certificate_issuer.password "")))) }}
       - name: certificate-issuer
         secret:
           secretName: {{ include "step-certificates.fullname" . }}-certificate-issuer-password
       {{- end }}
-      {{- if and .Values.inject.enabled (and .Values.inject.secrets.ssh.enabled (not (eq .Values.inject.secrets.ssh.host_ca_password ""))) }}
+      {{- if or (and .Values.existingSecrets.enabled .Values.existingSecrets.sshHostCa) (and .Values.inject.enabled (and .Values.inject.secrets.ssh.enabled (not (eq .Values.inject.secrets.ssh.host_ca_password "")))) }}
       - name: ssh-host-ca-password
         secret:
           secretName: {{ include "step-certificates.fullname" . }}-ssh-host-ca-password
       {{- end }}
-      {{- if and .Values.inject.enabled (and .Values.inject.secrets.ssh.enabled (not (eq .Values.inject.secrets.ssh.user_ca_password ""))) }}
+      {{- if or (and .Values.existingSecrets.enabled .Values.existingSecrets.sshUserCa) (and .Values.inject.enabled (and .Values.inject.secrets.ssh.enabled (not (eq .Values.inject.secrets.ssh.user_ca_password "")))) }}
       - name: ssh-user-ca-password
         secret:
           secretName: {{ include "step-certificates.fullname" . }}-ssh-user-ca-password

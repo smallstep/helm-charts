@@ -21,6 +21,16 @@ image:
   # Overrides the image tag whose default is the chart appVersion.
   tag: ""
 
+# Use existing secrets instead of 'bootstrap' init-container or 'inject'-element from helm chart
+# Note, the MutatingWebhookConfiguration created by autocert is not patched with CA bundle as the bootstrap init-container is not run
+existingSecrets: 
+  enabled: false
+  ca: false
+  issuer: false
+  configAsSecret: false
+  sshHostCa: false
+  sshUserCa: false
+
 # bootstrap contains the docker image for bootstrapping the configurations.
 #
 # It's also possible to disable the creation of secrets and configmaps.
@@ -268,6 +278,10 @@ ca:
   bootstrap:
     # Add script snippets here to be executed after the step ca init has been run
     postInitHook: ""
+  # Use existing secret for ca-password
+  existingSecrets:
+    enabled: false
+
 
 # autocert is used to configure the autocert chart that depends on step-certificates.
 autocert:
