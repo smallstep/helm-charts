@@ -107,7 +107,7 @@ spec:
           - name: secrets
             mountPath: /home/step/secrets
             readOnly: true
-          {{- if or .Values.ca.existingSecrets.enabled (or (and .Values.bootstrap.enabled .Values.bootstrap.secrets) (and .Values.inject.enabled (not (eq .Values.inject.secrets.ca_password "")))) }}
+          {{- if or (and .Values.existingSecrets.enabled .Values.existingSecrets.ca)  (or (and .Values.bootstrap.enabled .Values.bootstrap.secrets) (and .Values.inject.enabled (not (eq .Values.inject.secrets.ca_password "")))) }}
           - name: ca-password
             mountPath: /home/step/secrets/passwords
             readOnly: true
