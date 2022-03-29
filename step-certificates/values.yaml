@@ -18,7 +18,7 @@ image:
   repository: cr.step.sm/smallstep/step-ca
   initContainerRepository: busybox:latest
   # TODO: update with proper image reference
-  backupRestoreContainerRepository: badger:v1
+  backupRestoreRepository: badger:latest
   pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
   tag: ""

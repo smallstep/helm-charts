@@ -35,7 +35,7 @@ spec:
       {{- end }}
       {{- if and .Values.ca.db.enabled (hasKey .Values.ca.db.backupRestore "badger") }}
         - name: {{ .Chart.Name }}-backuprestore
-          image: {{ .Values.image.backupRestoreContainerRepository }}
+          image: {{ .Values.image.backupRestoreRepository }}
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           command: ["/usr/local/bin/backup-restore.sh" ]
           volumeMounts:
