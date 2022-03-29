@@ -38,6 +38,10 @@ spec:
           image: {{ .Values.image.backupRestoreContainerRepository }}
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           command: ["/usr/local/bin/backup-restore.sh" ]
+          volumeMounts:
+          - name: database
+            mountPath: /home/step/db
+            readOnly: false
       {{- end }}
       securityContext:
         {{- if .Values.ca.runAsRoot }}
