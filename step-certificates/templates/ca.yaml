@@ -37,7 +37,7 @@ spec:
         - name: {{ .Chart.Name }}-backuprestore
           image: {{ .Values.image.backupRestoreContainerRepository }}
           imagePullPolicy: {{ .Values.image.pullPolicy }}
-          command: ["badger", "backup", "--dir", "/home/step/db", "-f", "/home/step/db/badger-db.bak" ]
+          command: ["/usr/local/bin/backup-restore.sh" ]
       {{- end }}
       securityContext:
         {{- if .Values.ca.runAsRoot }}
