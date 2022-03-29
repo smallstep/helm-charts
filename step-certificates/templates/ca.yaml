@@ -26,12 +26,18 @@ spec:
         checksum/secret: {{ include (print $.Template.BasePath "/secrets.yaml") . | sha256sum }}
       {{- end }}
     spec:
-      {{- if and .Release.IsInstall (not (or .Values.inject.enabled .Values.existingSecrets.enabled )) }}
       initContainers:
+      {{- if and .Release.IsInstall (not (or .Values.inject.enabled .Values.existingSecrets.enabled )) }}
         - name: {{ .Chart.Name }}-init
           image: {{ .Values.image.initContainerRepository }}
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           command: ["sleep", "20"]
+      {{- end }}
+      {{- if and .Values.ca.db.enabled (hasKey .Values.ca.db.backupRestore "badger") }}
+        - name: {{ .Chart.Name }}-backuprestore
+          image: {{ .Values.image.backupRestoreContainerRepository }}
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          command: ["badger", "--dir", "/home/step/db", "-f", "/home/step/db/badger-db.bak" ]
       {{- end }}
       securityContext:
         {{- if .Values.ca.runAsRoot }}
