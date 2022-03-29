@@ -252,10 +252,8 @@ ca:
   db:
     # enabled defines if the database is enabled.
     enabled: true
-    # backup/restore for badger database
-    backupRestore:
-      badger:
-        enabled: false
+    # backup/restore of internal database
+    backupRestore: {}
     # persistent defines if a Persistent Volume Claim is used, if false and emptyDir will be used.
     persistent: true
     # storeageClass is Persistent Volume Storage Class
