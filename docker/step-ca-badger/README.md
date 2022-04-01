@@ -22,7 +22,7 @@ Add init-container to step-certificates Statefulset:
 
 The init-container does a back-up of the Badger database every time the pod restarts. Note, Badger backup/restore does not operate on a database in use.
 
-The backup can be extracted by use of for example `kubectl cp <pod>:/home/step/db/backup/badger-db.bak .` or by using Kubernetes CSI `VolumeSnapshot`.
+The backup can be extracted by use of for example `kubectl cp <pod>:/home/step/db/backup/badger-db.bak badger-db.bak  -c step-certificates -n <namespace>` or by using Kubernetes CSI `VolumeSnapshot`.
 
 A Kubernetes job or similar cronjob can schedule restart of the pod.
 
