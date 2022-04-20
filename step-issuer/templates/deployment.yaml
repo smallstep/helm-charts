@@ -5,6 +5,7 @@ metadata:
   namespace: {{ .Release.Namespace }}
   labels:
     control-plane: {{ .Values.service.controlPlane }}
+    {{- include "step-issuer.labels" . | nindent 4 }}
 spec:
   replicas: {{ .Values.replicaCount }}
   selector:
@@ -14,6 +15,7 @@ spec:
     metadata:
       labels:
         control-plane: {{ .Values.service.controlPlane }}
+        {{- include "step-issuer.labels" . | nindent 4 }}
     spec:
       {{- if $.Values.imagePullSecrets }}
       imagePullSecrets:

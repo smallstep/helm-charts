@@ -9,6 +9,7 @@ metadata:
     prometheus.io/scrape: "{{ .Values.service.scrape }}"
   labels:
     control-plane: {{ .Values.service.controlPlane }}
+    {{- include "step-issuer.labels" . | nindent 4 }}
 spec:
   ports:
   - name: {{ .Values.service.targetPorts }}
