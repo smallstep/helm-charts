@@ -16,4 +16,5 @@ spec:
     port: {{ .Values.service.port }}
     targetPort: {{ .Values.service.targetPorts }}
   selector:
+    {{- include "prometheus-blackbox-exporter.selectorLabels" . | nindent 4 }}
     control-plane: {{ .Values.service.controlPlane }}
