@@ -5,15 +5,18 @@ metadata:
   namespace: {{ .Release.Namespace }}
   labels:
     control-plane: {{ .Values.service.controlPlane }}
+    {{- include "step-issuer.labels" . | nindent 4 }}
 spec:
   replicas: {{ .Values.replicaCount }}
   selector:
     matchLabels:
       control-plane: {{ .Values.service.controlPlane }}
+      {{- include "step-issuer.selectorLabels" . | nindent 6 }}
   template:
     metadata:
       labels:
         control-plane: {{ .Values.service.controlPlane }}
+        {{- include "step-issuer.labels" . | nindent 8 }}
     spec:
       {{- if $.Values.imagePullSecrets }}
       imagePullSecrets:
