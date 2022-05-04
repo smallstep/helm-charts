@@ -84,3 +84,12 @@ tunnel:
 # Configure extra volumes and volume mounts as YAML expressions.
 volumes: false
 volumeMounts: false
+
+# nodeSelector contains the node labels for pod assignment.
+nodeSelector: {}
+
+# tolerations contains the toleration labels for pod assignment.
+tolerations: []
+
+# affinity contains the affinity settings for pod assignment.
+affinity: {}
