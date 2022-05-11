@@ -63,6 +63,19 @@ stepIssuer:
       name: ""
       key: ""
 
+# mandatory values to generate stepClusterIssuer resource
+# please follow the https://github.com/smallstep/step-issuer#getting-started to setup step-ca and get step-issuer values
+stepClusterIssuer:
+  create: false
+  caBundle: ""
+  provisioner:
+    name: ""
+    kid: ""
+    passwordRef:
+      name: ""
+      namespace: ""
+      key: ""
+
 # For the cert-manager approver
 certManager:
   serviceAccount:
