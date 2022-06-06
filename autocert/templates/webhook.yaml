@@ -19,7 +19,7 @@ webhooks:
         namespace: {{ .Release.Namespace }}
         path: "/mutate"
 {{- if semverCompare ">=1.16-0" .Capabilities.KubeVersion.GitVersion }}
-    sideEffects: NoneOnDryRun
+    sideEffects: None
     admissionReviewVersions: ["v1beta1"]
 {{- end }}
     rules:
