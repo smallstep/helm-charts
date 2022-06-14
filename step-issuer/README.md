@@ -51,17 +51,17 @@ and their default values.
 | `deployment.args.enableLeaderElection`                 | Enable k8s controller leader election.                                                                    | `true`                              |
 | `deployment.args.disableApprovalCheck`                 | To disable cert-manager approvals on old version of cert-manager.                                         | `false`                             |
 | `stepIssuer.create`                                    | If we should automatically create a StepIssuer                                                            | `false`                             |
-| `stepIssuer.caUrl`                                     | Step Certificates root certificate URL. This is normally the step-certificates service name.              | `"step-certificates"`               |
+| `stepIssuer.caUrl`                                     | Step Certificates CA URL. This is usually the step certificates service FQDN.                             | `""`                                |
 | `stepIssuer.caBundle`                                  | Step Certificates root certificate in a single-line base64 string.                                        | `""`                                |
 | `stepIssuer.provisioner.name`                          | Name of the provisioner used for authorizing the sign of certificates.                                    | `""`                                |
 | `stepIssuer.provisioner.kid`                           | Key id of the provisioner used for authorizing the sign of certificates.                                  | `""`                                |
 | `stepIssuer.provisioner.passwordRef.name`              | Name of the secret with the provisioner password.                                                         | `""`                                |
 | `stepIssuer.provisioner.passwordRef.key`               | Key name in the the secret with the provisioner password.                                                 | `""`                                |
 | `stepClusterIssuer.create`                             | If we should automatically create a StepClusterIssuer                                                     | `false`                             |
-| `stepClusterIssuer.caUrl`                              | Step Certificates root certificate URL. This is normally the step-certificates service name.              | `"step-certificates"`               |
+| `stepClusterIssuer.caUrl`                              | Step Certificates CA URL. This is usually the step certificates service FQDN.                             | `""`                                |
 | `stepClusterIssuer.caBundle`                           | Step Certificates root certificate in a single-line base64 string.                                        | `""`                                |
 | `stepClusterIssuer.provisioner.name`                   | Name of the provisioner used for authorizing the sign of certificates.                                    | `""`                                |
 | `stepClusterIssuer.provisioner.kid`                    | Key id of the provisioner used for authorizing the sign of certificates.                                  | `""`                                |
 | `stepClusterIssuer.provisioner.passwordRef.name`       | Name of the secret with the provisioner password.                                                         | `""`                                |
 | `stepClusterIssuer.provisioner.passwordRef.key`        | Key name in the the secret with the provisioner password.                                                 | `""`                                |
-| `stepClusterIssuer.provisioner.passwordRef.namespace`  | The namespace where the provisioner password secret resides.                                              | `""`                                |
+| `stepClusterIssuer.provisioner.passwordRef.namespace`  | Namespace where the provisioner password secret resides.                                                  | `""`                                |

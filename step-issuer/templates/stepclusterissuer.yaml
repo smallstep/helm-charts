@@ -5,7 +5,11 @@ metadata:
   name: "{{ template "step-issuer.fullname" . }}"
 spec:
   # The CA URL.
-  url: https://{{ .Values.stepClusterIssuer.caUrl }}.{{ .Release.Namespace }}.svc.cluster.local
+  {{- if .Values.stepClusterIssuer.caUrl }}
+  url: {{ .Values.stepClusterIssuer.caUrl }}
+  {{- else }}
+  url: https://step-certificates.{{ .Release.Namespace }}.svc.cluster.local
+  {{- end }}
   # The base64 encoded version of the CA root certificate in PEM format.
   caBundle: {{ .Values.stepClusterIssuer.caBundle }}
   # The provisioner name, kid, and a reference to the provisioner password secret.
