@@ -55,6 +55,7 @@ serviceAccount:
 # please follow the https://github.com/smallstep/step-issuer#getting-started to setup step-ca and get step-issuer values
 stepIssuer:
   create: false
+  caUrl: ""
   caBundle: ""
   provisioner:
     name: ""
@@ -67,6 +68,7 @@ stepIssuer:
 # please follow the https://github.com/smallstep/step-issuer#getting-started to setup step-ca and get step-issuer values
 stepClusterIssuer:
   create: false
+  caUrl: ""
   caBundle: ""
   provisioner:
     name: ""
