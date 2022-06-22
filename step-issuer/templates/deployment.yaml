@@ -29,12 +29,14 @@ spec:
       {{- end }}
       containers:
       - image: "{{ .Values.kubeRBACproxy.image.repository }}:{{ .Values.kubeRBACproxy.image.tag }}"
+        imagePullPolicy: {{ .Values.kubeRBACproxy.image.pullPolicy }}
         name: kube-rbac-proxy
         args: ["--secure-listen-address=0.0.0.0:8443", "--upstream=http://127.0.0.1:8080/", "--logtostderr=true", "--v=10"]
         ports:
         - containerPort: {{ .Values.service.port }}
           name: {{ .Values.service.targetPorts }}
       - image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+        imagePullPolicy: {{ .Values.image.pullPolicy }}
         name: manager
         args: [
           "--metrics-addr=127.0.0.1:8080",
