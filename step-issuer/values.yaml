@@ -13,6 +13,7 @@ image:
 kubeRBACproxy:
   image:
     repository: gcr.io/kubebuilder/kube-rbac-proxy
+    pullPolicy: IfNotPresent
     tag: v0.8.0
 
 # List of secret keys used to pull images from private registries.
