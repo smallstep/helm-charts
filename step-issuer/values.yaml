@@ -42,6 +42,7 @@ service:
   targetPorts: https
   controlPlane: controller-manager
   scrape: true
+  scrapePort: 8080
 
 serviceAccount:
   # Specifies whether a service account should be created
