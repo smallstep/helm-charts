@@ -4,7 +4,7 @@ metadata:
   name: "{{ template "step-issuer.fullname" . }}"
   namespace: {{ .Release.Namespace }}
   annotations:
-    prometheus.io/port: "{{ .Values.service.ports }}"
+    prometheus.io/port: "{{ .Values.service.scrapePort }}"
     prometheus.io/scheme: "{{ .Values.service.targetPorts }}"
     prometheus.io/scrape: "{{ .Values.service.scrape }}"
   labels:
