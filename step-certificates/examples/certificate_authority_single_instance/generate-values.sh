@@ -84,7 +84,7 @@ step crypto jwk create \
   --password-file=jwk_provisioner.password \
   --force
 
-JWK_PROVISIONER_KEY=`cat jwk_provisioner.key | step crypto jose format | tee jwk_provisioner.compact.key | base64 --wrap=0`
+JWK_PROVISIONER_KEY=`cat jwk_provisioner.key | step crypto jose format | tee jwk_provisioner.compact.key`
 JWK_PROVISIONER_CRT_ALG=`jq '.alg' -r jwk_provisioner.pub`
 JWK_PROVISIONER_CRT_CRV=`jq '.crv' -r jwk_provisioner.pub`
 JWK_PROVISIONER_CRT_KID=`jq '.kid' -r jwk_provisioner.pub`
