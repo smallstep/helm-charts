@@ -20,6 +20,9 @@ spec:
       labels:
         app.kubernetes.io/name: {{ include "step-certificates.name" . }}
         app.kubernetes.io/instance: {{ .Release.Name }}
+        {{- with .Values.podExtraLabels }}
+        {{- toYaml . | nindent 8 }}
+        {{- end }}
       {{- if .Values.inject.enabled }}
       annotations:
         checksum/config: {{ include (print $.Template.BasePath "/configmaps.yaml") . | sha256sum }}

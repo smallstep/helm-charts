@@ -46,6 +46,9 @@ bootstrap:
   # secrets defines if the secrets are created.
   secrets: true
 
+# Extra labels
+podExtraLabels: {}
+
 # inject contains values to be injected into config maps and secrets
 inject:
   enabled: false
