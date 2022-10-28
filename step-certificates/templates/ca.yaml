@@ -35,6 +35,10 @@ spec:
           image: {{ .Values.image.initContainerRepository }}
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           command: ["sleep", "20"]
+          {{- with .Values.ca.init.containerSecurityContext }}
+          securityContext:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
       {{- end }}
       {{- with .Values.podSecurityContext }}
       securityContext:
