@@ -45,6 +45,15 @@ bootstrap:
   configmaps: true
   # secrets defines if the secrets are created.
   secrets: true
+  containerSecurityContext:
+    allowPrivilegeEscalation: false
+    readOnlyRootFilesystem: false
+    runAsUser: 1000
+    capabilities:
+      drop: ["ALL"]
+    runAsNonRoot: true
+    # seccompProfile:
+    #   type: RuntimeDefault
 
 # Extra labels
 podExtraLabels: {}
@@ -284,7 +293,16 @@ ca:
   # Use existing secret for ca-password
   existingSecrets:
     enabled: false
-
+  containerSecurityContext:
+    allowPrivilegeEscalation: false
+    readOnlyRootFilesystem: true
+    runAsUser: 1000
+    capabilities:
+      drop: ["ALL"]
+      # add: ["NET_BIND_SERVICE"]
+    runAsNonRoot: true
+    # seccompProfile:
+    #   type: RuntimeDefault
 
 # autocert is used to configure the autocert chart that depends on step-certificates.
 autocert:
@@ -319,3 +337,12 @@ tolerations: []
 
 # affinity contains the affinity settings for pod assignment.
 affinity: {}
+
+# default SecurityContext for pods, can be altered for containers via containerSecurityContext
+podSecurityContext:
+  runAsUser: 1000
+  runAsNonRoot: true
+  runAsGroup: 1000
+  fsGroup: 1000
+  # seccompProfile:
+  #   type: RuntimeDefault
