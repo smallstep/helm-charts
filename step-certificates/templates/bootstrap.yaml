@@ -38,5 +38,13 @@ spec:
           - name: bootstrap
             mountPath: /home/step/bootstrap
             readOnly: true
+        {{- with .Values.bootstrap.containerSecurityContext }}
+        securityContext:
+            {{- toYaml . | nindent 12 }}
+        {{- end }}
+      securityContext:
+      {{- if .Values.podSecurityContext }}
+        {{- toYaml .Values.podSecurityContext | nindent 8 }}
+      {{- end }}
 {{- end }}
 {{- end }}
