@@ -290,6 +290,16 @@ ca:
   # Use existing secret for ca-password
   existingSecrets:
     enabled: false
+  init:
+    containerSecurityContext:
+      allowPrivilegeEscalation: false
+      readOnlyRootFilesystem: true
+      runAsUser: 1000
+      capabilities:
+        drop: ["ALL"]
+      runAsNonRoot: true
+      # seccompProfile:
+      #   type: RuntimeDefault
   containerSecurityContext:
     allowPrivilegeEscalation: false
     readOnlyRootFilesystem: true
