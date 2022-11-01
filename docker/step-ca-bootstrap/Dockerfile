@@ -1,4 +1,4 @@
-FROM smallstep/step-cli:latest
+FROM smallstep/step-cli:0.22.1
 
 ENV CA_NAME="Step CA"
 ENV CA_DNS="127.0.0.1"
@@ -6,7 +6,7 @@ ENV CA_ADDRESS=":9000"
 ENV CA_DEFAULT_PROVISIONER="admin"
 ENV CA_URL="https://127.0.0.1:9000"
 
-ENV KUBE_LATEST_VERSION="v1.18.2"
+ENV KUBE_LATEST_VERSION="v1.25.3"
 
 USER root
 RUN apk --update add expect && \
