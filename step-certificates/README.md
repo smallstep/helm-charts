@@ -258,7 +258,7 @@ chart and their default values.
 | `existingSecrets.sshHostCa`               | When `true`use existing secret for the ssh host CA public key.                                  | `false`                                  |
 | `existingSecrets.sshUserCa`               | When `true`use existing secret for the ssh user CA public key.                                  | `false`                                  |
 | `existingSecrets.configAsSecret`          | When `true`use existing secret for configuration instead of ConfigMap                           | `false`                                  |
-| `podSecurityContext`                      | Set SecurityContext on POD level for the STEP CA and STEP CA bootstrap job                      | See [values.yaml](./values.yaml)         |
+| `podSecurityContext`                      | Set SecurityContext on POD level for STEP CA and STEP CA bootstrap job                      | See [values.yaml](./values.yaml)         |
 
 Specify each parameter using the `--set key=value[,key=value]` argument to `helm
 install`. For example,
