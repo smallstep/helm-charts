@@ -1,4 +1,4 @@
-FROM smallstep/step-cli:0.22.1
+FROM smallstep/step-cli:0.22.0
 
 ENV CA_NAME="Step CA"
 ENV CA_DNS="127.0.0.1"
