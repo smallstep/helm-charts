@@ -218,7 +218,7 @@ inject:
       user_ca_password: ""
 
 
-# service contains configuration for the kubernetes service.
+# service contains configuration for the kubernes service.
 service:
   type: ClusterIP
   port: 443
@@ -309,7 +309,7 @@ ca:
     # runAsUser: 0
     capabilities:
       drop: ["ALL"]
-      # add: ["NET_BIND_SERVICE"]
+      add: ["NET_BIND_SERVICE"]
     runAsNonRoot: true
     # seccompProfile:
     #   type: RuntimeDefault
