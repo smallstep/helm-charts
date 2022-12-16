@@ -1,4 +1,4 @@
-apiVersion: v1
+apiVersion: v2
 name: autocert
 version: 1.16.4
 appVersion: 0.16.0
