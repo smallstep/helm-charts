@@ -29,6 +29,9 @@ spec:
         checksum/secret: {{ include (print $.Template.BasePath "/secrets.yaml") . | sha256sum }}
       {{- end }}
     spec:
+      {{- if or .Values.serviceaccount.create ( not (eq .Values.serviceaccount.name "")) }}
+      serviceAccountName: {{ template "step-certificates.serviceaccountname" . }}
+      {{- end }}
       {{- if and .Release.IsInstall (not (or .Values.inject.enabled .Values.existingSecrets.enabled )) }}
       initContainers:
         - name: {{ .Chart.Name }}-init
