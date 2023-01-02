@@ -34,6 +34,12 @@ Create chart name and version as used by the chart label.
 {{/*
 Common labels
 */}}
+{{- define "step-certificates.labelsinline" -}}
+helm.sh/chart={{ include "step-certificates.chart" . }} app.kubernetes.io/name={{ include "step-certificates.name" . }} napp.kubernetes.io/instance={{ .Release.Name }} {{- if .Chart.AppVersion }} app.kubernetes.io/version={{ .Chart.AppVersion | quote }} {{- end }} app.kubernetes.io/managed-by={{ .Release.Service }}
+{{- end -}}
+
+Common labels inline
+*/}}
 {{- define "step-certificates.labels" -}}
 helm.sh/chart: {{ include "step-certificates.chart" . }}
 app.kubernetes.io/name: {{ include "step-certificates.name" . }}
@@ -63,5 +69,24 @@ Create CA DNS
 {{- .Values.ca.dns -}}
 {{- else -}}
 {{- printf "%s.%s.svc.cluster.local,127.0.0.1" (include "step-certificates.fullname" .) .Release.Namespace -}}
+{{- end -}}
+{{- end -}}
+
+{{/*
+Linked CA variables
+*/}}
+{{- define "step-certificates.linkedca.secretKeyRef.name" -}}
+{{- if .Values.linkedca.secretKeyRef.name -}}
+{{- .Values.linkedca.secretKeyRef.name -}}
+{{- else -}}
+{{- printf "%s-step-ca-token" (include "step-certificates.fullname" .) -}}
+{{- end -}}
+{{- end -}}
+
+{{- define "step-certificates.linkedca.secretKeyRef.key" -}}
+{{- if .Values.linkedca.secretKeyRef.key -}}
+{{- .Values.linkedca.secretKeyRef.key -}}
+{{- else -}}
+token
 {{- end -}}
 {{- end -}}

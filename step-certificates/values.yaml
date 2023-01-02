@@ -1,5 +1,9 @@
 # Default values for step-certificates.
 
+# kind is the type of object to use when deploying the CA.
+# Changing the deployment type is experimental.
+kind: StatefulSet
+
 # replicaCount is the number of replicas of step-certificates.
 # Only one replica is supported at this time.
 replicaCount: 1
@@ -9,18 +13,53 @@ nameOverride: ""
 # fullnameOverride overrides the full name of the chart.
 fullnameOverride: ""
 
+securityContext:
+  runAsUser: 1000
+  runAsGroup: 1000
+  fsGroup: 1000
+
 # image contains the docker image for step-certificates.
 image:
-  repository: smallstep/step-ca
-  tag: 0.18.0
+  repository: cr.step.sm/smallstep/step-ca
+  initContainerRepository: busybox:latest
   pullPolicy: IfNotPresent
+  # Overrides the image tag whose default is the chart appVersion.
+  tag: ""
+
+registrationAuthority: false
+
+# Use existing secrets instead of 'bootstrap' init-container or 'inject'-element from helm chart
+# Note, the MutatingWebhookConfiguration created by autocert is not patched with CA bundle as the bootstrap init-container is not run
+existingSecrets: 
+  enabled: false
+  ca: false
+  issuer: false
+  configAsSecret: false
+  sshHostCa: false
+  sshUserCa: false
+  #generate can help you generate your secret on first install. It configures step-ca as a registration authority and connect it to vault.
+  generate:
+    configAsSecret: 
+      enabled: false
+      provisioners: ""
+      vault:
+        certificateAuthority: http://vault.vault.svc.cluster.local:8200
+        certificateAuthorityFingerprint: ""
+        pkiMountPath: pki_int1
+        pkiRoleRSA: "rsa-role"
+        pkiRoleEC: "ec-role"
+        pkiRoleEd25519: "ed25519-role"
+        authType: "kubernetes"
+        role: "smallstep"
+      
+serviceAccount: smallstep
 
 # bootstrap contains the docker image for bootstrapping the configurations.
 #
 # It's also possible to disable the creation of secrets and configmaps.
 bootstrap:
   image:
-    repository: smallstep/step-ca-bootstrap
+    repository: cr.step.sm/smallstep/step-ca-bootstrap
     tag: latest
     pullPolicy: IfNotPresent
   # enabled defines if the bootstrap job is created.
@@ -30,11 +69,188 @@ bootstrap:
   # secrets defines if the secrets are created.
   secrets: true
 
+# Extra labels
+podExtraLabels: {}
+
+# inject contains values to be injected into config maps and secrets
+inject:
+  enabled: false
+  config:
+    files:
+      ca.json:
+        root: /home/step/certs/root_ca.crt
+        federateRoots: []
+        crt: /home/step/certs/intermediate_ca.crt
+        key: /home/step/secrets/intermediate_ca_key
+        address: 0.0.0.0:9000
+        dnsNames:
+          - ca.example.com
+          - mysteprelease-step-certificates.default.svc.cluster.local
+          - 127.0.0.1
+        logger:
+          format: json
+        db:
+          type: badger
+          dataSource: /home/step/db
+        authority:
+          claims:
+            minTLSCertDuration: 5m
+            maxTLSCertDuration: 24h
+            defaultTLSCertDuration: 24h
+            disableRenewal: false
+            minHostSSHCertDuration: 5m
+            maxHostSSHCertDuration: 1680h
+            defaultHostSSHCertDuration: 720h
+            minUserSSHCertDuration: 5m
+            maxUserSSHCertDuration: 24h
+            defaultUserSSHCertDuration: 24h
+          provisioners:
+            - type: ACME
+              name: acme
+              forceCN: true
+              claims: {}
+        tls:
+          cipherSuites:
+            - TLS_ECDHE_ECDSA_WITH_CHACHA20_POLY1305
+            - TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256
+            - TLS_AES_128_GCM_SHA256
+          minVersion: 1.2
+          maxVersion: 1.3
+          renegotiation: false
+      defaults.json:
+        ca-url: https://mysteprelease-step-certificates.default.svc.cluster.local
+        ca-config: /home/step/config/ca.json
+        fingerprint: fingerprint
+        root: /home/step/certs/root_ca.crt
+    templates:
+      x509_leaf.tpl: |
+        {
+          "subject": {{ toJson .Subject }},
+          "sans": {{ toJson .SANs }},
+        {{- if typeIs "*rsa.PublicKey" .Insecure.CR.PublicKey }}
+          "keyUsage": ["keyEncipherment", "digitalSignature"],
+        {{- else }}
+          "keyUsage": ["digitalSignature"],
+        {{- end }}
+          "extKeyUsage": ["serverAuth", "clientAuth"]
+        }
+      ssh.tpl: |
+        {
+          "type": {{ toJson .Type }},
+          "keyId": {{ toJson .KeyID }},
+          "principals": {{ toJson .Principals }},
+          "extensions": {{ toJson .Extensions }},
+          "criticalOptions": {{ toJson .CriticalOptions }}
+        }
+
+  certificates:
+    # certificate_issuer contains the text of the Certificate Issuer certificate in PEM format.
+    # when set to "", certificate issuer crt is not injected, this is the default for the JWK provisioner.
+    # Provide a value if using the X5C provisioner.
+    certificate_issuer: ""
+    # certificate_issuer: |
+    #   -----BEGIN CERTIFICATE-----
+    #   ...
+    #   -----END CERTIFICATE-----
+
+    # intermediate_ca contains the text of the intermediate CA Certificate
+    intermediate_ca: ""
+    # intermediate_ca: |
+    #   -----BEGIN CERTIFICATE-----
+    #   ...
+    #   -----END CERTIFICATE-----
+
+    # root_ca contains the text of the root CA Certificate
+    root_ca: ""
+    # root_ca: |
+    #   -----BEGIN CERTIFICATE-----
+    #   ...
+    #   -----END CERTIFICATE-----
+
+    # ssh_host_ca contains the text of the public ssh key for the SSH root CA
+    ssh_host_ca: ""
+    # ssh_host_ca: "ecdsa-sha2-nistp384 public-key-here=="
+
+    # ssh_user_ca contains the text of the public ssh key for the SSH root CA
+    ssh_user_ca: ""
+    # ssh_user_ca: "ecdsa-sha2-nistp384 public-key-here=="
+
+  secrets:
+    # ca_password contains the password used to encrypt x509.intermediate_ca_key, ssh.host_ca_key and ssh.user_ca_key
+    # This value must be base64 encoded.
+    ca_password: ""
+    provisioner_password: ""
+    
+    certificate_issuer:
+      # enabled enables injection of certificate issuer certificates and keys when set to true.
+      enabled: false
+      key: ""
+      # key: |
+      #   -----BEGIN ENCRYPTED PRIVATE KEY-----
+      #   ...
+      #   -----END ENCRYPTED PRIVATE KEY-----
+      # password sets the certificate issuer password that decrypts the encrypted certificate issuer key.  Must be base64 encoded.
+      password: ""
+
+    x509:
+      # enabled enables injection of x509 certificates and keys when set to true.
+      enabled: true
+      # intermediate_ca_key contains the contents of your encrypted intermediate CA key
+      intermediate_ca_key: ""
+      # intermediate_ca_key: |
+      #   -----BEGIN EC PRIVATE KEY-----
+      #   ...
+      #   -----END EC PRIVATE KEY-----
+
+      # root_ca_key contains the contents of your encrypted root CA key
+      # Note that this value can be omitted without impacting the functionality of step-certificates
+      # If supplied, this should be encrypted using a unique password that is not used for encrypting
+      # the intermediate_ca_key, ssh.host_ca_key or ssh.user_ca_key.
+      root_ca_key: ""
+      # root_ca_key: |
+      #   -----BEGIN EC PRIVATE KEY-----
+      #   ...
+      #   -----END EC PRIVATE KEY-----
+
+    ssh:
+      # enabled enables injection of ssh certificates and keys when set to true.
+      enabled: true
+      # ssh_host_ca_key contains the contents of your encrypted SSH Host CA key
+      host_ca_key: ""
+      # host_ca_key: |
+      #   -----BEGIN OPENSSH PRIVATE KEY-----
+      #   ...
+      #   -----END OPENSSH PRIVATE KEY-----
+      host_ca_password: ""
+
+      # ssh_user_ca_key contains the contents of your encrypted SSH User CA key
+      user_ca_key: ""
+      # user_ca_key: |
+      #   -----BEGIN OPENSSH PRIVATE KEY-----
+      #   ...
+      #   -----END OPENSSH PRIVATE KEY-----
+      user_ca_password: ""
+
+
 # service contains configuration for the kubernetes service.
 service:
   type: ClusterIP
   port: 443
   targetPort: 9000
+  nodePort: ""
+  annotations: {}
+
+# linkedca contains the token to configure step-ca using the linkedca mode.
+#
+# The linked ca token can be provided using the linkedca.token value or using a
+# reference to a secret.
+linkedca:
+  # the linked ca token.
+  token:
+  # Reference to a secret name and key.
+  secretKeyRef:
+    name:
+    key:
 
 # ca contains the certificate authority configuration.
 ca:
@@ -56,7 +272,7 @@ ca:
     name: admin
     # password is the password used to encrypt the provisioner private key.
     password:
-  # db contains the step-certificate dataabase configuration.
+  # db contains the step-certificate database configuration.
   db:
     # enabled defines if the database is enabled.
     enabled: true
@@ -77,13 +293,21 @@ ca:
     - ReadWriteOnce
     # size is the Persistent Volume size.
     size: 10Gi
+  # kms type to utilize 
+  kms:
+    type: ""
+  # additional environment variables to set in the step-certificates container
+  env: []
   # runAsRoot runs the ca as root instead of the step user. This is required in
   # some storage provisioners.
   runAsRoot: false
   bootstrap:
     # Add script snippets here to be executed after the step ca init has been run
-    postInitHook: |-
-      step ca provisioner add acme --type ACME
+    postInitHook: ""
+  # Use existing secret for ca-password
+  existingSecrets:
+    enabled: false
+
 
 # autocert is used to configure the autocert chart that depends on step-certificates.
 autocert:
@@ -93,6 +317,7 @@ autocert:
 ingress:
   enabled: false
   annotations: {}
+  ingressClassName: ""
   hosts: []
   tls: []
 
@@ -117,20 +342,3 @@ tolerations: []
 
 # affinity contains the affinity settings for pod assignment.
 affinity: {}
-rootCA:
-  certs:
-    intermediate_ca.crt: |-
-      -----BEGIN CERTIFICATE-----
-      -----END CERTIFICATE-----
-    root_ca.crt: |-
-      -----BEGIN CERTIFICATE-----
-      -----END CERTIFICATE-----
-
-  key:
-    intermediate_ca_key: |-
-      -----BEGIN RSA PRIVATE KEY-----
-      -----END RSA PRIVATE KEY-----
-
-
-  
-
