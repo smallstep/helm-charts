@@ -1,0 +1,13 @@
+
+
+ca:
+  name: "demo"
+  db:
+    backupRestore:
+      badger:
+        enabled: true
+
+
+
+inject:
+  enabled: true

@@ -17,6 +17,8 @@ fullnameOverride: ""
 image:
   repository: cr.step.sm/smallstep/step-ca
   initContainerRepository: busybox:latest
+  # TODO: update with proper image reference
+  backupRestoreRepository: badger:latest
   pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
   tag: ""
@@ -253,6 +255,8 @@ ca:
   db:
     # enabled defines if the database is enabled.
     enabled: true
+    # backup/restore of internal database
+    backupRestore: {}
     # persistent defines if a Persistent Volume Claim is used, if false and emptyDir will be used.
     persistent: true
     # storeageClass is Persistent Volume Storage Class
