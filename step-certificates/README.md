@@ -204,8 +204,9 @@ chart and their default values.
 | `ca.db.existingClaim`         | Persistent volume existing claim name. If defined, PVC must be created manually before volume will be bound | `""`                                     |
 | `ca.kms.type`                 | Key management system to use.                                                                               | `""`                                     |
 | `ca.env`                      | Environment variables to set in `step-certificates` container.                                              | `[]`                                     |
-| `ca.runAsRoot`                | Run the CA as root.                                                                                         | `false`                                  |
 | `ca.bootstrap.postInitHook`   | Extra script snippet to run after `step ca init` has completed.                                             | `""`                                     |
+| `ca.init.containerSecurityContext`    | Set SecurityContext for the STEP CA init container                                                  | See [values.yaml](./values.yaml)         |
+| `ca.containerSecurityContext`         | Set SecurityContext for the STEP CA container                                                       | See [values.yaml](./values.yaml)         |
 | `linkedca.token`              | The token used to configure step-ca using the linkedca mode.                                                | `""`                                     |
 | `linkedca.secretKeyRef.name`  | The secret name where the linkedca token can be found.                                                      | `""`                                     |
 | `linkedca.secretKeyRef.key`   | The secret key where the linkedca token can be found.                                                       | `""`                                     |
@@ -225,6 +226,7 @@ chart and their default values.
 | `bootstrap.enabled`           | If false, it does not create the bootstrap job.                                                             | `true`                                   |
 | `bootstrap.configmaps`        | If false, it does not create the configmaps.                                                                | `true`                                   |
 | `bootstrap.secrets`           | If false, it does not create the secrets.                                                                   | `true`                                   |
+| `bootstrap.containerSecurityContext`  | Set SecurityContext for the STEP CA bootstrap container                                             | See [values.yaml](./values.yaml)         |
 | `nameOverride`                | Overrides the name of the chart                                                                             | `""`                                     |
 | `fullnameOverride`            | Overrides the full name of the chart                                                                        | `""`                                     |
 | `ingress.enabled`             | If true Step CA ingress will be created                                                                     | `false`                                  |
@@ -256,7 +258,7 @@ chart and their default values.
 | `existingSecrets.sshHostCa`               | When `true`use existing secret for the ssh host CA public key.                                  | `false`                                  |
 | `existingSecrets.sshUserCa`               | When `true`use existing secret for the ssh user CA public key.                                  | `false`                                  |
 | `existingSecrets.configAsSecret`          | When `true`use existing secret for configuration instead of ConfigMap                           | `false`                                  |
-
+| `podSecurityContext`                      | Set SecurityContext on POD level for STEP CA and STEP CA bootstrap job                      | See [values.yaml](./values.yaml)         |
 
 Specify each parameter using the `--set key=value[,key=value]` argument to `helm
 install`. For example,

@@ -38,16 +38,15 @@ spec:
           image: {{ .Values.image.initContainerRepository }}
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           command: ["sleep", "20"]
+          {{- with .Values.ca.init.containerSecurityContext }}
+          securityContext:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
       {{- end }}
+      {{- with .Values.podSecurityContext }}
       securityContext:
-        {{- if .Values.ca.runAsRoot }}
-        runAsUser: 0
-        {{- else }}
-        runAsUser: 1000
-        runAsNonRoot: true
-        runAsGroup: 1000
-        fsGroup: 1000
-        {{- end }}
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
       containers:
         - name: {{ .Chart.Name }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
@@ -99,9 +98,9 @@ spec:
               scheme: HTTPS
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
-          {{- if not .Values.ca.runAsRoot }}
+          {{- with .Values.ca.containerSecurityContext }}
           securityContext:
-            allowPrivilegeEscalation: false
+            {{- toYaml . | nindent 12 }}
           {{- end }}
           volumeMounts:
           - name: certs

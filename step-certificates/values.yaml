@@ -45,6 +45,15 @@ bootstrap:
   configmaps: true
   # secrets defines if the secrets are created.
   secrets: true
+  containerSecurityContext:
+    allowPrivilegeEscalation: false
+    readOnlyRootFilesystem: false
+    runAsUser: 1000
+    capabilities:
+      drop: ["ALL"]
+    runAsNonRoot: true
+    # seccompProfile:
+    #   type: RuntimeDefault
 
 # Extra labels
 podExtraLabels: {}
@@ -209,7 +218,7 @@ inject:
       user_ca_password: ""
 
 
-# service contains configuration for the kubernetes service.
+# service contains configuration for the kubernes service.
 service:
   type: ClusterIP
   port: 443
@@ -275,16 +284,35 @@ ca:
     type: ""
   # additional environment variables to set in the step-certificates container
   env: []
-  # runAsRoot runs the ca as root instead of the step user. This is required in
-  # some storage provisioners.
-  runAsRoot: false
   bootstrap:
     # Add script snippets here to be executed after the step ca init has been run
     postInitHook: ""
   # Use existing secret for ca-password
   existingSecrets:
     enabled: false
-
+  init:
+    containerSecurityContext:
+      allowPrivilegeEscalation: false
+      readOnlyRootFilesystem: true
+      runAsUser: 1000
+      capabilities:
+        drop: ["ALL"]
+      runAsNonRoot: true
+      # seccompProfile:
+      #   type: RuntimeDefault
+  containerSecurityContext:
+    allowPrivilegeEscalation: false
+    readOnlyRootFilesystem: true
+    runAsUser: 1000
+    # runAsRoot: 0 runs the ca as root instead of the step user. This is required in
+    # some storage provisioners.
+    # runAsUser: 0
+    capabilities:
+      drop: ["ALL"]
+      add: ["NET_BIND_SERVICE"]
+    runAsNonRoot: true
+    # seccompProfile:
+    #   type: RuntimeDefault
 
 # autocert is used to configure the autocert chart that depends on step-certificates.
 autocert:
@@ -326,3 +354,12 @@ serviceaccount:
   name: ""
   labels: {}
   annotations: {}
+
+# default SecurityContext for pods, can be altered for containers via containerSecurityContext
+podSecurityContext:
+  runAsUser: 1000
+  runAsNonRoot: true
+  runAsGroup: 1000
+  fsGroup: 1000
+  # seccompProfile:
+  #   type: RuntimeDefault
