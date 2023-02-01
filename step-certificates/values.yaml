@@ -348,6 +348,13 @@ tolerations: []
 # affinity contains the affinity settings for pod assignment.
 affinity: {}
 
+# create or use a service account for running the ca. Useful for oidc access to kms for example
+serviceaccount:
+  create: false
+  name: ""
+  labels: {}
+  annotations: {}
+
 # default SecurityContext for pods, can be altered for containers via containerSecurityContext
 podSecurityContext:
   runAsUser: 1000
