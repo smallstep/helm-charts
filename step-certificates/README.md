@@ -227,6 +227,8 @@ chart and their default values.
 | `bootstrap.configmaps`        | If false, it does not create the configmaps.                                                                | `true`                                   |
 | `bootstrap.secrets`           | If false, it does not create the secrets.                                                                   | `true`                                   |
 | `bootstrap.containerSecurityContext`  | Set SecurityContext for the STEP CA bootstrap container                                             | See [values.yaml](./values.yaml)         |
+| `extraVolumes`                | Array to add extra volumes                                                                                  | `[]`                                     |
+| `extraVolumeMounts`           | Array to add extra mount                                                                                    | `[]`                                     |
 | `nameOverride`                | Overrides the name of the chart                                                                             | `""`                                     |
 | `fullnameOverride`            | Overrides the full name of the chart                                                                        | `""`                                     |
 | `ingress.enabled`             | If true Step CA ingress will be created                                                                     | `false`                                  |
@@ -237,7 +239,7 @@ chart and their default values.
 | `nodeSelector`                | Node labels for pod assignment (YAML)                                                                       | `{}`                                     |
 | `tolerations`                 | Toleration labels for pod assignment (YAML)                                                                 | `[]`                                     |
 | `affinity`                    | Affinity settings for pod assignment (YAML)                                                                 | `{}`                                     |
-| `inject.enabled`              | When true, configuration files and templates are injected into a Kubernetes objects and bootstrap capability is disabled.                      | `false`                                  |
+| `inject.enabled`              | When true, configuration files and templates are injected into a Kubernetes objects and bootstrap capability is disabled. | `false`                    |
 | `inject.config.files.ca.json` | Yaml representation of the step-ca ca.json file.  This map object is converted to its equivalent json representation before being injected into a configMap.  See the step-ca [documentation](https://smallstep.com/docs/step-ca/configuration). | See [values.yaml](./values.yaml) |
 | `inject.config.files.default.json` | Yaml representation of the step-cli defaults.json file.  This map object is converted to its equivalent json representation before being injected into a configMap.  See the step-cli [documentation](https://smallstep.com/docs/step-cli/reference). | See [values.yaml](./values.yaml) |
 | `inject.config.templates.x509_leaf.tpl`   | Example X509 Leaf Certifixate Template to inject into the configMap.                            | See [values.yaml](./values.yaml)         |
@@ -258,7 +260,7 @@ chart and their default values.
 | `existingSecrets.sshHostCa`               | When `true`use existing secret for the ssh host CA public key.                                  | `false`                                  |
 | `existingSecrets.sshUserCa`               | When `true`use existing secret for the ssh user CA public key.                                  | `false`                                  |
 | `existingSecrets.configAsSecret`          | When `true`use existing secret for configuration instead of ConfigMap                           | `false`                                  |
-| `podSecurityContext`                      | Set SecurityContext on POD level for STEP CA and STEP CA bootstrap job                      | See [values.yaml](./values.yaml)         |
+| `podSecurityContext`                      | Set SecurityContext on POD level for STEP CA and STEP CA bootstrap job                          | See [values.yaml](./values.yaml)         |
 
 Specify each parameter using the `--set key=value[,key=value]` argument to `helm
 install`. For example,
