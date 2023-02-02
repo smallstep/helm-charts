@@ -339,6 +339,18 @@ resources: {}
   #   cpu: 100m
   #   memory: 128Mi
 
+# Configure extra volumes and volume mounts as YAML expressions.
+# And example that will mount an extra volume would be:
+# volumes:
+# - name: custom-ca
+#   configMap:
+#     name: custom-ca-certs
+# volumeMounts:
+# - name: custom-ca
+#   mountPath: /etc/ssl/certs/custom-ca.pem
+volumes: []
+volumeMounts: []
+
 # nodeSelector contains the node labels for pod assignment.
 nodeSelector: {}
 

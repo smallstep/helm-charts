@@ -1,3 +1,5 @@
+#!/bin/sh
+
 ROOT_CA_NAME=`jq -r '.root_ca_name' ca.config`
 INTERMEDIATE_CA_NAME=`jq -r '.intermediate_ca_name' ca.config`
 CA_ORG_NAME=`jq -r '.ca_org_name' ca.config`
