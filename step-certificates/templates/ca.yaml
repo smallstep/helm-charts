@@ -137,6 +137,9 @@ spec:
             mountPath: /home/step/secrets/ssh-user-ca
             readOnly: true
           {{- end }}
+          {{- with .Values.extraVolumeMounts }}
+          {{- toYaml . | nindent 10 }}
+          {{- end }}
       volumes:
       - name: certs
         configMap:
@@ -185,6 +188,9 @@ spec:
       - name: database
         persistentVolumeClaim:
           claimName: {{ .Values.ca.db.existingClaim }}
+      {{- end }}
+      {{- with .Values.extraVolumes }}
+      {{- toYaml . | nindent 6 }}
       {{- end }}
       {{- with .Values.nodeSelector }}
       nodeSelector:
