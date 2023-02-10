@@ -122,7 +122,7 @@ In some circumstainces it is not an option to use Helm install or to inject secr
 Secrets and configurations can be provided before the helm chart is deployed by defining `existingSecrets` in the values file:
 
 ```
-existingSecrets: 
+existingSecrets:
   enabled: true
   ca: true
   issuer: true
@@ -144,44 +144,66 @@ Therefore the bootstrap and inject are disabled in the example above.
 
 Note, the MutatingWebhookConfiguration created by autocert is not patched with CA bundle as the bootstrap init-container is not started when `existingSecrets` are enabled.
 
-The following naming conventions are used for secret names:  
+The following naming conventions are used for secret names:
 
-secret name: `{{ include "step-certificates.fullname" . }}-secrets`  
-which contains:
+secret name: `{{ include "step-certificates.fullname" . }}-secrets`
+which contains the following data:
+
 - `intermediate_ca_key`
-- `root_ca_key`
-- `certificate_issuer_key` (optional)
+  - The encrypted X.509 intermediate certificate private key.
+- `root_ca_key` (optional)
+  - The encrypted X.509 root certificate private key.
 - `ssh_host_ca_key` (optional)
+  - The encrypted private key used to sign SSH host certificates.
 - `ssh_user_ca_key` (optional)
+  - The encrypted private key used to sign SSH user certificates.
+- `certificate_issuer_key` (optional)
+  - The encrypted private key used to sign tokens used on RA mode. This is
+    required if an X5C provisioner is used to talk with the CA, but it can also
+    be used with JWK if the encrypted key is not distributed by the CA.
 
-When `existingSecrets.configAsSecret` is `true`  
-secret name: `{{ include "step-certificates.fullname" . }}-config`  
-which contains:
+When `existingSecrets.configAsSecret` is `true`
+secret name: `{{ include "step-certificates.fullname" . }}-config`
+which contains the following data:
+
 - `ca.json`
+  - The configuration file used by `step-ca`.
 - `default.json`
+  - The configuration file used by `step` with the default flags.
 
-When `existingSecrets.ca` is `true`  
-secret name: `{{ include "step-certificates.fullname" . }}-ca-password`  
-secret type: `smallstep.com/ca-password`  
-which contains `password`
+When `existingSecrets.ca` is `true`
+secret name: `{{ include "step-certificates.fullname" . }}-ca-password`
+secret type: `smallstep.com/ca-password`
+which contains the following data:
 
-When `existingSecrets.issuer` is `true`  
-secret name: `{{ include "step-certificates.fullname" . }}--certificate-issuer-password`  
-secret type: `smallstep.com/certificate-issuer-password`  
-which contains `password`
+- `password`
+  - The password used to decrypt the X.509 intermediate certificate private key.
 
-When `existingSecrets.sshHostCa` is `true`  
-secret name: `{{ include "step-certificates.fullname" . }}-ssh-host-ca-password`  
-secret type: `smallstep.com/ssh-host-ca-password`  
-which contains `password`
+When `existingSecrets.sshHostCa` is `true`
+secret name: `{{ include "step-certificates.fullname" . }}-ssh-host-ca-password`
+secret type: `smallstep.com/ssh-host-ca-password`
+which contains the following data:
 
-When `existingSecrets.sshUserCa` is `true`  
-secret name: `{{ include "step-certificates.fullname" . }}-ssh-user-ca-password`  
-secret type: `smallstep.com/ssh-user-ca-password`  
-which contains `password`
+- `password`
+  - The password used to decrypt the private key used to sign SSH host certificates.
 
-Further more the secret name `{{ include "step-certificates.fullname" . }}-provisioner-password` is used for the password used to encrypt JWK provisioner.  
+When `existingSecrets.sshUserCa` is `true`
+secret name: `{{ include "step-certificates.fullname" . }}-ssh-user-ca-password`
+secret type: `smallstep.com/ssh-user-ca-password`
+which contains the following data:
 
+- `password`
+  - The password used to decrypt the private key used to sign SSH user certificates.
+
+When `existingSecrets.issuer` is `true`
+secret name: `{{ include "step-certificates.fullname" . }}--certificate-issuer-password`
+secret type: `smallstep.com/certificate-issuer-password`
+which contains the following data:
+
+- `password`
+  - The password used to decrypt the private key used to sign RA tokens.
+
+Further more the secret name `{{ include "step-certificates.fullname" . }}-provisioner-password` is used for the password used to encrypt JWK provisioner.
 
 ### Configuration parameters
 
