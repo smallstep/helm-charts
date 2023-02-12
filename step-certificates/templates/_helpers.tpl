@@ -90,3 +90,15 @@ Linked CA variables
 token
 {{- end -}}
 {{- end -}}
+
+{{/*
+Create the name of the service account to use
+*/}}
+{{- define "step-certificates.serviceaccountname" -}}
+{{- if .Values.serviceaccount.create -}}
+    {{ default (include "step-certificates.fullname" .) .Values.serviceaccount.name }}
+{{- else -}}
+    {{ default "default" .Values.serviceaccount.name }}
+{{- end -}}
+{{- end -}}
+

@@ -122,7 +122,7 @@ In some circumstainces it is not an option to use Helm install or to inject secr
 Secrets and configurations can be provided before the helm chart is deployed by defining `existingSecrets` in the values file:
 
 ```
-existingSecrets: 
+existingSecrets:
   enabled: true
   ca: true
   issuer: true
@@ -144,44 +144,66 @@ Therefore the bootstrap and inject are disabled in the example above.
 
 Note, the MutatingWebhookConfiguration created by autocert is not patched with CA bundle as the bootstrap init-container is not started when `existingSecrets` are enabled.
 
-The following naming conventions are used for secret names:  
+The following naming conventions are used for secret names:
 
-secret name: `{{ include "step-certificates.fullname" . }}-secrets`  
-which contains:
+secret name: `{{ include "step-certificates.fullname" . }}-secrets`
+which contains the following data:
+
 - `intermediate_ca_key`
-- `root_ca_key`
-- `certificate_issuer_key` (optional)
+  - The encrypted X.509 intermediate certificate private key.
+- `root_ca_key` (optional)
+  - The encrypted X.509 root certificate private key.
 - `ssh_host_ca_key` (optional)
+  - The encrypted private key used to sign SSH host certificates.
 - `ssh_user_ca_key` (optional)
+  - The encrypted private key used to sign SSH user certificates.
+- `certificate_issuer_key` (optional)
+  - The encrypted private key used to sign tokens used on RA mode. This is
+    required if an X5C provisioner is used to talk with the CA, but it can also
+    be used with JWK if the encrypted key is not distributed by the CA.
 
-When `existingSecrets.configAsSecret` is `true`  
-secret name: `{{ include "step-certificates.fullname" . }}-config`  
-which contains:
+When `existingSecrets.configAsSecret` is `true`
+secret name: `{{ include "step-certificates.fullname" . }}-config`
+which contains the following data:
+
 - `ca.json`
+  - The configuration file used by `step-ca`.
 - `default.json`
+  - The configuration file used by `step` with the default flags.
 
-When `existingSecrets.ca` is `true`  
-secret name: `{{ include "step-certificates.fullname" . }}-ca-password`  
-secret type: `smallstep.com/ca-password`  
-which contains `password`
+When `existingSecrets.ca` is `true`
+secret name: `{{ include "step-certificates.fullname" . }}-ca-password`
+secret type: `smallstep.com/ca-password`
+which contains the following data:
 
-When `existingSecrets.issuer` is `true`  
-secret name: `{{ include "step-certificates.fullname" . }}--certificate-issuer-password`  
-secret type: `smallstep.com/certificate-issuer-password`  
-which contains `password`
+- `password`
+  - The password used to decrypt the X.509 intermediate certificate private key.
 
-When `existingSecrets.sshHostCa` is `true`  
-secret name: `{{ include "step-certificates.fullname" . }}-ssh-host-ca-password`  
-secret type: `smallstep.com/ssh-host-ca-password`  
-which contains `password`
+When `existingSecrets.sshHostCa` is `true`
+secret name: `{{ include "step-certificates.fullname" . }}-ssh-host-ca-password`
+secret type: `smallstep.com/ssh-host-ca-password`
+which contains the following data:
 
-When `existingSecrets.sshUserCa` is `true`  
-secret name: `{{ include "step-certificates.fullname" . }}-ssh-user-ca-password`  
-secret type: `smallstep.com/ssh-user-ca-password`  
-which contains `password`
+- `password`
+  - The password used to decrypt the private key used to sign SSH host certificates.
 
-Further more the secret name `{{ include "step-certificates.fullname" . }}-provisioner-password` is used for the password used to encrypt JWK provisioner.  
+When `existingSecrets.sshUserCa` is `true`
+secret name: `{{ include "step-certificates.fullname" . }}-ssh-user-ca-password`
+secret type: `smallstep.com/ssh-user-ca-password`
+which contains the following data:
 
+- `password`
+  - The password used to decrypt the private key used to sign SSH user certificates.
+
+When `existingSecrets.issuer` is `true`
+secret name: `{{ include "step-certificates.fullname" . }}--certificate-issuer-password`
+secret type: `smallstep.com/certificate-issuer-password`
+which contains the following data:
+
+- `password`
+  - The password used to decrypt the private key used to sign RA tokens.
+
+Further more the secret name `{{ include "step-certificates.fullname" . }}-provisioner-password` is used for the password used to encrypt JWK provisioner.
 
 ### Configuration parameters
 
@@ -204,8 +226,9 @@ chart and their default values.
 | `ca.db.existingClaim`         | Persistent volume existing claim name. If defined, PVC must be created manually before volume will be bound | `""`                                     |
 | `ca.kms.type`                 | Key management system to use.                                                                               | `""`                                     |
 | `ca.env`                      | Environment variables to set in `step-certificates` container.                                              | `[]`                                     |
-| `ca.runAsRoot`                | Run the CA as root.                                                                                         | `false`                                  |
 | `ca.bootstrap.postInitHook`   | Extra script snippet to run after `step ca init` has completed.                                             | `""`                                     |
+| `ca.init.containerSecurityContext`    | Set SecurityContext for the STEP CA init container                                                  | See [values.yaml](./values.yaml)         |
+| `ca.containerSecurityContext`         | Set SecurityContext for the STEP CA container                                                       | See [values.yaml](./values.yaml)         |
 | `linkedca.token`              | The token used to configure step-ca using the linkedca mode.                                                | `""`                                     |
 | `linkedca.secretKeyRef.name`  | The secret name where the linkedca token can be found.                                                      | `""`                                     |
 | `linkedca.secretKeyRef.key`   | The secret key where the linkedca token can be found.                                                       | `""`                                     |
@@ -225,6 +248,9 @@ chart and their default values.
 | `bootstrap.enabled`           | If false, it does not create the bootstrap job.                                                             | `true`                                   |
 | `bootstrap.configmaps`        | If false, it does not create the configmaps.                                                                | `true`                                   |
 | `bootstrap.secrets`           | If false, it does not create the secrets.                                                                   | `true`                                   |
+| `bootstrap.containerSecurityContext`  | Set SecurityContext for the STEP CA bootstrap container                                             | See [values.yaml](./values.yaml)         |
+| `extraVolumes`                | Array to add extra volumes                                                                                  | `[]`                                     |
+| `extraVolumeMounts`           | Array to add extra mount                                                                                    | `[]`                                     |
 | `nameOverride`                | Overrides the name of the chart                                                                             | `""`                                     |
 | `fullnameOverride`            | Overrides the full name of the chart                                                                        | `""`                                     |
 | `ingress.enabled`             | If true Step CA ingress will be created                                                                     | `false`                                  |
@@ -235,7 +261,7 @@ chart and their default values.
 | `nodeSelector`                | Node labels for pod assignment (YAML)                                                                       | `{}`                                     |
 | `tolerations`                 | Toleration labels for pod assignment (YAML)                                                                 | `[]`                                     |
 | `affinity`                    | Affinity settings for pod assignment (YAML)                                                                 | `{}`                                     |
-| `inject.enabled`              | When true, configuration files and templates are injected into a Kubernetes objects and bootstrap capability is disabled.                      | `false`                                  |
+| `inject.enabled`              | When true, configuration files and templates are injected into a Kubernetes objects and bootstrap capability is disabled. | `false`                    |
 | `inject.config.files.ca.json` | Yaml representation of the step-ca ca.json file.  This map object is converted to its equivalent json representation before being injected into a configMap.  See the step-ca [documentation](https://smallstep.com/docs/step-ca/configuration). | See [values.yaml](./values.yaml) |
 | `inject.config.files.default.json` | Yaml representation of the step-cli defaults.json file.  This map object is converted to its equivalent json representation before being injected into a configMap.  See the step-cli [documentation](https://smallstep.com/docs/step-cli/reference). | See [values.yaml](./values.yaml) |
 | `inject.config.templates.x509_leaf.tpl`   | Example X509 Leaf Certifixate Template to inject into the configMap.                            | See [values.yaml](./values.yaml)         |
@@ -256,7 +282,7 @@ chart and their default values.
 | `existingSecrets.sshHostCa`               | When `true`use existing secret for the ssh host CA public key.                                  | `false`                                  |
 | `existingSecrets.sshUserCa`               | When `true`use existing secret for the ssh user CA public key.                                  | `false`                                  |
 | `existingSecrets.configAsSecret`          | When `true`use existing secret for configuration instead of ConfigMap                           | `false`                                  |
-
+| `podSecurityContext`                      | Set SecurityContext on POD level for STEP CA and STEP CA bootstrap job                          | See [values.yaml](./values.yaml)         |
 
 Specify each parameter using the `--set key=value[,key=value]` argument to `helm
 install`. For example,

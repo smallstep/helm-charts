@@ -29,23 +29,24 @@ spec:
         checksum/secret: {{ include (print $.Template.BasePath "/secrets.yaml") . | sha256sum }}
       {{- end }}
     spec:
-      serviceAccountName: {{ .Values.serviceAccount }}
+      {{- if or .Values.serviceaccount.create ( not (eq .Values.serviceaccount.name "")) }}
+      serviceAccountName: {{ template "step-certificates.serviceaccountname" . }}
+      {{- end }}
       {{- if and .Release.IsInstall (not (or .Values.inject.enabled .Values.existingSecrets.enabled )) }}
       initContainers:
         - name: {{ .Chart.Name }}-init
           image: {{ .Values.image.initContainerRepository }}
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           command: ["sleep", "20"]
+          {{- with .Values.ca.init.containerSecurityContext }}
+          securityContext:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
       {{- end }}
+      {{- with .Values.podSecurityContext }}
       securityContext:
-        {{- if .Values.ca.runAsRoot }}
-        runAsUser: 0
-        {{- else }}
-        runAsUser: {{ .Values.securityContext.runAsUser }}
-        runAsNonRoot: true
-        runAsGroup: {{ .Values.securityContext.runAsGroup }}
-        fsGroup: {{ .Values.securityContext.fsGroup }}
-        {{- end }}
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
       containers:
         - name: {{ .Chart.Name }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
@@ -97,9 +98,9 @@ spec:
               scheme: HTTPS
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
-          {{- if not .Values.ca.runAsRoot }}
+          {{- with .Values.ca.containerSecurityContext }}
           securityContext:
-            allowPrivilegeEscalation: false
+            {{- toYaml . | nindent 12 }}
           {{- end }}
           volumeMounts:
           - mountPath: /etc/ssl/certs/custom-trusted-ca.crt
@@ -138,6 +139,9 @@ spec:
           - name: ssh-user-ca-password
             mountPath: /home/step/secrets/ssh-user-ca
             readOnly: true
+          {{- end }}
+          {{- with .Values.extraVolumeMounts }}
+          {{- toYaml . | nindent 10 }}
           {{- end }}
       volumes:
       - configMap:
@@ -191,6 +195,9 @@ spec:
       - name: database
         persistentVolumeClaim:
           claimName: {{ .Values.ca.db.existingClaim }}
+      {{- end }}
+      {{- with .Values.extraVolumes }}
+      {{- toYaml . | nindent 6 }}
       {{- end }}
       {{- with .Values.nodeSelector }}
       nodeSelector:
