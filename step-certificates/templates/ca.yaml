@@ -56,7 +56,7 @@ spec:
             {{- if or (and .Values.existingSecrets.enabled .Values.existingSecrets.issuer) (and .Values.inject.enabled (and .Values.inject.secrets.certificate_issuer.enabled (not (eq .Values.inject.secrets.certificate_issuer.password "")))) }}
             "--issuer-password-file", "/home/step/secrets/certificate-issuer/password",
             {{- end }}
-            {{- if or .Values.existingSecrets.enabled (or (and .Values.bootstrap.enabled .Values.bootstrap.secrets) (and .Values.inject.enabled (not (eq .Values.inject.secrets.ca_password "")))) }}
+            {{- if or (and .Values.existingSecrets.enabled .Values.existingSecrets.ca) (or (and .Values.bootstrap.enabled .Values.bootstrap.secrets) (and .Values.inject.enabled (not (eq .Values.inject.secrets.ca_password "")))) }}
             "--password-file", "/home/step/secrets/passwords/password",
             {{- end }}
             {{- if or (and .Values.existingSecrets.enabled .Values.existingSecrets.sshHostCa) (and .Values.inject.enabled (and .Values.inject.secrets.ssh.enabled (not (eq .Values.inject.secrets.ssh.host_ca_password "")))) }}
