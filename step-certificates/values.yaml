@@ -351,6 +351,13 @@ resources: {}
 extraVolumes: []
 extraVolumeMounts: []
 
+## extraInitContainers:
+##   - name: do-something
+##     image: busybox
+##     command: ['do', 'something']
+##
+extraInitContainers: []
+
 # nodeSelector contains the node labels for pod assignment.
 nodeSelector: {}
 
