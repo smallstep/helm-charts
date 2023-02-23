@@ -279,6 +279,9 @@ ca:
     - ReadWriteOnce
     # size is the Persistent Volume size.
     size: 10Gi
+  # Whether to enable ssh support for step-ca
+  ssh:
+    enabled: false
   # kms type to utilize 
   kms:
     type: ""

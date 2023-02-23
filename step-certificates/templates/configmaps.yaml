@@ -59,6 +59,16 @@ data:
 {{- end }}
 {{- end }}
 ---
+{{- if .Values.ca.ssh.enabled }}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ include "step-certificates.fullname" . }}-templates-ssh
+  namespace: {{ .Release.Namespace }}
+  labels:
+    {{- include "step-certificates.labels" . | nindent 4 }}
+{{- end }}
+---
 {{- if and .Values.bootstrap.configmaps (not .Values.inject.enabled) }}
 apiVersion: v1
 kind: ConfigMap
@@ -146,6 +156,7 @@ data:
 
     step ca init \
       --name "{{.Values.ca.name}}" \
+     {{- if .Values.ca.ssh.enabled }}--ssh \{{ end }}
       --dns "{{include "step-certificates.dns" .}}" \
       --address "{{.Values.ca.address}}" \
       --provisioner "{{.Values.ca.provisioner.name}}" \
@@ -167,6 +178,9 @@ data:
     kbreplace -n {{ .Release.Namespace }} create configmap {{ include "step-certificates.fullname" . }}-config --from-file $(step path)/config
     kbreplace -n {{ .Release.Namespace }} create configmap {{ include "step-certificates.fullname" . }}-certs --from-file $(step path)/certs
     kbreplace -n {{ .Release.Namespace }} create configmap {{ include "step-certificates.fullname" . }}-secrets --from-file $(step path)/secrets
+    {{- if .Values.ca.ssh.enabled }}
+    kbreplace -n {{ .Release.Namespace }} create configmap {{ include "step-certificates.fullname" . }}-templates-ssh --from-file $(step path)/templates/ssh
+    {{- end }}
 
     kbreplace -n {{ .Release.Namespace }} create secret generic {{ include "step-certificates.fullname" . }}-ca-password --from-literal "password=${CA_PASSWORD}"
     kbreplace -n {{ .Release.Namespace }} create secret generic {{ include "step-certificates.fullname" . }}-provisioner-password --from-literal "password=${CA_PROVISIONER_PASSWORD}"
@@ -175,6 +189,9 @@ data:
     kubectl -n {{ .Release.Namespace }} label configmap {{ include "step-certificates.fullname" . }}-config {{ include "step-certificates.labels" . | replace ": " "=" | replace "\n" " " }}
     kubectl -n {{ .Release.Namespace }} label configmap {{ include "step-certificates.fullname" . }}-certs {{ include "step-certificates.labels" . | replace ": " "=" | replace "\n" " " }}
     kubectl -n {{ .Release.Namespace }} label configmap {{ include "step-certificates.fullname" . }}-secrets {{ include "step-certificates.labels" . | replace ": " "=" | replace "\n" " " }}
+    {{- if .Values.ca.ssh.enabled }}
+    kubectl -n {{ .Release.Namespace }} label configmap {{ include "step-certificates.fullname" . }}-templates-ssh {{ include "step-certificates.labels" . | replace ": " "=" | replace "\n" " " }}
+    {{- end }}
     kubectl -n {{ .Release.Namespace }} label secret {{ include "step-certificates.fullname" . }}-ca-password {{ include "step-certificates.labels" . | replace ": " "=" | replace "\n" " " }}
     kubectl -n {{ .Release.Namespace }} label secret {{ include "step-certificates.fullname" . }}-provisioner-password {{ include "step-certificates.labels" . | replace ": " "=" | replace "\n" " " }}
 
