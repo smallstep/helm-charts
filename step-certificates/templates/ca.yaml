@@ -142,6 +142,11 @@ spec:
             mountPath: /home/step/secrets/ssh-user-ca
             readOnly: true
           {{- end }}
+          {{- if .Values.ca.ssh.enabled }}
+          - name: templates-ssh
+            mountPath: /home/step/templates/ssh
+            readOnly: true
+          {{- end }}
           {{- with .Values.extraVolumeMounts }}
           {{- toYaml . | nindent 10 }}
           {{- end }}
@@ -193,6 +198,11 @@ spec:
       - name: database
         persistentVolumeClaim:
           claimName: {{ .Values.ca.db.existingClaim }}
+      {{- end }}
+      {{- if .Values.ca.ssh.enabled }}
+      - name: templates-ssh
+        configMap:
+          name: {{ include "step-certificates.fullname" . }}-templates-ssh
       {{- end }}
       {{- with .Values.extraVolumes }}
       {{- toYaml . | nindent 6 }}

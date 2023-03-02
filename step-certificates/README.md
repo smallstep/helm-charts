@@ -229,6 +229,7 @@ chart and their default values.
 | `ca.bootstrap.postInitHook`   | Extra script snippet to run after `step ca init` has completed.                                             | `""`                                     |
 | `ca.init.containerSecurityContext`    | Set SecurityContext for the STEP CA init container                                                  | See [values.yaml](./values.yaml)         |
 | `ca.containerSecurityContext`         | Set SecurityContext for the STEP CA container                                                       | See [values.yaml](./values.yaml)         |
+| `ca.ssh.enabled`              | If true, step certificates will be configured with ssh support enabled                                      | `false`                                  |
 | `linkedca.token`              | The token used to configure step-ca using the linkedca mode.                                                | `""`                                     |
 | `linkedca.secretKeyRef.name`  | The secret name where the linkedca token can be found.                                                      | `""`                                     |
 | `linkedca.secretKeyRef.key`   | The secret key where the linkedca token can be found.                                                       | `""`                                     |
