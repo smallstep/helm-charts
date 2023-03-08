@@ -2,12 +2,14 @@
 
 ⚙️  A certificate issuer for cert-manager using step certificates CA.
 
-To learn more, visit <https://github.com/smallstep/step-issuer>.
+For complete install instructions, visit <https://github.com/smallstep/step-issuer>.
 
 ## TL;DR
 
 ```console
-helm install step-issuer step-issuer
+helm repo add smallstep https://smallstep.github.io/helm-charts
+helm repo update
+helm install step-issuer smallstep/step-issuer
 ```
 
 ## Prerequisites
@@ -19,7 +21,7 @@ helm install step-issuer step-issuer
 To install the chart with the release name `step-issuer`:
 
 ```console
-helm install step-issuer step-issuer
+helm install step-issuer smallstep/step-issuer
 ```
 
 The command deploys step-issuer on the Kubernetes cluster with the default configuration.
