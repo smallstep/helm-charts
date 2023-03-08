@@ -1,4 +1,15 @@
-⚙️  To get step-issuer up and running, follow the instructions here:
+⚙️  Thanks for installing step-issuer.
 
-https://github.com/smallstep/step-issuer#readme
+step-issuer is ideal for issuing certificates
+from your own private Certificate Authority (CA).
+
+To start issuing certificates, you will need:
+
+👉 A cert-manager installation
+👉 A step-ca Certificate Authority (CA)
+👉 A StepIssuer resource that links step-issuer to your CA
+
+To continue, follow the instructions here:
+
+https://u.step.sm/step-issuer
 
