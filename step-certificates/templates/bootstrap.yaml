@@ -43,6 +43,12 @@ spec:
           {{- toYaml . | nindent 10 }}
         {{- end }}
       {{- with .Values.podSecurityContext }}
+      {{- if .Values.bootstrap.image.imagePullSecrets }}
+      imagePullSecrets:
+      {{- range .Values.bootstrap.image.imagePullSecrets }}
+        - name: {{ . }}
+      {{- end }}
+      {{- end }}
       securityContext:
         {{- toYaml . | nindent 8 }}
       {{- end }}
