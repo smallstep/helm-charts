@@ -243,9 +243,11 @@ chart and their default values.
 | `image.initContainerRepository` | Repository of the Step CA Init Container image.                                                           | `busybox:latest`                         |
 | `image.tag`                   | Tag of the Step CA image                                                                                    | `latest`                                 |
 | `image.pullPolicy`            | Step CA image pull policy                                                                                   | `IfNotPresent`                           |
+| `image.imagePullSecrets`      | Name of image pull secrets to be used by kubernetes                                                         | `[]`                                        |
 | `bootstrap.image.repository`  | Repository of the Step CA bootstrap image                                                                   | `cr.step.sm/smallstep/step-ca-bootstrap` |
 | `bootstrap.image.tag`         | Tag of the Step CA bootstrap image                                                                          | `latest`                                 |
 | `bootstrap.image.pullPolicy`  | Step CA bootstrap image pull policy                                                                         | `IfNotPresent`                           |
+| `bootstrap.image.imagePullSecrets` | Name of image pull secrets to be used by kubernetes                                                         | `[]`                                        |
 | `bootstrap.enabled`           | If false, it does not create the bootstrap job.                                                             | `true`                                   |
 | `bootstrap.configmaps`        | If false, it does not create the configmaps.                                                                | `true`                                   |
 | `bootstrap.secrets`           | If false, it does not create the secrets.                                                                   | `true`                                   |
