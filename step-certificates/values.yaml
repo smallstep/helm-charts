@@ -225,6 +225,7 @@ service:
   targetPort: 9000
   nodePort: ""
   annotations: {}
+  externalIPs: []
 
 # linkedca contains the token to configure step-ca using the linkedca mode.
 #
