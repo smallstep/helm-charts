@@ -238,6 +238,7 @@ chart and their default values.
 | `service.nodePort`            | Incoming port to access Step CA                                                                             | `""`                                     |
 | `service.targetPort`          | Internal port where Step CA runs                                                                            | `9000`                                   |
 | `service.annotations`         | Service annotations (YAML)                                                                                  | `{}`                                     |
+| `service.externalIPs`         | Service externalIPs                                                                                         | `[]`                                     |
 | `replicaCount`                | Number of Step CA replicas. Only one replica is currently supported.                                        | `1`                                      |
 | `image.repository`            | Repository of the Step CA image                                                                             | `cr.step.sm/smallstep/step-ca`           |
 | `image.initContainerRepository` | Repository of the Step CA Init Container image.                                                           | `busybox:latest`                         |
