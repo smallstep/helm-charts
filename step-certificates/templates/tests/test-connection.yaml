@@ -12,5 +12,5 @@ spec:
     - name: wget
       image: busybox
       command: ['wget']
-      args:  ['{{ include "step-certificates.fullname" . }}:{{ .Values.service.port }}']
+      args: ['{{ include "step-certificates.fullname" . }}:{{ .Values.service.port }}']
   restartPolicy: Never
