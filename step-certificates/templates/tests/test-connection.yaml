@@ -6,11 +6,15 @@ metadata:
   labels:
     {{- include "step-certificates.labels" . | nindent 4 }}
   annotations:
-    "helm.sh/hook": test-success
+    "helm.sh/hook": test
 spec:
   containers:
-    - name: wget
-      image: busybox
-      command: ['wget']
-      args: ['{{ include "step-certificates.fullname" . }}:{{ .Values.service.port }}']
+    - name: curl
+      image: alpine/curl
+      command:
+        - 'curl'
+      args:
+        - '-s'
+        - '-k'
+        - 'https://{{ include "step-certificates.fullname" . }}:{{ .Values.service.port }}/health'
   restartPolicy: Never
