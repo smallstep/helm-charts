@@ -38,15 +38,15 @@ inject:
         ca-url: https://your-ca-name.your-org.ca.smallstep.com
         fingerprint: your-ca-fingerprint-here
         redirect-url: ''
-    enabled: true
-    secrets:
-      certificate_issuer:
-        enabled: true
-        password: your-base-64-encoded-key-password
-      ssh:
-        enabled: false
-      x509:
-        enabled: false
+  enabled: true
+  secrets:
+    certificate_issuer:
+      enabled: true
+      password: your-base-64-encoded-key-password
+    ssh:
+      enabled: false
+    x509:
+      enabled: false
 service:
   nodePort: 32400
   port: 443
