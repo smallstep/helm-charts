@@ -36,7 +36,7 @@ jobs:
             --build-arg VCS_REF=${GITHUB_SHA::8} \
             ${TAGS} --file docker/step-ca-bootstrap/Dockerfile docker/step-ca-bootstrap/" >> "${GITHUB_OUTPUT}"
       - name: Set up QEMU
-        uses: docker/setup-qemu-action@v1
+        uses: docker/setup-qemu-action@v3
       - name: Set up Docker Buildx
         id: buildx
         uses: docker/setup-buildx-action@v1
