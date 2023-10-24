@@ -1,0 +1,11 @@
+name: Dependabot auto-merge
+on: pull_request
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  dependabot-auto-merge:
+    uses: smallstep/workflows/.github/workflows/dependabot-auto-merge.yml@main
+    secrets: inherit
