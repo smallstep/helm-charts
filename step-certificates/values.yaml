@@ -27,6 +27,7 @@ existingSecrets:
   enabled: false
   ca: false
   issuer: false
+  certsAsSecret: false
   configAsSecret: false
   sshHostCa: false
   sshUserCa: false
