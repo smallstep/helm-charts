@@ -158,8 +158,13 @@ spec:
       {{- end }}
       volumes:
       - name: certs
+      {{- if and .Values.existingSecrets.enabled .Values.existingSecrets.certsAsSecret }}
+        secret:
+          secretName: {{ include "step-certificates.fullname" . }}-certs
+      {{- else }}
         configMap:
           name: {{ include "step-certificates.fullname" . }}-certs
+      {{- end }}
       - name: config
       {{- if and .Values.existingSecrets.enabled .Values.existingSecrets.configAsSecret }}
         secret:

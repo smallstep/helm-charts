@@ -126,6 +126,7 @@ existingSecrets:
   enabled: true
   ca: true
   issuer: true
+  certsAsSecret: true
   configAsSecret: true
   sshHostCa: true
   sshUserCa: true
@@ -161,6 +162,19 @@ which contains the following data:
   - The encrypted private key used to sign tokens used on RA mode. This is
     required if an X5C provisioner is used to talk with the CA, but it can also
     be used with JWK if the encrypted key is not distributed by the CA.
+
+When `existingSecrets.certsAsSecret` is `true`
+secret name: `{{ include "step-certificates.fullname" . }}-certs`
+which contains the following data:
+
+- `root_ca.crt`
+  - The root CA certificate.
+- `intermediate_ca.crt`
+  - The intermediate CA certificate (optional).
+- `ssh_host_ca_key.pub:`
+  - The SSH host CA public key (optional).
+- `ssh_user_ca_key.pub:`
+  - The SSH user CA public key (optional).
 
 When `existingSecrets.configAsSecret` is `true`
 secret name: `{{ include "step-certificates.fullname" . }}-config`
@@ -285,6 +299,7 @@ chart and their default values.
 | `existingSecrets.issuer`                  | When `true`use existing secret for the issuer.                                                  | `false`                                  |
 | `existingSecrets.sshHostCa`               | When `true`use existing secret for the ssh host CA public key.                                  | `false`                                  |
 | `existingSecrets.sshUserCa`               | When `true`use existing secret for the ssh user CA public key.                                  | `false`                                  |
+| `existingSecrets.certsAsSecret`           | When `true`use existing secret for certs instead of ConfigMap                                   | `false`                                  |
 | `existingSecrets.configAsSecret`          | When `true`use existing secret for configuration instead of ConfigMap                           | `false`                                  |
 | `podSecurityContext`                      | Set SecurityContext on POD level for STEP CA and STEP CA bootstrap job                          | See [values.yaml](./values.yaml)         |
 
