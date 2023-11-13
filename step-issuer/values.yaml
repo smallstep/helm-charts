@@ -110,3 +110,6 @@ tolerations: []
 
 # affinity contains the affinity settings for pod assignment.
 affinity: {}
+
+crds:
+  enabled: true
