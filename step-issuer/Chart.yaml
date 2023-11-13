@@ -1,14 +1,14 @@
 apiVersion: v2
 name: step-issuer
 type: application
-version: 0.9.0
-appVersion: 0.9.0
+version: 0.8.1
+appVersion: 0.8.0
 description: Step-issuer helm chart for kubernetes.
 home: https://smallstep.com
 dependencies:
 - name: crds
   condition: crds.enabled
-  version: 0.9.0
+  version: 0.8.1
 keywords:
  - authority
  - ca
