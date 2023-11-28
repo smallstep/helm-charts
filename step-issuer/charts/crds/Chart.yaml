@@ -1,0 +1,14 @@
+apiVersion: v2
+name: crds
+type: application
+version: 0.8.1
+appVersion: 0.8.0
+description: Step-issuer CRDs
+home: https://smallstep.com
+maintainers:
+  - name: Mariano Cano
+    email: mariano@smallstep.com
+  - name: Irwan Shofwan
+    email: abigaelse2@gmail.com 
+  - name: Muhammad Fauzan Razandi
+    email: muhammad.fauzan.razandi.16@gmail.com
