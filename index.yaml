@@ -2151,9 +2151,14 @@ entries:
   step-issuer:
   - apiVersion: v2
     appVersion: 0.8.0
-    created: "2023-08-29T15:00:39.756876-07:00"
+    created: "2023-11-27T17:04:55.536984-08:00"
+    dependencies:
+    - condition: crds.enabled
+      name: crds
+      repository: ""
+      version: 0.8.0+1
     description: Step-issuer helm chart for kubernetes.
-    digest: 1b54ce54856811e6a194464c8c7325e2b491ba264307db5d54dd2e8c289377a4
+    digest: d442a0cfa700b43fc89c752a05eab1b189773da0fb250b9a2b2a96db89a6b238
     home: https://smallstep.com
     keywords:
     - authority
@@ -2183,8 +2188,8 @@ entries:
     name: step-issuer
     type: application
     urls:
-    - https://smallstep.github.io/helm-charts/step-issuer-0.8.0.tgz
-    version: 0.8.0
+    - https://smallstep.github.io/helm-charts/step-issuer-0.8.0+1.tgz
+    version: 0.8.0+1
   - apiVersion: v2
     appVersion: 0.7.0
     created: "2023-03-29T16:26:01.646619-07:00"
@@ -2725,4 +2730,4 @@ entries:
     urls:
     - https://smallstep.github.io/helm-charts/step-issuer-0.2.0.tgz
     version: 0.2.0
-generated: "2023-11-07T12:59:06.05237-08:00"
+generated: "2023-11-27T17:04:55.532608-08:00"
