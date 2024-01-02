@@ -1,7 +1,7 @@
 apiVersion: v2
 name: crds
 type: application
-version: 0.8.0+1
+version: 0.8.0+2
 appVersion: 0.8.0
 description: Step-issuer CRDs
 home: https://smallstep.com
