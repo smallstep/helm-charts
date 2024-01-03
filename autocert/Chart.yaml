@@ -1,6 +1,6 @@
 apiVersion: v2
 name: autocert
-version: 1.18.1
+version: 1.18.0+1
 appVersion: 0.18.0
 description: A kubernetes add-on that automatically injects TLS/HTTPS certificates into your containers.
 keywords:
