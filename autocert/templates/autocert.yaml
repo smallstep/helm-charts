@@ -29,6 +29,8 @@ spec:
         imagePullPolicy: {{ .Values.autocert.image.pullPolicy }}
         resources: 
           {{- toYaml .Values.autocert.resources | nindent 10 }}
+        securityContext:
+          {{- toYaml .Values.autocert.securityContext | nindent 10 }}
         env:
         - name: PROVISIONER_NAME
           value: {{ .Values.ca.provisioner.name | default "admin" }}
@@ -47,9 +49,6 @@ spec:
         - name: autocert-config
           mountPath: /home/step/autocert
           readOnly: true
-        securityContext:
-          runAsUser: 1000
-          allowPrivilegeEscalation: false
         livenessProbe:
           initialDelaySeconds: 5
           httpGet:
@@ -87,3 +86,5 @@ spec:
       tolerations:
         {{- toYaml . | nindent 8 }}
       {{- end }}
+      securityContext:
+        {{- toYaml .Values.podSecurityContext | nindent 8 }}

@@ -35,6 +35,8 @@ spec:
         ports:
         - containerPort: {{ .Values.service.port }}
           name: {{ .Values.service.targetPorts }}
+        securityContext:
+          {{- toYaml .Values.kubeRBACproxy.securityContext | nindent 10 }}
       - image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
         imagePullPolicy: {{ .Values.image.pullPolicy }}
         name: manager
@@ -48,6 +50,8 @@ spec:
           {{- end }}
         ]
         command: ["/manager"]
+        securityContext:
+          {{- toYaml .Values.securityContext | nindent 10 }}
         {{- if .Values.tunnel.enabled }}
         env:
           - name: STEP_TLS_TUNNEL
@@ -95,3 +99,5 @@ spec:
         {{- toYaml . | nindent 8 }}
       {{- end }}
       terminationGracePeriodSeconds: {{ .Values.deployment.terminationGracePeriodSeconds }}
+      securityContext:
+        {{- toYaml .Values.podSecurityContext | nindent 8 }}

@@ -14,7 +14,13 @@ kubeRBACproxy:
   image:
     repository: gcr.io/kubebuilder/kube-rbac-proxy
     pullPolicy: IfNotPresent
-    tag: v0.8.0
+    tag: v0.15.0
+  # security context for container
+  securityContext:
+    runAsUser: 1000
+    runAsGroup: 1000
+    # seccompProfile:
+    #   type: RuntimeDefault
 
 # List of secret keys used to pull images from private registries.
 imagePullSecrets: []
@@ -43,6 +49,17 @@ service:
   controlPlane: controller-manager
   scrape: true
   scrapePort: 8080
+
+# Security Context for the pod
+podSecurityContext: {}
+  # fsGroup: 2000
+
+# security context for container
+securityContext:
+  runAsUser: 1000
+  runAsGroup: 1000
+  # seccompProfile:
+  #   type: RuntimeDefault
 
 serviceAccount:
   # Specifies whether a service account should be created
