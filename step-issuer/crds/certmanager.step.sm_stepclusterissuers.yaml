@@ -4,21 +4,20 @@ kind: CustomResourceDefinition
 metadata:
   annotations:
     controller-gen.kubebuilder.io/version: v0.10.0
-  creationTimestamp: null
-  name: stepissuers.certmanager.step.sm
+  name: stepclusterissuers.certmanager.step.sm
 spec:
   group: certmanager.step.sm
   names:
-    kind: StepIssuer
-    listKind: StepIssuerList
-    plural: stepissuers
-    singular: stepissuer
-  scope: Namespaced
+    kind: StepClusterIssuer
+    listKind: StepClusterIssuerList
+    plural: stepclusterissuers
+    singular: stepclusterissuer
+  scope: Cluster
   versions:
   - name: v1beta1
     schema:
       openAPIV3Schema:
-        description: StepIssuer is the Schema for the stepissuers API
+        description: StepClusterIssuer is the Schema for the stepclusterissuers API
         properties:
           apiVersion:
             description: 'APIVersion defines the versioned schema of this representation
@@ -33,7 +32,7 @@ spec:
           metadata:
             type: object
           spec:
-            description: StepIssuerSpec defines the desired state of StepIssuer
+            description: StepClusterIssuerSpec defines the desired state of StepClusterIssuer
             properties:
               caBundle:
                 description: CABundle is a base64 encoded TLS certificate used to
@@ -64,8 +63,13 @@ spec:
                         description: The name of the secret in the pod's namespace
                           to select from.
                         type: string
+                      namespace:
+                        description: The namespace of the secret in the pod's namespace
+                          to select from.
+                        type: string
                     required:
                     - name
+                    - namespace
                     type: object
                 required:
                 - kid
@@ -81,11 +85,11 @@ spec:
             - url
             type: object
           status:
-            description: StepIssuerStatus defines the observed state of StepIssuer
+            description: StepClusterIssuerStatus defines the observed state of StepClusterIssuer
             properties:
               conditions:
                 items:
-                  description: StepIssuerCondition contains condition information
+                  description: StepClusterIssuerCondition contains condition information
                     for the step issuer.
                   properties:
                     lastTransitionTime:
