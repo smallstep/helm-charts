@@ -1,3 +1,4 @@
+---
 # Default values for step-certificates.
 
 # kind is the type of object to use when deploying the CA.
