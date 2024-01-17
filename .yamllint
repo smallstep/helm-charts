@@ -1,0 +1,27 @@
+---
+yaml-files:
+  - '.yamllint'
+  - 'Chart.yaml'
+
+ignore: |
+  step-issuer/templates/
+  step-certificates/templates/
+  autocert/templates/
+
+rules:
+  line-length: disable
+  empty-values:
+    ignore: |
+      values.yaml
+  empty-lines: disable
+  trailing-spaces: disable
+  braces:
+    ignore: |
+      step-issuer/templates/
+      step-certificates/templates/
+      autocert/templates/
+  document-start:
+    level: warning
+  comments-indentation:
+    level: warning
+
