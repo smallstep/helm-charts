@@ -302,6 +302,9 @@ chart and their default values.
 | `existingSecrets.certsAsSecret`           | When `true`use existing secret for certs instead of ConfigMap                                   | `false`                                  |
 | `existingSecrets.configAsSecret`          | When `true`use existing secret for configuration instead of ConfigMap                           | `false`                                  |
 | `podSecurityContext`                      | Set SecurityContext on POD level for STEP CA and STEP CA bootstrap job                          | See [values.yaml](./values.yaml)         |
+| `networkpolicy.enabled`       | When `true` create the NetworkPolicy definition                                                             | `false`                                  |
+| `networkpolicy.annotations`   | Additional annotations to add to the NetworkPolicy definition                                               | `{}`                                     |
+| `networkpolicy.allow`         | If defined, restrict policy allow rule to only these CIDR subnets                                           | `[]`                                     |
 
 Specify each parameter using the `--set key=value[,key=value]` argument to `helm
 install`. For example,
