@@ -11,7 +11,7 @@ metadata:
     {{- toYaml . | nindent 4 }}
   {{- end }}
 spec:
-  podSelector: 
+  podSelector:
     matchLabels:
       app.kubernetes.io/name: {{ include "step-certificates.name" . }}
   policyTypes:
@@ -36,4 +36,11 @@ spec:
       port: 443
     - protocol: TCP
       port: 80
+      {{- if .Values.networkpolicy.allow }}
+    to:
+    {{- range .Values.networkpolicy.allow }}
+    - ipBlock:
+        cidr: {{ . | quote }}
+    {{- end }}
+    {{- end }}
 {{- end }}
