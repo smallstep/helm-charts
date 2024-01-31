@@ -24,24 +24,45 @@ helm install -f values.yaml \
 
 ## Installing the Chart
 
-To install the chart with the release name `my-release`:
+Before installing the chart, we need to generate the
+[configuration](#configuration) that we will use. To do this, we will use
+[`step`](https://github.com/smallstep/cli):
 
 ```console
-helm install my-release smallstep/step-certificates
+step ca init --helm > values.yaml
+echo "password" | base64 > password.txt
+```
+
+Now we can install the chart with release name `step-certificates` using the
+generated configuration and password:
+
+```console
+helm install -f values.yaml \
+     --set inject.secrets.ca_password=$(cat password.txt) \
+     --set inject.secrets.provisioner_password=$(cat password.txt) \
+     step-certificates smallstep/step-certificates
 ```
 
 The command deploys Step certificates on the Kubernetes cluster in the default
 configuration. The [configuration](#configuration) section lists the parameters
 that can be configured during installation.
 
+The chart also has an option to generate the configuration automatically. This
+option is deprecated, and it will be removed in a future release. To install the
+chart using this option, we can run:
+
+```console
+helm install my-release smallstep/step-certificates
+```
+
 > **Tip**: List all releases using `helm list`
 
 ## Uninstalling the Chart
 
-To uninstall the `my-release` deployment:
+To uninstall the `step-certificates` release:
 
 ```console
-helm uninstall my-release
+helm uninstall step-certificates
 ```
 
 The command removes all the Kubernetes components associated with the chart and
@@ -114,7 +135,6 @@ helm install -f values.yaml \
 
 With this method, the automatic bootstrap of the PKI is deprecated and it will
 be removed in future releases.
-
 
 ### Advanced configuration
 
@@ -226,6 +246,9 @@ chart and their default values.
 
 | Parameter                     | Description                                                                                                 | Default                                  |
 | ----------------------------- | ----------------------------------------------------------------------------------------------------------- | ---------------------------------------- |
+| `command`                     | The command entrypoint array                                                                                | `[]`                                     |
+| `args`                        | Arguments to the entrypoint                                                                                 | `[]`                                     |
+| `workingDir`                  | The container working directory                                                                             | `"/home/step"`                           |
 | `ca.name`                     | Name for you CA                                                                                             | `Step Certificates`                      |
 | `ca.address`                  | TCP address where Step CA runs                                                                              | `:9000`                                  |
 | `ca.dns`                      | DNS of Step CA, if empty it will be inferred                                                                | `""`                                     |
@@ -258,17 +281,19 @@ chart and their default values.
 | `image.initContainerRepository` | Repository of the Step CA Init Container image.                                                           | `busybox:latest`                         |
 | `image.tag`                   | Tag of the Step CA image                                                                                    | `latest`                                 |
 | `image.pullPolicy`            | Step CA image pull policy                                                                                   | `IfNotPresent`                           |
-| `image.imagePullSecrets`      | Name of image pull secrets to be used by kubernetes                                                         | `[]`                                        |
+| `image.imagePullSecrets`      | Name of image pull secrets to be used by kubernetes                                                         | `[]`                                     |
 | `bootstrap.image.repository`  | Repository of the Step CA bootstrap image                                                                   | `cr.step.sm/smallstep/step-ca-bootstrap` |
 | `bootstrap.image.tag`         | Tag of the Step CA bootstrap image                                                                          | `latest`                                 |
 | `bootstrap.image.pullPolicy`  | Step CA bootstrap image pull policy                                                                         | `IfNotPresent`                           |
-| `bootstrap.image.imagePullSecrets` | Name of image pull secrets to be used by kubernetes                                                         | `[]`                                        |
+| `bootstrap.image.imagePullSecrets` | Name of image pull secrets to be used by kubernetes.                                                   | `[]`                                     |
 | `bootstrap.enabled`           | If false, it does not create the bootstrap job.                                                             | `true`                                   |
 | `bootstrap.configmaps`        | If false, it does not create the configmaps.                                                                | `true`                                   |
 | `bootstrap.secrets`           | If false, it does not create the secrets.                                                                   | `true`                                   |
-| `bootstrap.containerSecurityContext`  | Set SecurityContext for the STEP CA bootstrap container                                             | See [values.yaml](./values.yaml)         |
+| `bootstrap.containerSecurityContext` | Set SecurityContext for the STEP CA bootstrap container.                                             | See [values.yaml](./values.yaml)         |
 | `extraVolumes`                | Array to add extra volumes                                                                                  | `[]`                                     |
 | `extraVolumeMounts`           | Array to add extra mount                                                                                    | `[]`                                     |
+| `extraInitContainers`         | Array to add extra init containers.                                                                         | `[]`                                     |
+| `extraContainers`             | Array to add extra containers.                                                                              | `[]`                                     |
 | `nameOverride`                | Overrides the name of the chart                                                                             | `""`                                     |
 | `fullnameOverride`            | Overrides the full name of the chart                                                                        | `""`                                     |
 | `ingress.enabled`             | If true Step CA ingress will be created                                                                     | `false`                                  |
@@ -294,21 +319,22 @@ chart and their default values.
 | `inject.secrets.x509.root_ca_key`         | Plain text PEM representation of the root CA private key.                                       | `""`                                     |
 | `inject.secrets.ssh.host_ca_key`          | Plain text representation of the ssh host CA private key.                                       | `""`                                     |
 | `inject.secrets.ssh.user_ca_key`          | Plain text representation of the ssh user CA private key.                                       | `""`                                     |
-| `existingSecrets.enabled`                 | Use secrets and configurations from existing secrets created outside of this chart              | `false`                                  |
+| `existingSecrets.enabled`                 | Use secrets and configurations from existing secrets created outside of this chart.             | `false`                                  |
 | `existingSecrets.ca`                      | When `true`use existing secret for the ca-password.                                             | `false`                                  |
 | `existingSecrets.issuer`                  | When `true`use existing secret for the issuer.                                                  | `false`                                  |
 | `existingSecrets.sshHostCa`               | When `true`use existing secret for the ssh host CA public key.                                  | `false`                                  |
 | `existingSecrets.sshUserCa`               | When `true`use existing secret for the ssh user CA public key.                                  | `false`                                  |
-| `existingSecrets.certsAsSecret`           | When `true`use existing secret for certs instead of ConfigMap                                   | `false`                                  |
-| `existingSecrets.configAsSecret`          | When `true`use existing secret for configuration instead of ConfigMap                           | `false`                                  |
-| `podSecurityContext`                      | Set SecurityContext on POD level for STEP CA and STEP CA bootstrap job                          | See [values.yaml](./values.yaml)         |
+| `existingSecrets.certsAsSecret`           | When `true`use existing secret for certs instead of ConfigMap.                                  | `false`                                  |
+| `existingSecrets.configAsSecret`          | When `true`use existing secret for configuration instead of ConfigMap.                          | `false`                                  |
+| `podSecurityContext`                      | Set SecurityContext on POD level for STEP CA and STEP CA bootstrap job.                         | See [values.yaml](./values.yaml)         |
+| `shareProcessNamespace`                   | Share a single process namespace between all of the containers in a pod.                        | `false`                                  |
 
 Specify each parameter using the `--set key=value[,key=value]` argument to `helm
 install`. For example,
 
 ```console
 helm install --set provisioner.password=secretpassword,provisioner.name=Foo \
-  my-release step-certificates
+  my-release smallstep/step-certificates
 ```
 
 The above command sets the Step Certificates main provisioner `Foo` with the key
@@ -320,14 +346,14 @@ accessing the CA by those DNS/IPs will fail (services internal to the cluster):
 
 ```console
 helm install --set ca.dns="ca.example.com\,my-release-step-certificates.default.svc.cluster.local\,127.0.0.1" \
-  my-release step-certificates
+  my-release smallstep/step-certificates
 ```
 
 Alternatively, a YAML file that specifies the values for the parameters can be
 provided while installing the chart. For example,
 
 ```console
-helm install -f values.yaml my-release step-certificates
+helm install -f values.yaml my-release smallstep/step-certificates
 ```
 
 > **Tip**: You can use the default [values.yaml](values.yaml)
@@ -336,7 +362,6 @@ helm install -f values.yaml my-release step-certificates
 
 At this moment only one replica is supported, step certificates supports
 multiple ones using MariaDB or MySQL.
-
 
 # Development
 

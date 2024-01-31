@@ -52,12 +52,24 @@ spec:
       securityContext:
         {{- toYaml . | nindent 8 }}
       {{- end }}
+      {{- if  .Values.shareProcessNamespace }}
+      shareProcessNamespace: {{ .Values.shareProcessNamespace }}
+      {{- end }}
       containers:
         - name: {{ .Chart.Name }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
-          command: [
-            "/usr/local/bin/step-ca",
+          {{- with .Values.command }}
+          command:
+            {{- toYaml . | nindent 10 }}
+          {{- else }}
+          command: [ "/usr/local/bin/step-ca" ]
+          {{- end -}}
+          {{- with .Values.args }}
+          args:
+            {{- toYaml . | nindent 10 }}
+          {{- else }}
+          args: [
             {{- if or (and .Values.existingSecrets.enabled .Values.existingSecrets.issuer) (and .Values.inject.enabled (and .Values.inject.secrets.certificate_issuer.enabled (not (eq .Values.inject.secrets.certificate_issuer.password "")))) }}
             "--issuer-password-file", "/home/step/secrets/certificate-issuer/password",
             {{- end }}
@@ -72,6 +84,8 @@ spec:
             {{- end }}
             "/home/step/config/ca.json"
           ]
+          {{- end }}
+          workingDir: {{ .Values.workingDir }}
           env:
           - name: NAMESPACE
             value: "{{ .Release.Namespace }}"
@@ -150,6 +164,9 @@ spec:
           {{- with .Values.extraVolumeMounts }}
           {{- toYaml . | nindent 10 }}
           {{- end }}
+        {{- with .Values.extraContainers }}
+        {{- toYaml . | nindent 8 }}
+        {{- end }}
       {{- if .Values.image.imagePullSecrets }}
       imagePullSecrets:
       {{- range .Values.image.imagePullSecrets }}
