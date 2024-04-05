@@ -1,8 +1,8 @@
 apiVersion: v2
 name: step-issuer
 type: application
-version: 1.8.0
-appVersion: 0.8.0
+version: 1.9.1
+appVersion: 0.9.1
 description: Step-issuer helm chart for kubernetes.
 home: https://smallstep.com
 keywords:
@@ -27,6 +27,6 @@ maintainers:
   - name: Mariano Cano
     email: mariano@smallstep.com
   - name: Irwan Shofwan
-    email: abigaelse2@gmail.com 
+    email: abigaelse2@gmail.com
   - name: Muhammad Fauzan Razandi
     email: muhammad.fauzan.razandi.16@gmail.com
