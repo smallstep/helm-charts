@@ -23,13 +23,16 @@ Visit https://smallstep.github.io/helm-charts/ for stable releases.
 
 2. Update `appVersion` to the image tag in _packageName/Chart.yaml_.
 
-3. Create helm package. For example for step-certificates:
+3. Commit these changes to a branch and push the branch to the origin. 
+Open a PR for merging to master.
+
+4. Create helm package. For example for step-certificates:
 
    ```sh
    helm package ./step-certificates
    ```
 
-4. Update repository:
+5. Update repository:
 
    ```sh
    git checkout gh-pages
