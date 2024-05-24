@@ -38,6 +38,7 @@ existingSecrets:
   configAsSecret: false
   sshHostCa: false
   sshUserCa: false
+  sshTemplates: false
 
 # bootstrap contains the docker image for bootstrapping the configurations.
 #

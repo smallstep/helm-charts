@@ -59,7 +59,7 @@ data:
 {{- end }}
 {{- end }}
 ---
-{{- if .Values.ca.ssh.enabled }}
+{{- if and .Values.ca.ssh.enabled ( not .Values.existingSecrets.sshTemplates ) }}
 apiVersion: v1
 kind: ConfigMap
 metadata:

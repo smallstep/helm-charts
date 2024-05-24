@@ -227,10 +227,15 @@ spec:
         persistentVolumeClaim:
           claimName: {{ .Values.ca.db.existingClaim }}
       {{- end }}
-      {{- if .Values.ca.ssh.enabled }}
+      {{- if and .Values.ca.ssh.enabled ( not .Values.existingSecrets.sshTemplates ) }}
       - name: templates-ssh
         configMap:
           name: {{ include "step-certificates.fullname" . }}-templates-ssh
+      {{- end }}
+      {{ if .Values.existingSecrets.sshTemplates }}
+      - name: templates-ssh
+        secret:
+          secretName: {{ include "step-certificates.fullname" . }}-templates-ssh
       {{- end }}
       {{- with .Values.extraVolumes }}
       {{- toYaml . | nindent 6 }}
