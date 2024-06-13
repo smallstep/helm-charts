@@ -26,23 +26,14 @@ Visit https://smallstep.github.io/helm-charts/ for stable releases.
 3. Commit these changes to a branch and push the branch to the origin. 
 Open a PR for merging to master.
 
-4. Create helm package. For example for step-certificates:
+4. Create helm package (using `step-certificates` as an example):
 
    ```sh
    helm package ./step-certificates
    ```
 
-5. Update repository:
+5. Update repository (using `step-certificates` as an example):
 
    ```sh
-   git checkout gh-pages
-   git pull origin gh-pages
-   git add "step-certificates-<version>.tgz"
-   mkdir new-charts
-   cp "step-certificates-<version>.tgz" new-charts/
-   helm repo index --merge index.yaml --url https://smallstep.github.io/helm-charts/ new-charts
-   cp new-charts/index.yaml .
-   rm -rf new-charts
-   git commit -a -m "Add package for step-certificates vX.Y.Z"
-   git push origin gh-pages
+   ./deploy.sh ./step-certificates
    ```
