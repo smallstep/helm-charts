@@ -30,7 +30,7 @@ workingDir: "/home/step"
 
 # Use existing secrets instead of 'bootstrap' init-container or 'inject'-element from helm chart
 # Note, the MutatingWebhookConfiguration created by autocert is not patched with CA bundle as the bootstrap init-container is not run
-existingSecrets: 
+existingSecrets:
   enabled: false
   ca: false
   issuer: false
@@ -175,7 +175,7 @@ inject:
     # This value must be base64 encoded.
     ca_password: ""
     provisioner_password: ""
-    
+
     certificate_issuer:
       # enabled enables injection of certificate issuer certificates and keys when set to true.
       enabled: false
@@ -292,7 +292,7 @@ ca:
   # Whether to enable ssh support for step-ca
   ssh:
     enabled: false
-  # kms type to utilize 
+  # kms type to utilize
   kms:
     type: ""
   # additional environment variables to set in the step-certificates container
@@ -377,6 +377,13 @@ extraInitContainers: []
 ##     command: ['do', 'something']
 ##
 extraContainers: []
+
+## Configure additional entries for /etc/hosts.
+## hostAliases:
+##   - ip: 10.0.0.1
+##     hostnames:
+##       - host.domain.com
+hostAliases: []
 
 # shareProcessNamespace share a single process namespace between all of the
 # containers in a pod.
