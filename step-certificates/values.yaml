@@ -15,7 +15,7 @@ fullnameOverride: ""
 
 # image contains the docker image for step-certificates.
 image:
-  repository: cr.step.sm/smallstep/step-ca
+  repository: cr.smallstep.com/smallstep/step-ca
   initContainerRepository: busybox:latest
   pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
@@ -45,7 +45,7 @@ existingSecrets:
 # It's also possible to disable the creation of secrets and configmaps.
 bootstrap:
   image:
-    repository: cr.step.sm/smallstep/step-ca-bootstrap
+    repository: cr.smallstep.com/smallstep/step-ca-bootstrap
     tag: latest
     pullPolicy: IfNotPresent
   # enabled defines if the bootstrap job is created.
