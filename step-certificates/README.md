@@ -328,6 +328,7 @@ chart and their default values.
 | `existingSecrets.configAsSecret`          | When `true`use existing secret for configuration instead of ConfigMap.                          | `false`                                  |
 | `podSecurityContext`                      | Set SecurityContext on POD level for STEP CA and STEP CA bootstrap job.                         | See [values.yaml](./values.yaml)         |
 | `shareProcessNamespace`                   | Share a single process namespace between all of the containers in a pod.                        | `false`                                  |
+| `hostAliases`                             | Additional entries for `/etc/hosts`.                                                            | []                                       |
 
 Specify each parameter using the `--set key=value[,key=value]` argument to `helm
 install`. For example,
