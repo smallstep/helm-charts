@@ -6,6 +6,10 @@ metadata:
   labels:
     control-plane: {{ .Values.service.controlPlane }}
     {{- include "step-issuer.labels" . | nindent 4 }}
+  {{- if .Values.annotations }}
+  annotations:
+    {{- toYaml .Values.annotations | nindent 4 }}
+  {{- end }}
 spec:
   replicas: {{ .Values.replicaCount }}
   selector:
@@ -17,6 +21,10 @@ spec:
       labels:
         control-plane: {{ .Values.service.controlPlane }}
         {{- include "step-issuer.labels" . | nindent 8 }}
+      {{- if .Values.podAnnotations }}
+      annotations:
+        {{- toYaml .Values.podAnnotations | nindent 8}}
+      {{- end }}
     spec:
       {{- if $.Values.imagePullSecrets }}
       imagePullSecrets:
