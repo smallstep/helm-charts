@@ -33,6 +33,8 @@ deployment:
     enableLeaderElection: true
     disableApprovalCheck: false
   terminationGracePeriodSeconds: 10
+  # Strategy used for the deployment
+  strategy: {}
 
 resources:
   limits:
@@ -53,9 +55,6 @@ service:
 # Security Context for the pod
 podSecurityContext: {}
   # fsGroup: 2000
-
-# Strategy used for the deployment
-updateStrategy: {}
 
 # security context for container
 securityContext:

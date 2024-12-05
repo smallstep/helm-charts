@@ -7,8 +7,8 @@ metadata:
     control-plane: {{ .Values.service.controlPlane }}
     {{- include "step-issuer.labels" . | nindent 4 }}
 spec:
-  {{- if .Values.updateStrategy }}
-  strategy: {{ toYaml .Values.updateStrategy | nindent 4 }}
+  {{- if .Values.deployment.strategy }}
+  strategy: {{ toYaml .Values.deployment.strategy | nindent 4 }}
   {{- end }}
   replicas: {{ .Values.replicaCount }}
   selector:
