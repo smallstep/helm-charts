@@ -11,18 +11,30 @@ metadata:
   {{- end }}
 spec:
   type: {{ .Values.service.type }}
+  {{ if .Values.service.loadBalancerIP }}
+  loadBalancerIP: {{ .Values.service.loadBalancerIP }}
+  {{- end }}
   {{- with .Values.service.externalIPs }}
   externalIPs:
     {{- toYaml . | nindent 4 }}
   {{- end }}
   ports:
-    - port: {{ .Values.service.port }}
-      targetPort: {{ .Values.service.targetPort }}
+    - port: {{ .Values.service.ports.https.port }}
+      targetPort: {{ .Values.service.ports.https.targetPort }}
       protocol: TCP
       name: https
       {{- if eq .Values.service.type "NodePort" }}
-      nodePort: {{ .Values.service.nodePort }}
+      nodePort: {{ .Values.service.ports.https.nodePort }}
       {{- end }}
+    {{ if .Values.service.ports.http.enabled }}
+    - port: {{ .Values.service.ports.http.port }}
+      targetPort: {{ .Values.service.ports.http.targetPort }}
+      protocol: TCP
+      name: http
+      {{- if eq .Values.service.type "NodePort" }}
+      nodePort: {{ .Values.service.ports.http.nodePort }}
+      {{- end }}
+    {{- end }}
   selector:
     app.kubernetes.io/name: {{ include "step-certificates.name" . }}
     app.kubernetes.io/instance: {{ .Release.Name }}
