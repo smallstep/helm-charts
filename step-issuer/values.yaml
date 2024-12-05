@@ -54,6 +54,9 @@ service:
 podSecurityContext: {}
   # fsGroup: 2000
 
+# Strategy used for the deployment
+updateStrategy: {}
+
 # security context for container
 securityContext:
   runAsUser: 1000
