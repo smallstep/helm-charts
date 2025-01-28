@@ -10,7 +10,7 @@ metadata:
 spec:
   containers:
     - name: curl
-      image: alpine/curl
+      image: alpine/curl:latest
       command:
         - 'curl'
       args:

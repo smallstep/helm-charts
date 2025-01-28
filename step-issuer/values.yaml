@@ -39,6 +39,8 @@ deployment:
     enableLeaderElection: true
     disableApprovalCheck: false
   terminationGracePeriodSeconds: 10
+  # Strategy used for the deployment
+  strategy: {}
 
 resources:
   limits:
