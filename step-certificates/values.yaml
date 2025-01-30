@@ -300,6 +300,10 @@ ca:
   bootstrap:
     # Add script snippets here to be executed after the step ca init has been run
     postInitHook: ""
+  # dns policy. See: https://kubernetes.io/docs/concepts/services-networking/dns-pod-service/#pod-s-dns-policy
+  dnsPolicy: Default
+  # dns config. See: https://kubernetes.io/docs/concepts/services-networking/dns-pod-service/#pod-dns-config
+  dnsConfig: {}
   # Use existing secret for ca-password
   existingSecrets:
     enabled: false
