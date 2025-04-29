@@ -227,7 +227,7 @@ inject:
       user_ca_password: ""
 
 
-# service contains configuration for the kubernes service.
+# service contains configuration for the kubernetes service.
 service:
   type: ClusterIP
   port: 443
