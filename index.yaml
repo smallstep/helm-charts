@@ -2662,6 +2662,42 @@ entries:
     version: 0.14.5
   step-issuer:
   - apiVersion: v2
+    appVersion: 0.9.9
+    created: "2025-07-14T14:47:42.555891-04:00"
+    description: Step-issuer helm chart for kubernetes.
+    digest: de837416463467e87b7023b14303d742214a2cad0a1ea3fab5f4548b5780ce35
+    home: https://smallstep.com
+    keywords:
+    - authority
+    - ca
+    - cert-manager
+    - certificate
+    - certificate-authority
+    - certificates
+    - kubernetes
+    - pki
+    - security
+    - security-tools
+    - smallstep
+    - ssh
+    - step
+    - step-ca
+    - step-issuer
+    - tls
+    - x509
+    maintainers:
+    - email: mariano@smallstep.com
+      name: Mariano Cano
+    - email: abigaelse2@gmail.com
+      name: Irwan Shofwan
+    - email: muhammad.fauzan.razandi.16@gmail.com
+      name: Muhammad Fauzan Razandi
+    name: step-issuer
+    type: application
+    urls:
+    - https://smallstep.github.io/helm-charts/step-issuer-1.9.9.tgz
+    version: 1.9.9
+  - apiVersion: v2
     appVersion: 0.9.8
     created: "2025-03-18T18:02:02.425297-07:00"
     description: Step-issuer helm chart for kubernetes.
@@ -3422,4 +3458,4 @@ entries:
     urls:
     - https://smallstep.github.io/helm-charts/step-issuer-0.2.0.tgz
     version: 0.2.0
-generated: "2025-03-18T18:08:38.712541-07:00"
+generated: "2025-07-14T14:47:42.554832-04:00"
