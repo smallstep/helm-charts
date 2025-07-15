@@ -1,8 +1,8 @@
 apiVersion: v2
 name: step-issuer
 type: application
-version: 1.9.8
-appVersion: 0.9.8
+version: 1.9.9
+appVersion: 0.9.9
 description: Step-issuer helm chart for kubernetes.
 home: https://smallstep.com
 keywords:
