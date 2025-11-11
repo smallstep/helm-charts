@@ -1,9 +1,8 @@
-# Smallstep Helm Charts
+**This project is maintained on a best-effort basis and is not officially supported by Smallstep.**  
+We welcome community contributions via PRs.  
+Interested in commercial support? [Let's talk.](https://smallstep.com/webforms/contact-us/)
 
-[Helm](https://helm.sh) packages for Kubernetes. The master branch of this
-repository contains work in progress packages.
-
-Visit https://smallstep.github.io/helm-charts/ for stable releases.
+These charts are releaseed at https://smallstep.github.io/helm-charts/.
 
 ## Packages
 
