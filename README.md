@@ -2,7 +2,7 @@
 We welcome community contributions via PRs.  
 Interested in commercial support? [Let's talk.](https://smallstep.com/webforms/contact-us/)
 
-These charts are releaseed at https://smallstep.github.io/helm-charts/.
+These charts are released at https://smallstep.github.io/helm-charts/.
 
 ## Packages
 
