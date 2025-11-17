@@ -30,6 +30,9 @@ spec:
       {{- if .Values.serviceAccount.create }}
       serviceAccountName: {{ include "step-issuer.serviceAccountName" . }}
       {{- end }}
+      {{- with $.Values.deployment.priorityClassName }}
+      priorityClassName: {{ . }}
+      {{- end }}
       containers:
       - image: "{{ .Values.kubeRBACproxy.image.repository }}:{{ .Values.kubeRBACproxy.image.tag }}"
         imagePullPolicy: {{ .Values.kubeRBACproxy.image.pullPolicy }}
