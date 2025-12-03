@@ -35,6 +35,7 @@ deployment:
   terminationGracePeriodSeconds: 10
   # Strategy used for the deployment
   strategy: {}
+  priorityClassName: ""
 
 resources:
   limits:

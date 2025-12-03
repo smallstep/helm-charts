@@ -52,7 +52,8 @@ and their default values.
 | `image.pullPolicy`                                     | Step Issuer image pull policy                                                                             | `IfNotPresent`                      |
 | `deployment.args.enableLeaderElection`                 | Enable k8s controller leader election.                                                                    | `true`                              |
 | `deployment.args.disableApprovalCheck`                 | To disable cert-manager approvals on old version of cert-manager.                                         | `false`                             |
-| `deployment.strategy`                                  | To change the deployment strategy.                                                                        | `{}`                             |
+| `deployment.strategy`                                  | To change the deployment strategy.                                                                        | `{}`                                |
+| `deployment.priorityClassName`                         | Pod priority for the Kubernetes scheduler                                                                 | `""`                                |
 | `stepIssuer.create`                                    | If we should automatically create a StepIssuer                                                            | `false`                             |
 | `stepIssuer.caUrl`                                     | Step Certificates CA URL. This is usually the step certificates service FQDN.                             | `""`                                |
 | `stepIssuer.caBundle`                                  | Step Certificates root certificate in a single-line base64 string.                                        | `""`                                |
