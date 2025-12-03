@@ -1,6 +1,6 @@
 apiVersion: v2
 name: autocert
-version: 1.20.3
+version: 1.20.4
 appVersion: 0.20.3
 description: A kubernetes add-on that automatically injects TLS/HTTPS certificates into your containers.
 keywords:
@@ -28,7 +28,7 @@ maintainers:
    email: mariano@smallstep.com
 dependencies:
   - name: step-certificates
-    version: 1.28.4
+    version: 1.29.0
     repository: https://smallstep.github.io/helm-charts
     condition: step-certificates.enabled
     tags:
