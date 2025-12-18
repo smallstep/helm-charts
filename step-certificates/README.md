@@ -230,7 +230,7 @@ which contains the following data:
   - The password used to decrypt the private key used to sign SSH user certificates.
 
 When `existingSecrets.issuer` is `true`
-secret name: `{{ include "step-certificates.fullname" . }}--certificate-issuer-password`
+secret name: `{{ include "step-certificates.fullname" . }}-certificate-issuer-password`
 secret type: `smallstep.com/certificate-issuer-password`
 which contains the following data:
 
