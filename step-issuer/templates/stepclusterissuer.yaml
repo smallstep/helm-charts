@@ -3,6 +3,13 @@ apiVersion: certmanager.step.sm/v1beta1
 kind: StepClusterIssuer
 metadata:
   name: "{{ template "step-issuer.fullname" . }}"
+  labels:
+  {{- with .Values.commonLabels }}
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
+  {{- with .Values.stepClusterIssuer.labels }}
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
 spec:
   # The CA URL.
   {{- if .Values.stepClusterIssuer.caUrl }}

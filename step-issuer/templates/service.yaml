@@ -10,6 +10,9 @@ metadata:
   labels:
     control-plane: {{ .Values.service.controlPlane }}
     {{- include "step-issuer.labels" . | nindent 4 }}
+  {{- with .Values.service.labels }}
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
 spec:
   ports:
   - name: {{ .Values.service.targetPorts }}
