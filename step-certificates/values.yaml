@@ -235,6 +235,14 @@ service:
   nodePort: ""
   annotations: {}
   externalIPs: []
+  # labels is a map of custom labels to add to the service resource.
+  # These labels are merged with the standard Helm labels.
+  # Example:
+  #   labels:
+  #     environment: production
+  #     team: platform
+  #     cost-center: engineering
+  labels: {}
 
 # linkedca contains the token to configure step-ca using the linkedca mode.
 #
