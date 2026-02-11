@@ -276,6 +276,7 @@ chart and their default values.
 | `service.targetPort`          | Internal port where Step CA runs                                                                            | `9000`                                   |
 | `service.annotations`         | Service annotations (YAML)                                                                                  | `{}`                                     |
 | `service.externalIPs`         | Service externalIPs                                                                                         | `[]`                                     |
+| `service.labels`              | Custom labels to add to the service resource (YAML)                                                          | `{}`                                     |
 | `replicaCount`                | Number of Step CA replicas. Only one replica is currently supported.                                        | `1`                                      |
 | `image.repository`            | Repository of the Step CA image                                                                             | `cr.step.sm/smallstep/step-ca`           |
 | `image.initContainerRepository` | Repository of the Step CA Init Container image.                                                           | `busybox:latest`                         |
@@ -349,6 +350,29 @@ accessing the CA by those DNS/IPs will fail (services internal to the cluster):
 helm install --set ca.dns="ca.example.com\,my-release-step-certificates.default.svc.cluster.local\,127.0.0.1" \
   my-release smallstep/step-certificates
 ```
+
+### Service Customization
+
+You can add custom labels to the service resource for integration with service meshes, monitoring systems, or compliance requirements:
+
+```console
+helm install step-certificates smallstep/step-certificates \
+  --set service.labels.environment=production \
+  --set service.labels.team=platform
+```
+
+Or using a values file:
+
+```yaml
+service:
+  labels:
+    environment: production
+    team: platform
+    cost-center: engineering
+    compliance: nis2
+```
+
+**Note**: Custom labels are merged with standard Helm labels. Avoid using reserved Kubernetes label prefixes like `app.kubernetes.io/`, `helm.sh/`, or `kubernetes.io/`.
 
 Alternatively, a YAML file that specifies the values for the parameters can be
 provided while installing the chart. For example,
