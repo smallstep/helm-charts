@@ -1,5 +1,15 @@
 # Default values for step-certificates.
 
+# global values are propagated to all subcharts.
+global:
+  # labels is a map of custom labels added to every resource in this chart and subcharts.
+  # Per-resource labels (e.g. service.labels) are merged on top.
+  # Example:
+  #   labels:
+  #     environment: production
+  #     team: platform
+  labels: {}
+
 # kind is the type of object to use when deploying the CA.
 # Changing the deployment type is experimental.
 kind: StatefulSet
