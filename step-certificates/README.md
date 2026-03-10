@@ -94,6 +94,36 @@ helm install \
   step-certificates smallstep/step-certificates
 ```
 
+## Global Labels
+
+The `global.labels` configuration applies custom labels to every Kubernetes resource created by this chart. This is useful for:
+
+- Compliance and monitoring: Tag resources with environment, team, or cost-center information
+- GitOps and automation: Identify resources managed by this chart across clusters
+- Network policies and security: Label resources for access control rules
+
+Global labels are propagated to all subcharts (e.g., `autocert` when enabled). Per-resource labels (e.g., `service.labels`) are merged on top of global labels.
+
+Example:
+
+```console
+helm install \
+  --set global.labels.environment=production \
+  --set global.labels.team=platform \
+  --set global.labels.cost-center=engineering \
+  step-certificates smallstep/step-certificates
+```
+
+Or in a `values.yaml` file:
+
+```yaml
+global:
+  labels:
+    environment: production
+    team: platform
+    cost-center: engineering
+```
+
 ## Configuration
 
 The easiest way to configure step-certificates is to use [step](https://github.com/smallstep/cli).
@@ -249,6 +279,7 @@ chart and their default values.
 | `command`                     | The command entrypoint array                                                                                | `[]`                                     |
 | `args`                        | Arguments to the entrypoint                                                                                 | `[]`                                     |
 | `workingDir`                  | The container working directory                                                                             | `"/home/step"`                           |
+| `global.labels`               | Custom labels added to every resource in this chart and subcharts (YAML)                                    | `{}`                                     |
 | `ca.name`                     | Name for you CA                                                                                             | `Step Certificates`                      |
 | `ca.address`                  | TCP address where Step CA runs                                                                              | `:9000`                                  |
 | `ca.dns`                      | DNS of Step CA, if empty it will be inferred                                                                | `""`                                     |
