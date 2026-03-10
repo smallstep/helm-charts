@@ -27,6 +27,12 @@ imagePullSecrets: []
 nameOverride: ""
 fullnameOverride: ""
 
+# Deployment Annotations
+annotations: {}
+
+# Annotations to be added to deployment pods
+podAnnotations: {}
+
 deployment:
   # Configure arguments to pass to the step issuer
   args:
