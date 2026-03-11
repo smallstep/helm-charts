@@ -27,6 +27,9 @@ imagePullSecrets: []
 nameOverride: ""
 fullnameOverride: ""
 
+# Labels to be added to most objects deployed by this chart.
+commonLabels: {}
+
 deployment:
   # Configure arguments to pass to the step issuer
   args:
@@ -36,6 +39,10 @@ deployment:
   # Strategy used for the deployment
   strategy: {}
   priorityClassName: ""
+  # Labels for the deployment, does not affect the deployment's pods.
+  labels: {}
+  # Labels for the pods.
+  podLabels: {}
 
 resources:
   limits:
@@ -52,6 +59,7 @@ service:
   controlPlane: controller-manager
   scrape: true
   scrapePort: 8080
+  labels: {}
 
 # Security Context for the pod
 podSecurityContext: {}
@@ -72,6 +80,7 @@ serviceAccount:
   # The name of the service account to use.
   # If not set and create is true, a name is generated using the fullname template
   name: ""
+  labels: {}
 
 # mandatory values to generate stepIssuer resource
 # please follow the https://github.com/smallstep/step-issuer#getting-started to setup step-ca and get step-issuer values
@@ -85,6 +94,7 @@ stepIssuer:
     passwordRef:
       name: ""
       key: ""
+  labels: {}
 
 # mandatory values to generate stepClusterIssuer resource
 # please follow the https://github.com/smallstep/step-issuer#getting-started to setup step-ca and get step-issuer values
@@ -99,6 +109,7 @@ stepClusterIssuer:
       name: ""
       namespace: ""
       key: ""
+  labels: {}
 
 # For the cert-manager approver
 certManager:

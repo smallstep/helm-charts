@@ -50,10 +50,13 @@ and their default values.
 | `image.repository`                                     | Repository of the Step Issuer image.                                                                      | `cr.step.sm/smallstep/step-issuer`  |
 | `image.tag`                                            | Tag of the image. If empty it will use .Chart.appVersion.                                                 | `""`                                |
 | `image.pullPolicy`                                     | Step Issuer image pull policy                                                                             | `IfNotPresent`                      |
+| `commonLabels`                                         | Additional labels to be added to most deployed resources.                                                 | `{}`                                |
 | `deployment.args.enableLeaderElection`                 | Enable k8s controller leader election.                                                                    | `true`                              |
 | `deployment.args.disableApprovalCheck`                 | To disable cert-manager approvals on old version of cert-manager.                                         | `false`                             |
 | `deployment.strategy`                                  | To change the deployment strategy.                                                                        | `{}`                                |
-| `deployment.priorityClassName`                         | Pod priority for the Kubernetes scheduler                                                                 | `""`                                |
+| `deployment.priorityClassName`                         | Pod priority for the Kubernetes scheduler.                                                                | `""`                                |
+| `deployment.labels`                                    | Additional labels for the deployment. To add labels to the pods, see `deployment.podLabels`.              | `{}`                                |
+| `deployment.podLabels`                                 | Additional labels for the pods.                                                                           | `{}`                                |
 | `stepIssuer.create`                                    | If we should automatically create a StepIssuer                                                            | `false`                             |
 | `stepIssuer.caUrl`                                     | Step Certificates CA URL. This is usually the step certificates service FQDN.                             | `""`                                |
 | `stepIssuer.caBundle`                                  | Step Certificates root certificate in a single-line base64 string.                                        | `""`                                |
@@ -61,6 +64,7 @@ and their default values.
 | `stepIssuer.provisioner.kid`                           | Key id of the provisioner used for authorizing the sign of certificates.                                  | `""`                                |
 | `stepIssuer.provisioner.passwordRef.name`              | Name of the secret with the provisioner password.                                                         | `""`                                |
 | `stepIssuer.provisioner.passwordRef.key`               | Key name in the the secret with the provisioner password.                                                 | `""`                                |
+| `stepIssuer.labels`                                    | Additional labels for the issuer.                                                                         | `{}`                                |
 | `stepClusterIssuer.create`                             | If we should automatically create a StepClusterIssuer                                                     | `false`                             |
 | `stepClusterIssuer.caUrl`                              | Step Certificates CA URL. This is usually the step certificates service FQDN.                             | `""`                                |
 | `stepClusterIssuer.caBundle`                           | Step Certificates root certificate in a single-line base64 string.                                        | `""`                                |
@@ -69,3 +73,6 @@ and their default values.
 | `stepClusterIssuer.provisioner.passwordRef.name`       | Name of the secret with the provisioner password.                                                         | `""`                                |
 | `stepClusterIssuer.provisioner.passwordRef.key`        | Key name in the the secret with the provisioner password.                                                 | `""`                                |
 | `stepClusterIssuer.provisioner.passwordRef.namespace`  | Namespace where the provisioner password secret resides.                                                  | `""`                                |
+| `stepClusterIssuer.labels`                             | Additional labels for the cluster issuer.                                                                 | `{}`                                |
+| `service.labels`                                       | Additional labels for the service.                                                                        | `{}`                                |
+| `serviceAccount.labels`                                | Additional labels for the service account.                                                                | `{}`                                |
