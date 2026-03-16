@@ -12,7 +12,7 @@ image:
 
 kubeRBACproxy:
   image:
-    repository: gcr.io/kubebuilder/kube-rbac-proxy
+    repository: quay.io/brancz/kube-rbac-proxy
     pullPolicy: IfNotPresent
     tag: v0.15.0
   # security context for container
