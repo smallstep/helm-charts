@@ -18,7 +18,6 @@ fullnameOverride: ""
 deployment:
   # Configure arguments to pass to the step issuer
   args:
-    enableMetrics: true
     metricsBindAddress: :8443
     metricsSecure: true
     enableLeaderElection: true
