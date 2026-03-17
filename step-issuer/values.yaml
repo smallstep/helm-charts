@@ -10,18 +10,6 @@ image:
   # Overrides the image tag whose default is the chart appVersion.
   tag: ""
 
-kubeRBACproxy:
-  image:
-    repository: gcr.io/kubebuilder/kube-rbac-proxy
-    pullPolicy: IfNotPresent
-    tag: v0.15.0
-  # security context for container
-  securityContext:
-    runAsUser: 1000
-    runAsGroup: 1000
-    # seccompProfile:
-    #   type: RuntimeDefault
-
 # List of secret keys used to pull images from private registries.
 imagePullSecrets: []
 nameOverride: ""
@@ -30,6 +18,9 @@ fullnameOverride: ""
 deployment:
   # Configure arguments to pass to the step issuer
   args:
+    enableMetrics: true
+    metricsBindAddress: :8443
+    metricsSecure: true
     enableLeaderElection: true
     disableApprovalCheck: false
   terminationGracePeriodSeconds: 10
