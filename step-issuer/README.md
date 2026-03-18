@@ -50,6 +50,7 @@ and their default values.
 | `image.repository`                                     | Repository of the Step Issuer image.                                                                      | `cr.step.sm/smallstep/step-issuer`  |
 | `image.tag`                                            | Tag of the image. If empty it will use .Chart.appVersion.                                                 | `""`                                |
 | `image.pullPolicy`                                     | Step Issuer image pull policy                                                                             | `IfNotPresent`                      |
+| `deployment.args.metricsBindAddress`                   | Enable the metrics server.                                                                                | `:8080`                             |
 | `deployment.args.enableLeaderElection`                 | Enable k8s controller leader election.                                                                    | `true`                              |
 | `deployment.args.disableApprovalCheck`                 | To disable cert-manager approvals on old version of cert-manager.                                         | `false`                             |
 | `deployment.strategy`                                  | To change the deployment strategy.                                                                        | `{}`                                |
