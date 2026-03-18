@@ -38,8 +38,9 @@ spec:
         imagePullPolicy: {{ .Values.image.pullPolicy }}
         name: manager
         args: [
+          {{- if .Values.deployment.args.metricsBindAddress }}
           "--metrics-bind-address={{ .Values.deployment.args.metricsBindAddress }}",
-          "--metrics-secure={{ .Values.deployment.args.metricsSecure }}",
+          {{- end }}
           {{- if .Values.deployment.args.enableLeaderElection }}
           "--enable-leader-election",
           {{- end }}
