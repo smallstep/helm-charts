@@ -42,12 +42,20 @@ git diff $LAST HEAD -- '<chart>/' -- ':(exclude)<chart>/Chart.yaml'
 - No upstream version change **and** no chart file changes → nothing to release. Inform the user and stop.
 - Otherwise, continue.
 
-### 2. Determine version bump type
+### 2. Determine the new `version`
 
-- Chart files changed (templates, values.yaml, helpers, etc.) → **minor** bump to `version`
-- Only `appVersion` is changing, no other chart changes → **patch** bump to `version`
+`version` always tracks `appVersion` with the major component incremented by 1 (e.g., `appVersion: 0.30.2` → base `1.30.2`).
 
-`version` is plain SemVer for the chart itself, independent of `appVersion`.
+**If `appVersion` changed:**
+- `version` = `(appVersion.major + 1).appVersion.minor.appVersion.patch`
+- Any prior suffix is dropped.
+- Examples: `0.30.2` → `1.30.2`, `1.0.0` → `2.0.0`
+
+**If `appVersion` did not change (chart files only):**
+- Take the current `version` base (strip any existing `-N` suffix) and increment the suffix.
+- `x.y.z` → `x.y.z-1`
+- `x.y.z-N` → `x.y.z-(N+1)`
+- Examples: `1.30.2` → `1.30.2-1`, `1.30.2-3` → `1.30.2-4`
 
 ### 3. Update Chart.yaml
 
@@ -58,7 +66,7 @@ Edit `<chart>/Chart.yaml`:
 ### 4. Create branch, commit, open PR
 
 ```sh
-USERNAME=$(git config user.name | tr '[:upper:]' '[:lower:]')
+USERNAME=$(whoami)
 git checkout -b $USERNAME/<branch-shortname>-<new-appVersion>
 git add <chart>/Chart.yaml
 ```
