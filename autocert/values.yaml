@@ -19,6 +19,12 @@ service:
 podSecurityContext: {}
   # fsGroup: 2000
 
+# Deployment Annotations
+annotations: {}
+
+# Annotations to be added to deployment pods
+podAnnotations: {}
+
 # autocert contains the configuration for autocert.
 autocert:
   # image contains the docker image for step-certificates.
