@@ -398,6 +398,25 @@ tolerations: []
 # affinity contains the affinity settings for pod assignment.
 affinity: {}
 
+# livenessProbe contains the liveness probe configuration.
+# If not set, defaults to initialDelaySeconds: 5, httpGet on /health.
+# Override entirely to customize (e.g. increase initialDelaySeconds for slow startups).
+# livenessProbe:
+#   initialDelaySeconds: 30
+#   periodSeconds: 10
+#   timeoutSeconds: 5
+#   failureThreshold: 3
+livenessProbe: {}
+
+# readinessProbe contains the readiness probe configuration.
+# If not set, defaults to initialDelaySeconds: 5, httpGet on /health.
+# readinessProbe:
+#   initialDelaySeconds: 30
+#   periodSeconds: 10
+#   timeoutSeconds: 5
+#   failureThreshold: 3
+readinessProbe: {}
+
 # create or use a service account for running the ca. Useful for oidc access to kms for example
 serviceaccount:
   create: false

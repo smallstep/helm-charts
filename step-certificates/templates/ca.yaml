@@ -103,18 +103,28 @@ spec:
             - name: https
               containerPort: {{ .Values.service.targetPort }}
               protocol: TCP
+          {{- with .Values.livenessProbe }}
+          livenessProbe:
+            {{- toYaml . | nindent 12 }}
+          {{- else }}
           livenessProbe:
             initialDelaySeconds: 5
             httpGet:
               path: /health
               port: {{ .Values.service.targetPort }}
               scheme: HTTPS
+          {{- end }}
+          {{- with .Values.readinessProbe }}
+          readinessProbe:
+            {{- toYaml . | nindent 12 }}
+          {{- else }}
           readinessProbe:
             initialDelaySeconds: 5
             httpGet:
               path: /health
               port: {{ .Values.service.targetPort }}
               scheme: HTTPS
+          {{- end }}
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
           {{- with .Values.ca.containerSecurityContext }}
