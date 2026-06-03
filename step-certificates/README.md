@@ -329,6 +329,8 @@ chart and their default values.
 | `podSecurityContext`                      | Set SecurityContext on POD level for STEP CA and STEP CA bootstrap job.                         | See [values.yaml](./values.yaml)         |
 | `shareProcessNamespace`                   | Share a single process namespace between all of the containers in a pod.                        | `false`                                  |
 | `hostAliases`                             | Additional entries for `/etc/hosts`.                                                            | []                                       |
+| `livenessProbe`                           | Liveness probe configuration. If empty, defaults to `initialDelaySeconds: 5` on `/health`.     | `{}`                                     |
+| `readinessProbe`                          | Readiness probe configuration. If empty, defaults to `initialDelaySeconds: 5` on `/health`.    | `{}`                                     |
 
 Specify each parameter using the `--set key=value[,key=value]` argument to `helm
 install`. For example,
