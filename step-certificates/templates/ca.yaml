@@ -101,19 +101,24 @@ spec:
           {{- end }}
           ports:
             - name: https
-              containerPort: {{ .Values.service.targetPort }}
+              containerPort: {{ .Values.service.ports.https.targetPort }}
               protocol: TCP
+            {{ if .Values.service.ports.http.enabled }}
+            - name: http
+              containerPort: {{ .Values.service.ports.http.targetPort }}
+              protocol: TCP
+            {{- end }}
           livenessProbe:
             initialDelaySeconds: 5
             httpGet:
               path: /health
-              port: {{ .Values.service.targetPort }}
+              port: {{ .Values.service.ports.https.targetPort }}
               scheme: HTTPS
           readinessProbe:
             initialDelaySeconds: 5
             httpGet:
               path: /health
-              port: {{ .Values.service.targetPort }}
+              port: {{ .Values.service.ports.https.targetPort }}
               scheme: HTTPS
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
