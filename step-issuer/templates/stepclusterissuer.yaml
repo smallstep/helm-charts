@@ -16,8 +16,16 @@ spec:
   provisioner:
     name: {{ .Values.stepClusterIssuer.provisioner.name }}
     kid: {{ .Values.stepClusterIssuer.provisioner.kid }}
+    {{- if .Values.stepClusterIssuer.provisioner.passwordRef.name }}
     passwordRef:
       name: {{ .Values.stepClusterIssuer.provisioner.passwordRef.name }}
       namespace: {{ .Values.stepClusterIssuer.provisioner.passwordRef.namespace }}
       key: {{ .Values.stepClusterIssuer.provisioner.passwordRef.key }}
+    {{- else if .Values.stepClusterIssuer.provisioner.passwordEnv }}
+    passwordEnv: {{ .Values.stepClusterIssuer.provisioner.passwordEnv }}
+    {{- else if .Values.stepClusterIssuer.provisioner.passwordFile }}
+    passwordFile: {{ .Values.stepClusterIssuer.provisioner.passwordFile }}
+    {{- else }}
+    {{- fail "One of passwordRef, passwordEnv, or passwordFile must be set" }}
+    {{- end }}
 {{- end }}
