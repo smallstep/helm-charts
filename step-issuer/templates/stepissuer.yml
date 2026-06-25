@@ -17,7 +17,15 @@ spec:
   provisioner:
     name: {{ .Values.stepIssuer.provisioner.name }}
     kid: {{ .Values.stepIssuer.provisioner.kid }}
+    {{- if .Values.stepIssuer.provisioner.passwordRef.name }}
     passwordRef:
       name: {{ .Values.stepIssuer.provisioner.passwordRef.name }}
       key: {{ .Values.stepIssuer.provisioner.passwordRef.key }}
+    {{- else if .Values.stepIssuer.provisioner.passwordEnv }}
+    passwordEnv: {{ .Values.stepIssuer.provisioner.passwordEnv }}
+    {{- else if .Values.stepIssuer.provisioner.passwordFile }}
+    passwordFile: {{ .Values.stepIssuer.provisioner.passwordFile }}
+    {{- else }}
+    {{- fail "One of passwordRef, passwordEnv, or passwordFile must be set" }}
+    {{- end }}
 {{- end }}
