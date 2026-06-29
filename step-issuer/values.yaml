@@ -107,7 +107,11 @@ tunnel:
     secret:
       secretName: ""
 
-# Configure extra volumes and volume mounts as YAML expressions.
+# Configure extra init containers, sidecar containers, volumes, and volume
+# mounts as YAML expressions. Useful for injecting secret-agent sidecars
+# (e.g. Vault Agent) that render passwords for passwordFile/passwordEnv.
+extraInitContainers: []
+extraContainers: []
 volumes: false
 volumeMounts: false
 
