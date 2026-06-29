@@ -33,6 +33,10 @@ spec:
       {{- with $.Values.deployment.priorityClassName }}
       priorityClassName: {{ . }}
       {{- end }}
+      {{- with .Values.extraInitContainers }}
+      initContainers:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
       containers:
       - image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
         imagePullPolicy: {{ .Values.image.pullPolicy }}
@@ -72,6 +76,9 @@ spec:
            # Extra volumeMounts
 {{ toYaml . | indent 10 }}
 {{- end }}
+      {{- with .Values.extraContainers }}
+      {{- toYaml . | nindent 6 }}
+      {{- end }}
       volumes:
         {{- if or .Values.tunnel.enabled }}
         # Tunnel configuration
