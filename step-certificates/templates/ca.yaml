@@ -52,6 +52,13 @@ spec:
       securityContext:
         {{- toYaml . | nindent 8 }}
       {{- end }}
+      {{- if .Values.ca.dnsPolicy }}
+      dnsPolicy: {{ .Values.ca.dnsPolicy }}
+      {{- end }}
+      {{- with .Values.ca.dnsConfig }}
+      dnsConfig:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
       {{- if  .Values.shareProcessNamespace }}
       shareProcessNamespace: {{ .Values.shareProcessNamespace }}
       {{- end }}
