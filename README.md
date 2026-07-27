@@ -18,12 +18,24 @@ These charts are released at https://smallstep.github.io/helm-charts/.
 
 ## Distribution
 
+### Using Claude Code
+
+With [Claude Code](https://claude.ai/code) installed, release a chart using the built-in `/release` skill:
+
+```
+/release step-certificates
+```
+
+The skill handles everything: checking for upstream releases, bumping the chart version, opening a PR, and publishing to the helm repository.
+
+### Manual
+
 1. Update `version` in _packageName/Chart.yaml_.
 
 2. Update `appVersion` to the image tag in _packageName/Chart.yaml_.
 
-3. Commit these changes to a branch and push the branch to the origin. 
-Open a PR for merging to master.
+3. Commit these changes to a branch and push the branch to the origin.
+   Open a PR for merging to master.
 
 4. Create helm package (using `step-certificates` as an example):
 
