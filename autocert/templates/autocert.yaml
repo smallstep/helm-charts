@@ -4,6 +4,10 @@ metadata:
   name: {{ include "autocert.fullname" . }}
   labels: 
     {{- include "autocert.labels" . | nindent 4 }}
+  {{- if .Values.annotations }}
+  annotations:
+    {{- toYaml .Values.annotations | nindent 4 }}
+  {{- end }}
 spec:
   replicas: {{ .Values.replicaCount }}
   selector:
@@ -15,6 +19,10 @@ spec:
       labels:
         app.kubernetes.io/name: {{ include "autocert.name" . }}
         app.kubernetes.io/instance: {{ .Release.Name }}
+      {{- if .Values.podAnnotations }}
+      annotations:
+        {{- toYaml .Values.podAnnotations | nindent 8}}
+      {{- end }}
     spec:
       {{- if and .Release.IsInstall (index .Values "step-certificates" "enabled") }}
       initContainers:
