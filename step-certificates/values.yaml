@@ -378,6 +378,15 @@ extraInitContainers: []
 ##
 extraContainers: []
 
+## Configure DNS configuration
+## dnsConfig:
+##   nameservers:
+##     - 192.0.2.1 # this is an example
+##   searches:
+##     - ns1.svc.cluster-domain.example
+##     - my.dns.search.suffix
+dnsConfig: {}
+
 ## Configure additional entries for /etc/hosts.
 ## hostAliases:
 ##   - ip: 10.0.0.1
