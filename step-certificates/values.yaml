@@ -332,6 +332,20 @@ autocert:
   enabled: false
 
 # ingress contains the configuration for an ingress controller.
+# ingress:
+  # enabled: true
+  # annotations:
+  #   cert-manager.io/cluster-issuer: "letsencrypt"
+  # ingressClassName: nginx
+  # hosts:
+  #   - host: stepcert.example.com
+  #     paths:
+  #       - /
+  # tls:
+  #   - secretName: step-tls
+  #     hosts:
+  #       - "*.example.com"
+
 ingress:
   enabled: false
   annotations: {}
