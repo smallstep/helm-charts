@@ -16,5 +16,5 @@ spec:
       args:
         - '-s'
         - '-k'
-        - 'https://{{ include "step-certificates.fullname" . }}:{{ .Values.service.port }}/health'
+        - 'https://{{ include "step-certificates.fullname" . }}:{{ .Values.service.ports.https.port }}/health'
   restartPolicy: Never

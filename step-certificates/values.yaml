@@ -230,11 +230,19 @@ inject:
 # service contains configuration for the kubernetes service.
 service:
   type: ClusterIP
-  port: 443
-  targetPort: 9000
-  nodePort: ""
+  loadBalancerIP: ""
   annotations: {}
   externalIPs: []
+  ports:
+    https:
+      port: 443
+      targetPort: 9000
+      nodePort: ""
+    http:
+      enabled: false
+      port: 80
+      targetPort: 8080
+      nodePort: ""
 
 # linkedca contains the token to configure step-ca using the linkedca mode.
 #
