@@ -1,0 +1,21 @@
+# Artifact Hub repository metadata file
+#
+# This file is served next to index.yaml at https://smallstep.github.io/helm-charts/
+# so that Artifact Hub can verify ownership of the `smallstep` repository listed at
+# https://artifacthub.io/packages/search?repo=smallstep
+#
+# See https://artifacthub.io/docs/topics/repositories/
+#
+# Note: this file belongs on the gh-pages branch only, because Artifact Hub requires it
+# at the same level as the chart repository's index.yaml.
+
+repositoryID: 227e7c9c-4ae2-4ba4-ae05-68fa006d87c0
+owners:
+  - name: Mariano Cano
+    email: mariano@smallstep.com
+  - name: Max Furman
+    email: max@smallstep.com 
+  - name: Josh Drake
+    email: josh@smallstep.com
+  - name: Herman Slatman
+    email: herman@smallstep.com
