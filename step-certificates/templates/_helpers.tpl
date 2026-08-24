@@ -67,6 +67,17 @@ Create CA DNS
 {{- end -}}
 
 {{/*
+Renders a complete tree, including values that contains template.
+*/}}
+{{- define "step-certificates.render" -}}
+  {{- if typeIs "string" .value }}
+    {{- tpl .value .context }}
+  {{ else }}
+    {{- tpl (.value | toYaml) .context }}
+  {{- end }}
+{{- end -}}
+
+{{/*
 Linked CA variables
 */}}
 {{- define "step-certificates.linkedca.secretKeyRef.name" -}}

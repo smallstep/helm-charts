@@ -1,0 +1,26 @@
+podExtraAnnotations:
+  prometheus.io/path: /metrics
+  prometheus.io/port: "9100"
+  prometheus.io/scrape: "true"
+
+extraObjects:
+  - |
+    apiVersion: monitoring.googleapis.com/v1
+    kind: PodMonitoring
+    metadata:
+      name: {{ .Release.Name }}-podmonitoring
+    spec:
+      selector:
+        matchLabels:
+          app.kubernetes.io/name: {{ include "step-certificates.name" . }}
+      endpoints:
+        - port: 9090
+          path: /metrics
+          interval: 30s
+      targetLabels:
+        metadata:
+          - container
+          - pod
+          - node
+          - top_level_controller_name
+          - top_level_controller_type
