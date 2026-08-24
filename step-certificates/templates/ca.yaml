@@ -23,8 +23,11 @@ spec:
         {{- with .Values.podExtraLabels }}
         {{- toYaml . | nindent 8 }}
         {{- end }}
-      {{- if .Values.inject.enabled }}
       annotations:
+        {{- with .Values.podExtraAnnotations }}
+        {{- toYaml . | nindent 8 }}
+        {{- end }}
+      {{- if .Values.inject.enabled }}
         checksum/config: {{ include (print $.Template.BasePath "/configmaps.yaml") . | sha256sum }}
         checksum/secret: {{ include (print $.Template.BasePath "/secrets.yaml") . | sha256sum }}
       {{- end }}
