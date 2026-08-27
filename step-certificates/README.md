@@ -94,6 +94,36 @@ helm install \
   step-certificates smallstep/step-certificates
 ```
 
+## Global Labels
+
+The `global.labels` configuration applies custom labels to every Kubernetes resource created by this chart. This is useful for:
+
+- Compliance and monitoring: Tag resources with environment, team, or cost-center information
+- GitOps and automation: Identify resources managed by this chart across clusters
+- Network policies and security: Label resources for access control rules
+
+Global labels are propagated to all subcharts (e.g., `autocert` when enabled). Per-resource labels (e.g., `service.labels`) are merged on top of global labels.
+
+Example:
+
+```console
+helm install \
+  --set global.labels.environment=production \
+  --set global.labels.team=platform \
+  --set global.labels.cost-center=engineering \
+  step-certificates smallstep/step-certificates
+```
+
+Or in a `values.yaml` file:
+
+```yaml
+global:
+  labels:
+    environment: production
+    team: platform
+    cost-center: engineering
+```
+
 ## Configuration
 
 The easiest way to configure step-certificates is to use [step](https://github.com/smallstep/cli).
@@ -249,6 +279,7 @@ chart and their default values.
 | `command`                     | The command entrypoint array                                                                                | `[]`                                     |
 | `args`                        | Arguments to the entrypoint                                                                                 | `[]`                                     |
 | `workingDir`                  | The container working directory                                                                             | `"/home/step"`                           |
+| `global.labels`               | Custom labels added to every resource in this chart and subcharts (YAML)                                    | `{}`                                     |
 | `ca.name`                     | Name for you CA                                                                                             | `Step Certificates`                      |
 | `ca.address`                  | TCP address where Step CA runs                                                                              | `:9000`                                  |
 | `ca.dns`                      | DNS of Step CA, if empty it will be inferred                                                                | `""`                                     |
@@ -276,6 +307,7 @@ chart and their default values.
 | `service.targetPort`          | Internal port where Step CA runs                                                                            | `9000`                                   |
 | `service.annotations`         | Service annotations (YAML)                                                                                  | `{}`                                     |
 | `service.externalIPs`         | Service externalIPs                                                                                         | `[]`                                     |
+| `service.labels`              | Custom labels to add to the service resource (YAML)                                                          | `{}`                                     |
 | `replicaCount`                | Number of Step CA replicas. Only one replica is currently supported.                                        | `1`                                      |
 | `image.repository`            | Repository of the Step CA image                                                                             | `cr.step.sm/smallstep/step-ca`           |
 | `image.initContainerRepository` | Repository of the Step CA Init Container image.                                                           | `busybox:latest`                         |
@@ -349,6 +381,29 @@ accessing the CA by those DNS/IPs will fail (services internal to the cluster):
 helm install --set ca.dns="ca.example.com\,my-release-step-certificates.default.svc.cluster.local\,127.0.0.1" \
   my-release smallstep/step-certificates
 ```
+
+### Service Customization
+
+You can add custom labels to the service resource for integration with service meshes, monitoring systems, or compliance requirements:
+
+```console
+helm install step-certificates smallstep/step-certificates \
+  --set service.labels.environment=production \
+  --set service.labels.team=platform
+```
+
+Or using a values file:
+
+```yaml
+service:
+  labels:
+    environment: production
+    team: platform
+    cost-center: engineering
+    compliance: nis2
+```
+
+**Note**: Custom labels are merged with standard Helm labels. Avoid using reserved Kubernetes label prefixes like `app.kubernetes.io/`, `helm.sh/`, or `kubernetes.io/`.
 
 Alternatively, a YAML file that specifies the values for the parameters can be
 provided while installing the chart. For example,

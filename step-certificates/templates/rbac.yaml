@@ -5,11 +5,7 @@ metadata:
   name: {{ include "step-certificates.fullname" . }}-config
   namespace: {{ .Release.Namespace }}
   labels:
-    helm.sh/chart: {{ include "step-certificates.chart" . }}
-    app.kubernetes.io/name: {{ include "step-certificates.name" . }}
-    app.kubernetes.io/instance: {{ .Release.Name }}
-    app.kubernetes.io/managed-by: {{ .Release.Service }}
-    app.kubernetes.io/version: {{ .Chart.AppVersion }}
+    {{- include "step-certificates.labels" . | nindent 4 }}
 rules:
 - apiGroups: [""]
   resources: ["secrets", "configmaps"]
@@ -21,11 +17,7 @@ metadata:
   name: {{ include "step-certificates.fullname" . }}-config
   namespace: {{ .Release.Namespace }}
   labels:
-    helm.sh/chart: {{ include "step-certificates.chart" . }}
-    app.kubernetes.io/name: {{ include "step-certificates.name" . }}
-    app.kubernetes.io/instance: {{ .Release.Name }}
-    app.kubernetes.io/managed-by: {{ .Release.Service }}
-    app.kubernetes.io/version: {{ .Chart.AppVersion }}
+    {{- include "step-certificates.labels" . | nindent 4 }}
 subjects:
 - kind: ServiceAccount
   name: {{ include "step-certificates.fullname" . }}-config
@@ -41,11 +33,7 @@ kind: ClusterRole
 metadata:
   name: {{ include "step-certificates.fullname" . }}-config
   labels:
-    helm.sh/chart: {{ include "step-certificates.chart" . }}
-    app.kubernetes.io/name: {{ include "step-certificates.name" . }}
-    app.kubernetes.io/instance: {{ .Release.Name }}
-    app.kubernetes.io/managed-by: {{ .Release.Service }}
-    app.kubernetes.io/version: {{ .Chart.AppVersion }}
+    {{- include "step-certificates.labels" . | nindent 4 }}
 rules:
 - apiGroups: ["admissionregistration.k8s.io"]
   resources: ["mutatingwebhookconfigurations"]
@@ -57,11 +45,7 @@ metadata:
   name: {{ include "step-certificates.fullname" . }}-config
   namespace: {{ .Release.Namespace }}
   labels:
-    helm.sh/chart: {{ include "step-certificates.chart" . }}
-    app.kubernetes.io/name: {{ include "step-certificates.name" . }}
-    app.kubernetes.io/instance: {{ .Release.Name }}
-    app.kubernetes.io/managed-by: {{ .Release.Service }}
-    app.kubernetes.io/version: {{ .Chart.AppVersion }}
+    {{- include "step-certificates.labels" . | nindent 4 }}
 subjects:
 - kind: ServiceAccount
   name: {{ include "step-certificates.fullname" . }}-config
