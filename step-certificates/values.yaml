@@ -67,6 +67,9 @@ bootstrap:
 # Extra labels
 podExtraLabels: {}
 
+# Extra annotations
+podAnnotations: {}
+
 # inject contains values to be injected into config maps and secrets
 inject:
   enabled: false
