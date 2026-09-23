@@ -62,6 +62,10 @@ spec:
         {{- end }}
         resources:
           {{- toYaml .Values.resources | nindent 10 }}
+        ports:
+          - name: https
+            containerPort: 8443
+            protocol: TCP
         volumeMounts:
           {{- if .Values.tunnel.enabled }}
           # Tunnel configuration
