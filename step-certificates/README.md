@@ -10,7 +10,7 @@ To learn more, visit <https://github.com/smallstep/certificates>.
 ```console
 helm repo add smallstep https://smallstep.github.io/helm-charts/
 step ca init --helm > values.yaml
-echo "password" | base64 > password.txt
+echo -n "password" | base64 > password.txt
 helm install -f values.yaml \
      --set inject.secrets.ca_password=$(cat password.txt) \
      --set inject.secrets.provisioner_password=$(cat password.txt) \
@@ -30,7 +30,7 @@ Before installing the chart, we need to generate the
 
 ```console
 step ca init --helm > values.yaml
-echo "password" | base64 > password.txt
+echo -n "password" | base64 > password.txt
 ```
 
 Now we can install the chart with release name `step-certificates` using the
@@ -125,7 +125,7 @@ using the base64 encoding. And the port where the CA binds to, in the example,
 `:9000` must be set as `service.targetPort=9000`.
 
 ```console
-echo "password" | base64 > password.txt
+echo -n "password" | base64 > password.txt
 helm install -f values.yaml \
      --set inject.secrets.ca_password=$(cat password.txt) \
      --set inject.secrets.provisioner_password=$(cat password.txt) \
